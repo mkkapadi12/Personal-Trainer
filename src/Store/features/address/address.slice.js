@@ -93,6 +93,10 @@ const addressSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      .addCase(fetchAddresses.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchAddresses.fulfilled, (state, action) => {
         state.loading = false;
         state.addresses = action.payload.addresses;

@@ -4,15 +4,28 @@ import {
   BadgePercent,
   Eye,
   Heart,
+  Minus,
   Phone,
+  Plus,
   ShoppingCart,
   Shuffle,
   Star,
   Trash2,
   Truck,
+  CalendarDays,
+  Clock,
+  Mail,
+  FileText,
+  MessageSquare,
+  CalendarCheck,
+  UserRound,
+  Dumbbell,
+  Timer,
+  ClipboardList,
 } from 'lucide-react';
 
 export const PAGE_ICONS = {
+  // General
   ARROWLEFT: ArrowLeft,
   OFFER: BadgePercent,
   TRUCK: Truck,
@@ -24,4 +37,18 @@ export const PAGE_ICONS = {
   EYE: Eye,
   STAR: Star,
   HEART: Heart,
+  MINUS: Minus,
+  PLUS: Plus,
+
+  // Appointment
+  CALENDAR: CalendarDays,
+  CALENDAR_CHECK: CalendarCheck,
+  CLOCK: Clock,
+  MAIL: Mail,
+  FILE_TEXT: FileText,
+  MESSAGE: MessageSquare,
+  USER: UserRound,
+  DUMBBELL: Dumbbell,
+  TIMER: Timer,
+  CLIPBOARD: ClipboardList,
 };

@@ -26,7 +26,7 @@ const SingleArticle = () => {
 
   useEffect(() => {
     dispatch(getComments(id));
-  }, [single_article]);
+  }, [id, dispatch]);
 
   return (
     <div className="min-h-screen">

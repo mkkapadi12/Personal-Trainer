@@ -11,6 +11,7 @@ const initialState = {
   token: localStorage.getItem('workDo') || null,
   loading: false,
   error: null,
+  isAuthChecked: false,
 };
 
 // REGISTER
@@ -95,6 +96,7 @@ const authSlice = createSlice({
     logout: (state, { payload }) => {
       state.user = null;
       state.token = null;
+      state.isAuthChecked = false;
       localStorage.removeItem('workDo');
       payload.navigate('/account/login');
     },
@@ -132,12 +134,13 @@ const authSlice = createSlice({
       // PROFILE
       .addCase(getProfile.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.isAuthChecked = true;
       })
-      .addCase(getProfile.rejected, (state) => {
+      .addCase(getProfile.rejected, (state, action) => {
         state.user = null;
         state.token = null;
         state.error = action.payload;
-        // localStorage.removeItem('workDo');
+        state.isAuthChecked = false;
       })
 
       //update profile

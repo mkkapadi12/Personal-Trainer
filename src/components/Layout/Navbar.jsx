@@ -28,6 +28,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { CalendarDays, LogOut, MapPin, User } from 'lucide-react';
 import { logout } from '@/Store/features/auth/auth.slice';
 import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import CartDrawer from '@/pages/Cart/components/CartDrawer';
 
 const navigation = {
   categories: [
@@ -434,12 +435,7 @@ const Navbar = () => {
 
                 {/* Cart */}
                 <div className="flow-root lg:ml-6">
-                  <Link to="/account/cart" className="group flex items-center">
-                    <PAGE_ICONS.CART className="size-7 text-white" />
-                    <span className="hidden sm:block ml-2 text-sm text-gray-300">
-                      ({cart.length || '0'})
-                    </span>
-                  </Link>
+                  <CartDrawer />
                 </div>
                 <div className="lg:hidden flex items-center justify-center">
                   <button

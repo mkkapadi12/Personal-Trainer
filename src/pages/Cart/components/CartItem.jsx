@@ -6,6 +6,7 @@ import {
   updateQuantity,
 } from '@/Store/features/cart/cart.slice';
 import { Link } from 'react-router-dom';
+import QuantityUpdate from './QuantityUpdate';
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -32,29 +33,7 @@ const CartItem = ({ item }) => {
       </p>
 
       {/* Quantity */}
-      <div className="absolute md:relative top-1/2 right-0 md:top-0 md:right-0 flex border w-fit">
-        <button
-          className="px-3"
-          onClick={() =>
-            dispatch(
-              updateQuantity({ id: item._id, quantity: item.quantity - 1 }),
-            )
-          }
-        >
-          -
-        </button>
-        <span className="px-4">{item.quantity}</span>
-        <button
-          className="px-3"
-          onClick={() =>
-            dispatch(
-              updateQuantity({ id: item._id, quantity: item.quantity + 1 }),
-            )
-          }
-        >
-          +
-        </button>
-      </div>
+      <QuantityUpdate item={item} />
 
       {/* Total */}
       <div className="absolute md:relative bottom-2 right-2 md:top-0 md:right-0 flex items-center gap-3">

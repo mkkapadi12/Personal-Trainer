@@ -15,10 +15,6 @@ const Products = () => {
     dispatch(getProducts({ category, sort: 'all', page: 1 }));
   }, [category]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     toast.error(error);
   }
@@ -32,7 +28,7 @@ const Products = () => {
         description={`Showing all products in the ${category} category`}
       />
       <section className="container mx-auto max-w-292.5 px-3">
-        <ProductSection products={products} />
+        <ProductSection products={products} loading={loading} />
       </section>
     </div>
   );

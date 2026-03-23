@@ -58,6 +58,7 @@ const PersonalSubscription = () => {
 
                 <input
                   {...register('firstName')}
+                  type="text"
                   placeholder="John"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 />
@@ -70,6 +71,7 @@ const PersonalSubscription = () => {
 
                 <input
                   {...register('lastName')}
+                  type="text"
                   placeholder="Dio"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 />
@@ -84,7 +86,9 @@ const PersonalSubscription = () => {
 
                 <input
                   {...register('contact')}
-                  placeholder="1234567890"
+                  type="tel"
+                  pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                  placeholder="123-456-7890"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 />
               </div>
@@ -96,6 +100,7 @@ const PersonalSubscription = () => {
 
                 <input
                   {...register('email')}
+                  type="email"
                   placeholder="shop@company.com"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 />

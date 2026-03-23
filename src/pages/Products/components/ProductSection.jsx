@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogBackdrop,
@@ -17,17 +17,19 @@ import {
   FunnelIcon,
   MinusIcon,
   PlusIcon,
-  Squares2X2Icon,
 } from '@heroicons/react/20/solid';
 import { useParams } from 'react-router-dom';
 import ProductCard from './ProductCard';
+import { useDispatch } from 'react-redux';
+import { getProducts } from '@/Store/features/product/product.slice';
+import { Loader2 } from 'lucide-react';
+import ProductNotFound from '../../../assets/images/product-not-found.jpg';
 
 const sortOptions = [
-  { name: 'Most Popular', value: 'popular', current: true },
-  { name: 'Best Rating', value: 'rating', current: false },
-  { name: 'Newest', value: 'newest', current: false },
-  { name: 'Price: Low to High', value: 'price-asc', current: false },
-  { name: 'Price: High to Low', value: 'price-desc', current: false },
+  { name: 'Most Popular', value: 'latest' },
+  { name: 'Best Rating', value: 'rating' },
+  { name: 'Price: Low to High', value: 'price-asc' },
+  { name: 'Price: High to Low', value: 'price-desc' },
 ];
 const subCategories = [
   { name: 'Protein Powder', value: 'protein' },
@@ -91,9 +93,16 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-const ProductSection = ({ products }) => {
+const ProductSection = ({ products, loading }) => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState('latest');
   const { category } = useParams();
+  const dispatch = useDispatch();
+
+  const handleSort = (sort) => {
+    setSelectedSort(sort);
+    dispatch(getProducts({ category, sort, page: 1 }));
+  };
 
   return (
     <div className="bg-white">
@@ -216,12 +225,12 @@ const ProductSection = ({ products }) => {
         </Dialog>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
+          <div className="flex sm:flex-row flex-col items-baseline justify-between border-b border-gray-200 pt-10 md:pt-24 pb-6">
             <h1 className="text-2xl md:text-4xl font-bold capitalize tracking-tight text-gray-900">
               {category}
             </h1>
 
-            <div className="flex items-center">
+            <div className="flex items-center justify-between sm:w-auto w-full sm:flex-row flex-row-reverse">
               <Menu as="div" className="relative inline-block text-left">
                 <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
                   Sort
@@ -241,11 +250,12 @@ const ProductSection = ({ products }) => {
                         <a
                           href={option.href}
                           className={classNames(
-                            option.current
+                            option.value === selectedSort
                               ? 'font-medium text-gray-900'
                               : 'text-gray-500',
-                            'block px-4 py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
+                            'block px-4 cursor-pointer py-2 text-sm data-focus:bg-gray-100 data-focus:outline-hidden',
                           )}
+                          onClick={() => handleSort(option.value)}
                         >
                           {option.name}
                         </a>
@@ -257,15 +267,8 @@ const ProductSection = ({ products }) => {
 
               <button
                 type="button"
-                className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-              >
-                <span className="sr-only">View grid</span>
-                <Squares2X2Icon aria-hidden="true" className="size-5" />
-              </button>
-              <button
-                type="button"
                 onClick={() => setMobileFiltersOpen(true)}
-                className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+                className="p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
               >
                 <span className="sr-only">Filters</span>
                 <FunnelIcon aria-hidden="true" className="size-5" />
@@ -370,14 +373,18 @@ const ProductSection = ({ products }) => {
               <div className="lg:col-span-3">
                 {products.length === 0 ? (
                   <div className="flex items-center justify-center">
-                    <p className="text-gray-500">
-                      No products found : {category}
-                    </p>
+                    <div>
+                      <img src={ProductNotFound} alt="Product Not Found" />
+                    </div>
+                  </div>
+                ) : loading ? (
+                  <div className="flex items-center justify-center h-full">
+                    <Loader2 className="animate-spin" />
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                    {products.map((product) => (
-                      <ProductCard key={product._id} product={product} />
+                    {products?.map((product) => (
+                      <ProductCard key={product?._id} product={product} />
                     ))}
                   </div>
                 )}

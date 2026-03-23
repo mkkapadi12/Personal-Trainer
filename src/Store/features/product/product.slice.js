@@ -13,7 +13,7 @@ const initialState = {
 
 export const getProducts = createAsyncThunk(
   'products/getProducts',
-  async ({ category, sort, page }, { rejectWithValue }) => {
+  async ({ category, sort = 'latest', page = 1 }, { rejectWithValue }) => {
     try {
       const result = await getProductsAPI(category, sort, page);
       return result;
