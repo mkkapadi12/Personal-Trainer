@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const result = await registerUserAPI(data);
-      console.log('API response :', result);
+      // console.log('API response :', result);
       return result;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message);
@@ -43,11 +43,7 @@ export const loginUser = createAsyncThunk(
 
       return result;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data?.msg ||
-          error.response?.data?.message ||
-          'Login failed',
-      );
+      return rejectWithValue(error.response.data.message || 'login failed!');
     }
   },
 );
@@ -93,12 +89,11 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: (state, { payload }) => {
+    logout: (state) => {
       state.user = null;
       state.token = null;
       state.isAuthChecked = false;
       localStorage.removeItem('workDo');
-      payload.navigate('/account/login');
     },
   },
   extraReducers: (builder) => {

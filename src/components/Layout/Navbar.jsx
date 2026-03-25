@@ -384,7 +384,8 @@ const Navbar = () => {
                         {/* Logout */}
                         <DropdownMenuItem
                           onClick={() => {
-                            dispatch(logout({ navigate }));
+                            dispatch(logout());
+                            navigate('/account/login');
                           }}
                           className="flex items-center gap-2 cursor-pointer text-red-500"
                         >

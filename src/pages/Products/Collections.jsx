@@ -30,6 +30,13 @@ const collectionData = [
     image:
       'https://personaltrainer-workdo.myshopify.com/cdn/shop/collections/image_87.png?v=1689157536',
   },
+  {
+    id: 5,
+    name: 'health',
+    category: 'health',
+    image:
+      'https://plus.unsplash.com/premium_photo-1675808577247-2281dc17147a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  },
 ];
 
 const Collections = () => {
@@ -43,7 +50,10 @@ const Collections = () => {
           <div className="grid grid-cols-1 gap-5 mt-5 md:grid-cols-2 lg:grid-cols-3">
             {collectionData.map((collection) => (
               <div key={collection.id} className="flex flex-col gap-2">
-                <Link to={`/products/collections/${collection.category}`}>
+                <Link
+                  to={`/products/collections/${collection.category}`}
+                  className="w-full h-full"
+                >
                   <img
                     src={collection.image}
                     alt={collection.name}

@@ -119,7 +119,6 @@ const ProfileForm = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
         {/* Personal Details Section */}
         <div>
           {sectionLabel('Personal Details')}
@@ -140,7 +139,10 @@ const ProfileForm = () => {
                       disabled={!isEditing}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs" style={{ color: '#ff6b6b' }} />
+                  <FormMessage
+                    className="text-xs"
+                    style={{ color: '#ff6b6b' }}
+                  />
                 </FormItem>
               )}
             />
@@ -161,7 +163,10 @@ const ProfileForm = () => {
                       disabled={!isEditing}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs" style={{ color: '#ff6b6b' }} />
+                  <FormMessage
+                    className="text-xs"
+                    style={{ color: '#ff6b6b' }}
+                  />
                 </FormItem>
               )}
             />
@@ -191,7 +196,10 @@ const ProfileForm = () => {
                       disabled
                     />
                   </FormControl>
-                  <FormMessage className="text-xs" style={{ color: '#ff6b6b' }} />
+                  <FormMessage
+                    className="text-xs"
+                    style={{ color: '#ff6b6b' }}
+                  />
                 </FormItem>
               )}
             />
@@ -212,7 +220,10 @@ const ProfileForm = () => {
                       disabled={!isEditing}
                     />
                   </FormControl>
-                  <FormMessage className="text-xs" style={{ color: '#ff6b6b' }} />
+                  <FormMessage
+                    className="text-xs"
+                    style={{ color: '#ff6b6b' }}
+                  />
                 </FormItem>
               )}
             />
@@ -274,7 +285,6 @@ const ProfileForm = () => {
             </>
           )}
         </div>
-
       </form>
     </Form>
   );

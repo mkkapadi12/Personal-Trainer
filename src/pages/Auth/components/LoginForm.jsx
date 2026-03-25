@@ -28,7 +28,7 @@ const LoginForm = () => {
       navigate('/');
     } catch (error) {
       toast.dismiss();
-      toast.error(error || 'Login failed');
+      toast.error(error);
     }
   };
 
@@ -51,6 +51,7 @@ const LoginForm = () => {
                   <Input
                     type="email"
                     placeholder="Email"
+                    autoComplete="current-email"
                     {...register('email', {
                       required: 'Email is required',
                     })}
@@ -71,6 +72,7 @@ const LoginForm = () => {
                   <Input
                     type="password"
                     placeholder="Password"
+                    autoComplete="new-password"
                     {...register('password', {
                       required: 'Password is required',
                       minLength: {

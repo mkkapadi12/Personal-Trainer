@@ -87,6 +87,7 @@ const CreateAccountForm = () => {
               <Input
                 type="email"
                 placeholder="Email"
+                autoComplete="new-email"
                 {...register('email', {
                   required: 'Email is required',
                 })}
@@ -111,6 +112,7 @@ const CreateAccountForm = () => {
               <Input
                 type="password"
                 placeholder="Password"
+                autoComplete="new-password"
                 {...register('password', {
                   required: 'Password is required',
                   minLength: {
