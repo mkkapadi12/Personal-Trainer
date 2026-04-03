@@ -9,13 +9,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { commentSchema } from './commentSchema';
 import { toast } from 'sonner';
 import { addComment } from '@/Store/features/comments/comment.slice';
 import { useDispatch } from 'react-redux';
+import { MessageSquarePlus } from 'lucide-react';
 
 export default function CommentForm({ id }) {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export default function CommentForm({ id }) {
       ).unwrap();
 
       toast.dismiss();
-      toast.success(result.msg || 'Comment added successfully!');
+      toast.success(result?.msg || 'Comment added successfully!');
       form.reset();
     } catch (error) {
       toast.dismiss();
@@ -45,49 +45,21 @@ export default function CommentForm({ id }) {
   };
 
   return (
-    <div className="border p-4 md:p-8 bg-white">
-      <h3 className="text-xl md:text-2xl font-semibold mb-6">Leave a Comment</h3>
+    <div className="relative overflow-hidden bg-white rounded-[2rem] p-6 md:p-10 border border-gray-100/80">
+      <div className="relative z-10 flex items-center gap-4 mb-8">
+        <div className="p-2.5 bg-[#c7f000]/20 rounded-2xl border border-[#c7f000]/30 shadow-sm">
+          <MessageSquarePlus className="w-5 h-5 text-[#8ba600]" />
+        </div>
+        <h3 className="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight">
+          Leave a Comment
+        </h3>
+      </div>
 
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          {/* Name */}
-          {/* <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Name"
-                    {...field}
-                    className="h-12 rounded-none border-gray-300"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
-
-          {/* Email */}
-          {/* <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Email"
-                    {...field}
-                    className="h-12 rounded-none border-gray-300"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
-
-          {/* Message */}
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="relative z-10 space-y-7"
+        >
           <FormField
             control={form.control}
             name="comment"
@@ -95,23 +67,24 @@ export default function CommentForm({ id }) {
               <FormItem>
                 <FormControl>
                   <Textarea
-                    placeholder="Comment"
+                    placeholder="Share your thoughts about this article..."
                     rows={5}
                     {...field}
-                    className="rounded-none border-gray-300"
+                    className="min-h-[140px] rounded-2xl border-gray-200 bg-gray-50/80 p-5 text-base focus:bg-white focus:ring-4 focus:ring-[#c7f000]/30 focus:border-[#c7f000] transition-all duration-300 resize-none shadow-inner"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500 font-medium ml-2" />
               </FormItem>
             )}
           />
 
-          {/* Button */}
           <Button
             type="submit"
-            className="w-full bg-[#c7f000] text-black hover:bg-black hover:text-white rounded-none py-6 font-semibold"
+            className="w-full hover:text-white cursor-pointer relative overflow-hidden bg-[#c7f000] text-black rounded-xl py-5 font-bold text-lg tracking-wider uppercase"
           >
-            POST COMMENT
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Post Comment
+            </span>
           </Button>
         </form>
       </Form>

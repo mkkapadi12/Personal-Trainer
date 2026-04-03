@@ -11,6 +11,6 @@ export const appointmentSchema = z.object({
   firstName: z.string().min(2, 'First name required'),
   lastName: z.string().min(2, 'Last name required'),
   email: z.string().email('Valid email required'),
-  phone: z.string().min(8, 'Phone required'),
+  phone: z.string().min(10, 'Phone is required').max(10, 'Phone is invalid'),
   message: z.string().optional(),
 });

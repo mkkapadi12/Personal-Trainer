@@ -52,26 +52,34 @@ const PersonalSubscription = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="text-white opacity-[0.6] text-sm mb-1 block">
+                <label
+                  htmlFor="firstname"
+                  className="text-white opacity-[0.6] text-sm mb-1 block"
+                >
                   First Name:
                 </label>
 
                 <input
                   {...register('firstName')}
                   type="text"
+                  id="firstname"
                   placeholder="John"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 />
               </div>
 
               <div>
-                <label className="text-white opacity-[0.6] text-sm mb-1 block">
+                <label
+                  htmlFor="lastname"
+                  className="text-white opacity-[0.6] text-sm mb-1 block"
+                >
                   Last Name:
                 </label>
 
                 <input
                   {...register('lastName')}
                   type="text"
+                  id="lastname"
                   placeholder="Dio"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 />
@@ -80,13 +88,19 @@ const PersonalSubscription = () => {
 
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="text-white opacity-[0.6] text-sm mb-1 block">
-                  Contact:
+                <label
+                  htmlFor="phone"
+                  className="text-white opacity-[0.6] text-sm mb-1 block"
+                >
+                  Phone:
                 </label>
 
                 <input
-                  {...register('contact')}
+                  {...register('phone')}
                   type="tel"
+                  id="phone"
+                  name="phone"
+                  autoComplete="phone"
                   pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                   placeholder="123-456-7890"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
@@ -94,13 +108,19 @@ const PersonalSubscription = () => {
               </div>
 
               <div>
-                <label className="text-white opacity-[0.6] text-sm mb-1 block">
+                <label
+                  htmlFor="email"
+                  className="text-white opacity-[0.6] text-sm mb-1 block"
+                >
                   E-mail:
                 </label>
 
                 <input
                   {...register('email')}
                   type="email"
+                  id="email"
+                  name="email"
+                  autoComplete="email"
                   placeholder="shop@company.com"
                   className="w-full bg-black border border-gray-600 px-4 py-3 outline-none text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 />
@@ -108,12 +128,18 @@ const PersonalSubscription = () => {
             </div>
 
             <div>
-              <label className="text-white opacity-[0.6] text-sm mb-1 block">
+              <label
+                htmlFor="description"
+                className="text-white opacity-[0.6] text-sm mb-1 block"
+              >
                 Description:
               </label>
 
               <textarea
                 {...register('description')}
+                id="description"
+                name="description"
+                autoComplete="description"
                 placeholder="How can we help?"
                 rows="5 text-brand placeholder:text-white placeholder:opacity-[0.6]"
                 className="w-full bg-black border border-gray-600 px-4 py-3 outline-none"

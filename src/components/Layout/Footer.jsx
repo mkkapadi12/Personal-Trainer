@@ -31,6 +31,7 @@ const Footer = () => {
                       <Input
                         type="email"
                         id="email"
+                        autoComplete="current-email"
                         className="bg-black border rounded-none  border-gray-600 text-white placeholder:text-white focus:ring-brand! focus:border-brand! focus:ring-1 focus:ring-offset-0 focus:ring-offset-black! focus-visible:ring-brand! focus-visible:ring-1 focus-visible:ring-offset-0 focus-visible:ring-offset-black! w-full"
                         placeholder="Enter email here..."
                       />

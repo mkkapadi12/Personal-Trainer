@@ -10,6 +10,7 @@ const address_routes = require('./routes/address.routes');
 const article_routes = require('./routes/article.routes');
 const appo_routes = require('./routes/appo.routes');
 const product_routes = require('./routes/product.routes');
+const admin_routes = require('./routes/admin.routes');
 
 const errorMiddleware = require('./middlewares/error.middleware');
 
@@ -35,6 +36,7 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.get('/api', (req, res) => res.send('API is working!'));
 
 app.use('/api/auth', auth_routes);
+app.use('/api/admin', admin_routes);
 app.use('/api/user/addresses', address_routes);
 app.use('/api/article', article_routes);
 app.use('/api/appointment', appo_routes);

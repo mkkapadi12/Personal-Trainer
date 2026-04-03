@@ -6,11 +6,11 @@ import { Label } from '@/components/ui/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '@/Store/features/auth/auth.slice';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
 
 const CreateAccountForm = () => {
-  const { loading, error, user } = useSelector((state) => state.user);
-  // console.log('Auth State:', { loading, error, user });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,6 +25,7 @@ const CreateAccountForm = () => {
 
       toast.dismiss();
       toast.success(result.msg || 'Registration successful!');
+      navigate('/account/login');
     } catch (error) {
       toast.dismiss();
       toast.error(error || 'Registration failed');
