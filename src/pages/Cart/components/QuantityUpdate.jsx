@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { updateQuantity } from '@/Store/features/cart/cart.slice';
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const QuantityUpdate = ({ item }) => {
   const dispatch = useDispatch();

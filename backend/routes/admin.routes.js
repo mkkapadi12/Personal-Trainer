@@ -5,6 +5,7 @@ const {
   registerAdmin,
   loginAdmin,
   getAdminProfile,
+  updateAdminProfile,
 } = require('../controllers/admin.controller');
 
 //admin register
@@ -15,5 +16,8 @@ router.post('/login', loginAdmin);
 
 //admin profile
 router.get('/profile', adminMiddleware, getAdminProfile);
+
+//update profile
+router.put('/update-profile', adminMiddleware, updateAdminProfile);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import { formatDate } from '@/lib/utils';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -25,7 +25,7 @@ const ArticleHeader = ({ article }) => {
             </div>
             <span className="text-sm font-medium">Back to Articles</span>
           </Link>
-          <div className='flex items-center flex-wrap gap-4 text-sm'>
+          <div className="flex items-center flex-wrap gap-4 text-sm">
             <div className="bg-brand px-5 py-2 rounded-full text-black font-medium">
               <h1>Featured</h1>
             </div>
@@ -37,7 +37,9 @@ const ArticleHeader = ({ article }) => {
             </div>
           </div>
           <div>
-            <h1 className="text-2xl md:text-4xl uppercase font-bold">{article?.title}</h1>
+            <h1 className="text-2xl md:text-4xl uppercase font-bold">
+              {article?.title}
+            </h1>
           </div>
           <div
             className="text-sm font-normal md:max-w-130"

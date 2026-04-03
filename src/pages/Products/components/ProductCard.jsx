@@ -7,7 +7,7 @@ import {
   addToWishList,
   removeFromWishList,
 } from '@/Store/features/wishlist/wishlist.slice';
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import { useSelector } from 'react-redux';
 import QuickView from './QuickView';
 

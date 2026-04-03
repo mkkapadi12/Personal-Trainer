@@ -14,7 +14,7 @@ const adminSchema = new Schema(
     email: {
       type: String,
       required: [true, 'Email is required'],
-      unique: true,
+      unique: [true, 'This email is already registered'],
       lowercase: true,
     },
     password: {
@@ -24,7 +24,8 @@ const adminSchema = new Schema(
     },
     phone: {
       type: String,
-      unique: [true, 'Phone number already exists'],
+      unique: true,
+      sparse: true,
     },
   },
   {
@@ -47,8 +48,7 @@ adminSchema.methods.generateToken = async function () {
       {
         adminId: this._id.toString(),
         email: this.email,
-        name:this.name,
-        phone:this.phone,
+        name: this.name,
       },
       process.env.JWT_SECRET_KEY,
       {

@@ -1,4 +1,4 @@
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +17,9 @@ const PageHero = ({ title, backLink, backText, description }) => {
             <span className="text-sm font-medium">{backText}</span>
           </Link>
           <div>
-            <h1 className="text-2xl md:text-4xl uppercase font-bold">{title}</h1>
+            <h1 className="text-2xl md:text-4xl uppercase font-bold">
+              {title}
+            </h1>
           </div>
           <div>
             <p className="text-sm font-normal md:max-w-140">{description}</p>

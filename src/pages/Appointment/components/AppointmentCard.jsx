@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatDate } from '@/lib/utils';
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const {
   CALENDAR,

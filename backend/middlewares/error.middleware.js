@@ -13,10 +13,11 @@ const errorMiddleware = (err, req, res, next) => {
 
   // Mongoose Duplicate Key Error
   if (err.code === 11000) {
-    const field = Object.keys(err.keyPattern)[0];
+    const field = Object.keys(err.keyValue)[0];
+
     return res.status(400).json({
       success: false,
-      errors: [`${field} already exists`],
+      message: `${field} already exists`,
     });
   }
 

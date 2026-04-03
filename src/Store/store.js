@@ -7,6 +7,7 @@ import appointmentSlice from './features/appointment/appointment.slice';
 import productSlice from './features/product/product.slice';
 import cartSlice from './features/cart/cart.slice';
 import wishListSlice from './features/wishlist/wishlist.slice';
+import adminAuthSlice from './features/admin/auth/admin.auth.slice';
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     products: productSlice,
     cart: cartSlice,
     wishlist: wishListSlice,
+    admin: adminAuthSlice,
   },
 });
 export default store;

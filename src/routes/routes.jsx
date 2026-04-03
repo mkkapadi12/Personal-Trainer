@@ -1,6 +1,7 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/Layout/layout';
+import AdminAuthLayout from '../components/Layout/AdminAuthLayout';
 import Error from '../pages/Error';
 import PrivateRoute from '../pages/Private/PrivateRoute';
 import AddProducts from '@/pages/AddProducts';
@@ -26,6 +27,8 @@ const Products = lazy(() => import('../pages/Products/Products'));
 const ProductDetails = lazy(() => import('../pages/Products/ProductDetails'));
 const Cart = lazy(() => import('../pages/Cart/Cart'));
 const WishList = lazy(() => import('../pages/WishList/WishList'));
+const AdminLogin = lazy(() => import('../pages/admin/auth/AdminLogin'));
+const AdminRegister = lazy(() => import('../pages/admin/auth/AdminRegister'));
 
 // Private route children
 const privateChildren = [
@@ -61,7 +64,6 @@ export const router = createBrowserRouter([
           { path: 'faqs', element: <Faqs /> },
           { path: 'services', element: <Services /> },
           { path: 'appointment', element: <BookAppointment /> },
-          { path: 'addproduct', element: <AddProducts /> },
         ],
       },
 
@@ -76,6 +78,17 @@ export const router = createBrowserRouter([
       { path: 'products', element: <Collections /> },
       { path: 'products/collections/:category', element: <Products /> },
       { path: 'products/:id', element: <ProductDetails /> },
+    ],
+  },
+
+  // ── Admin Auth routes (no Navbar / Footer) ───────────────────────
+  {
+    path: '/admin',
+    element: <AdminAuthLayout />,
+    errorElement: <Error />,
+    children: [
+      { path: 'login', element: <AdminLogin /> },
+      { path: 'register', element: <AdminRegister /> },
     ],
   },
 ]);

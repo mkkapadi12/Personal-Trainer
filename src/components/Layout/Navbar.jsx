@@ -27,7 +27,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { CalendarDays, LogOut, MapPin, User } from 'lucide-react';
 import { logout } from '@/Store/features/auth/auth.slice';
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import CartDrawer from '@/pages/Cart/components/CartDrawer';
 
 const navigation = {

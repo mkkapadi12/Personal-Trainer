@@ -10,7 +10,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import { TESTIMONIALS } from '@/constants/home/data';
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import Autoplay from 'embla-carousel-autoplay';
 import { Star } from 'lucide-react';
 import React from 'react';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AppointmentCard from './components/AppointmentCard';
 import { getAllAppointmentsAsync } from '@/Store/features/appointment/appointment.slice';
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const { CALENDAR_CHECK, CLIPBOARD } = PAGE_ICONS;
 

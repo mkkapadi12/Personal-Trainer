@@ -1,7 +1,7 @@
 import React from 'react';
 import PageHero from '@/components/PageHero';
 import { Card, CardContent } from '@/components/ui/card';
-import { PAGE_ICONS } from '@/lib/icons/pageicons';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const AboutUs = () => {
   return (

@@ -2,14 +2,14 @@ const ADMIN = require('../models/admin.model');
 
 const registerAdmin = async (req, res, next) => {
   try {
-    const { name, email, password, phone } = req.body;
+    const admin = req.body;
 
-    const newAdmin = await ADMIN.create({ name, email, password, phone });
+    const newAdmin = await ADMIN.create(admin);
 
     return res.status(201).json({
       msg: 'Admin registration successful!',
       token: await newAdmin.generateToken(),
-      adminId: newAdmin._id.toString(),
+      adminId: newAdmin._id.  toString(),
     });
   } catch (error) {
     return next(error);
@@ -58,8 +58,25 @@ const getAdminProfile = async (req, res, next) => {
   }
 };
 
+const updateAdminProfile = async (req, res, next) => {
+  try {
+    const admin = req.admin;
+    const { name, phone } = req.body;
+    admin.name = name;
+    admin.phone = phone;
+    await admin.save();
+    return res.status(200).json({
+      msg: 'Admin profile updated successfully!',
+      admin,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   loginAdmin,
   registerAdmin,
   getAdminProfile,
+  updateAdminProfile,
 };
