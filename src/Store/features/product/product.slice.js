@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getProductsAPI, getProductByIdAPI } from './productAPI';
+import {
+  getProductsAPI,
+  getProductByIdAPI,
+  addProductAPI,
+  deleteProductAPI,
+} from './productAPI';
 
 const initialState = {
   products: [],
@@ -13,9 +18,12 @@ const initialState = {
 
 export const getProducts = createAsyncThunk(
   'products/getProducts',
-  async ({ category, sort = 'latest', page = 1 }, { rejectWithValue }) => {
+  async (
+    { category, sort = 'latest', page = 1, search = '' },
+    { rejectWithValue },
+  ) => {
     try {
-      const result = await getProductsAPI(category, sort, page);
+      const result = await getProductsAPI(category, sort, page, search);
       return result;
     } catch (error) {
       return rejectWithValue(
@@ -39,12 +47,41 @@ export const getProductById = createAsyncThunk(
   },
 );
 
+export const addProduct = createAsyncThunk(
+  'products/addProduct',
+  async (productData, { rejectWithValue }) => {
+    try {
+      const result = await addProductAPI(productData);
+      return result;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Something went wrong',
+      );
+    }
+  },
+);
+
+export const deleteProduct = createAsyncThunk(
+  'products/deleteProduct',
+  async (id, { rejectWithValue }) => {
+    try {
+      const result = await deleteProductAPI(id);
+      return { ...result, id };
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Something went wrong',
+      );
+    }
+  },
+);
+
 const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // GET PRODUCTS
       .addCase(getProducts.pending, (state) => {
         state.loading = true;
       })
@@ -59,6 +96,8 @@ const productSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+
+      // GET PRODUCT BY ID
       .addCase(getProductById.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -70,9 +109,36 @@ const productSlice = createSlice({
       .addCase(getProductById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      // ADD PRODUCT
+      .addCase(addProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = [action.payload.product, ...state.products];
+      })
+      .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // DELETE PRODUCT
+      .addCase(deleteProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        state.products = state.products.filter(
+          (p) => p._id !== action.payload.id,
+        );
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
 
-export const {} = productSlice.actions;
 export default productSlice.reducer;

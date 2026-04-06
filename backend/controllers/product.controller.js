@@ -79,9 +79,9 @@ const getAllProducts = async (req, res, next) => {
       search,
       minPrice,
       maxPrice,
-      sort,
+      sort = 'latest',
       page = 1,
-      limit = 10,
+      limit = 5,
     } = req.query;
 
     // 🔍 Build Query
@@ -115,10 +115,8 @@ const getAllProducts = async (req, res, next) => {
     else if (sort === 'latest') sortOption.createdAt = -1;
     else if (sort === 'rating') sortOption.rating = -1;
 
-    // 📄 Pagination
     const skip = (page - 1) * limit;
 
-    // 🔥 Execute Query
     const products = await PRODUCT.find(query)
       .sort(sortOption)
       .skip(skip)
@@ -138,4 +136,78 @@ const getAllProducts = async (req, res, next) => {
   }
 };
 
-module.exports = { addItem, getProductById, getAllProducts };
+const updateProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const {
+      name,
+      brand,
+      category,
+      price,
+      description,
+      mainImage,
+      images,
+      stock,
+      features,
+      variants,
+    } = req.body;
+
+    const product = await PRODUCT.findById(id);
+
+    if (!product) {
+      const error = new Error('Product not found');
+      error.status = 404;
+      return next(error);
+    }
+
+    product.name = name || product.name;
+    product.brand = brand || product.brand;
+    product.category = category || product.category;
+    product.price = price || product.price;
+    product.description = description || product.description;
+    product.mainImage = mainImage || product.mainImage;
+    product.images = images || product.images;
+    product.stock = stock || product.stock;
+    product.features = features || product.features;
+    product.variants = variants || product.variants;
+
+    await product.save();
+
+    return res.status(200).json({
+      msg: 'Product updated successfully',
+      product,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+const deleteProduct = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const product = await PRODUCT.findById(id);
+
+    if (!product) {
+      const error = new Error('Product not found');
+      error.status = 404;
+      return next(error);
+    }
+
+    await product.deleteOne();
+
+    return res.status(200).json({
+      msg: 'Product deleted successfully',
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+module.exports = {
+  addItem,
+  getProductById,
+  getAllProducts,
+  updateProduct,
+  deleteProduct,
+};

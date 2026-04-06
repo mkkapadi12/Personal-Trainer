@@ -89,10 +89,10 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.user = null;
+      state.admin = null;
       state.token = null;
-      state.isAuthChecked = false;
-      localStorage.removeItem('workDo');
+      state.isAdminChecked = false;
+      localStorage.removeItem('workDoAdminToken');
     },
   },
   extraReducers: (builder) => {

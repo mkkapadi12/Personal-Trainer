@@ -18,8 +18,8 @@ const collectionData = [
   },
   {
     id: 3,
-    name: 'protien poweder',
-    category: 'protien poweder',
+    name: 'protein powder',
+    category: 'protein powder',
     image:
       'https://personaltrainer-workdo.myshopify.com/cdn/shop/collections/image_86.png?v=1689152015',
   },

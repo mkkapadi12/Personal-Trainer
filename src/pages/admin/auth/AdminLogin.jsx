@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
 import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
-import { adminLoginSchema } from './admin.schema';
+import { adminLoginSchema } from '../Schema/admin.schema';
 import { loginAdmin } from '@/Store/features/admin/auth/admin.auth.slice';
 import { toast } from 'sonner';
 
@@ -35,7 +35,7 @@ const AdminLogin = () => {
     try {
       const result = await dispatch(loginAdmin(data)).unwrap();
       toast.success(result.msg || 'Login successful');
-      navigate('/');
+      navigate('/admin/dashboard');
     } catch (error) {
       toast.error(error || 'Login failed');
     }

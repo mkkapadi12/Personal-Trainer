@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
-import { adminRegisterSchema } from './admin.schema';
+import { adminRegisterSchema } from '../Schema/admin.schema';
 import { registerAdmin } from '@/Store/features/admin/auth/admin.auth.slice';
 import { toast } from 'sonner';
 

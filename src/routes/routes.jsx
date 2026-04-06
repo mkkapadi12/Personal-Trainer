@@ -1,10 +1,13 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Layout from '../components/Layout/layout';
-import AdminAuthLayout from '../components/Layout/AdminAuthLayout';
 import Error from '../pages/Error';
 import PrivateRoute from '../pages/Private/PrivateRoute';
-import AddProducts from '@/pages/AddProducts';
+import ProtectedAdminRoute from '../components/admin/ProtectedAdminRoute';
+import AdminLayout from '@/components/admin/AdminLayout';
+import AdminDashboard from '@/pages/admin/pages/AdminDashboard';
+import AdminUsers from '@/pages/admin/pages/AdminUsers';
+import AdminProducts from '@/pages/admin/pages/AdminProducts';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('../pages/Home'));
@@ -81,14 +84,30 @@ export const router = createBrowserRouter([
     ],
   },
 
-  // ── Admin Auth routes (no Navbar / Footer) ───────────────────────
+  // Admin routes
+  {
+    path: '/admin/login',
+    element: <AdminLogin />,
+    errorElement: <Error />,
+  },
+  {
+    path: '/admin/register',
+    element: <AdminRegister />,
+    errorElement: <Error />,
+  },
+
   {
     path: '/admin',
-    element: <AdminAuthLayout />,
+    element: (
+      <ProtectedAdminRoute>
+        <AdminLayout />
+      </ProtectedAdminRoute>
+    ),
     errorElement: <Error />,
     children: [
-      { path: 'login', element: <AdminLogin /> },
-      { path: 'register', element: <AdminRegister /> },
+      { index: true, path: 'dashboard', element: <AdminDashboard /> },
+      { path: 'users', element: <AdminUsers /> },
+      { path: 'products', element: <AdminProducts /> },
     ],
   },
 ]);
