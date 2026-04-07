@@ -183,7 +183,7 @@ const AdminProducts = () => {
     {
       label: 'Categories',
       value: uniqueCategories.length,
-      icon: ADMIN_ICONS.SHOPPINGBAG,
+      icon: ADMIN_ICONS.PRODUCTS,
       iconBg: 'bg-emerald-500/10',
       iconColor: 'text-emerald-400',
     },

@@ -27,6 +27,15 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronsRight,
+  Activity,
+  Calendar,
+  ArrowUpRight,
+  ArrowDownRight,
+  Box,
+  ShoppingCart,
+  Clock,
+  Check,
+  XCircle,
 } from 'lucide-react';
 
 export const ADMIN_ICONS = {
@@ -40,10 +49,12 @@ export const ADMIN_ICONS = {
   ARROWRIGHT: ArrowRight,
   DUMBBELL: Dumbbell,
   CHECKCIRCLE2: CheckCircle2,
+  SHOPPINGCART: ShoppingCart,
+  SHOPPINGBAG: ShoppingBag,
 
   //admin products page icons
   PACKAGE: Package,
-  SHOPPINGBAG: ShoppingBag,
+  PRODUCTS: Box,
   TRENDINGUP: TrendingUp,
   SHIELDHALF: ShieldHalf,
   SEARCH: Search,
@@ -61,4 +72,15 @@ export const ADMIN_ICONS = {
   CHEVRONLEFT: ChevronLeft,
   CHEVRONRIGHT: ChevronRight,
   CHEVRONS_RIGHT: ChevronsRight,
+
+  //admin dashboard icons
+  ACTIVITY: Activity,
+  CALENDAR: Calendar,
+  ARROWUPRIGHT: ArrowUpRight,
+  ARROWDOWNRIGHT: ArrowDownRight,
+
+  //admin orders page icons
+  CLOCK: Clock,
+  CHECK: Check,
+  XCIRCLE: XCircle,
 };

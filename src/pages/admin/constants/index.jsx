@@ -1,3 +1,5 @@
+import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
+
 // ─── Constants ──────────────────────────────────────────
 export const sortOptions = [
   { value: 'latest', label: 'Latest' },
@@ -30,3 +32,87 @@ export const emptyForm = {
 // ─── Dark-themed input class ────────────────────────────
 export const inputClass =
   'bg-zinc-900 border-zinc-800 text-white placeholder:text-zinc-600 focus-visible:ring-lime-400/30 focus-visible:border-lime-400/50 transition-colors';
+
+// ─── Admin Dashboard Stats Cards ────────────────────────────
+export const statsCardsDashboard = [
+  {
+    label: 'Total Users',
+    value: '2,420',
+    change: '+12.5%',
+    trending: 'up',
+    icon: ADMIN_ICONS.USER,
+    iconBg: 'bg-blue-500/10',
+    iconColor: 'text-blue-400',
+  },
+  {
+    label: 'Products',
+    value: '348',
+    change: '+8.2%',
+    trending: 'up',
+    icon: ADMIN_ICONS.PRODUCTS,
+    iconBg: 'bg-emerald-500/10',
+    iconColor: 'text-emerald-400',
+  },
+  {
+    label: 'Revenue',
+    value: '₹18.2k',
+    change: '+23.1%',
+    trending: 'up',
+    icon: ADMIN_ICONS.TRENDINGUP,
+    iconBg: 'bg-lime-400/10',
+    iconColor: 'text-lime-400',
+  },
+  {
+    label: 'Active Sessions',
+    value: '1,024',
+    change: '-2.4%',
+    trending: 'down',
+    icon: ADMIN_ICONS.ACTIVITY,
+    iconBg: 'bg-amber-500/10',
+    iconColor: 'text-amber-400',
+  },
+];
+
+// ─── Admin Dashboard Recent Activity ────────────────────────────
+export const recentActivity = [
+  {
+    id: 1,
+    user: 'John Doe',
+    action: 'purchased',
+    target: 'Premium Whey Protein',
+    time: '2 min ago',
+    icon: ADMIN_ICONS.SHOPPINGBAG,
+  },
+  {
+    id: 2,
+    user: 'Sarah Miller',
+    action: 'signed up',
+    target: 'New account',
+    time: '15 min ago',
+    icon: ADMIN_ICONS.USER,
+  },
+  {
+    id: 3,
+    user: 'Mike Johnson',
+    action: 'booked',
+    target: 'Training Session',
+    time: '32 min ago',
+    icon: ADMIN_ICONS.CALENDAR,
+  },
+  {
+    id: 4,
+    user: 'Emma Wilson',
+    action: 'purchased',
+    target: 'Adjustable Dumbbells',
+    time: '1 hr ago',
+    icon: ADMIN_ICONS.SHOPPINGBAG,
+  },
+  {
+    id: 5,
+    user: 'Chris Lee',
+    action: 'signed up',
+    target: 'New account',
+    time: '2 hrs ago',
+    icon: ADMIN_ICONS.USER,
+  },
+];

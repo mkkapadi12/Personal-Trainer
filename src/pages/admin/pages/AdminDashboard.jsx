@@ -11,88 +11,8 @@ import {
   Calendar,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const statsCards = [
-  {
-    label: 'Total Users',
-    value: '2,420',
-    change: '+12.5%',
-    trending: 'up',
-    icon: Users,
-    iconBg: 'bg-blue-500/10',
-    iconColor: 'text-blue-400',
-  },
-  {
-    label: 'Products',
-    value: '348',
-    change: '+8.2%',
-    trending: 'up',
-    icon: ShoppingBag,
-    iconBg: 'bg-emerald-500/10',
-    iconColor: 'text-emerald-400',
-  },
-  {
-    label: 'Revenue',
-    value: '$18.2k',
-    change: '+23.1%',
-    trending: 'up',
-    icon: TrendingUp,
-    iconBg: 'bg-lime-400/10',
-    iconColor: 'text-lime-400',
-  },
-  {
-    label: 'Active Sessions',
-    value: '1,024',
-    change: '-2.4%',
-    trending: 'down',
-    icon: Activity,
-    iconBg: 'bg-amber-500/10',
-    iconColor: 'text-amber-400',
-  },
-];
-
-const recentActivity = [
-  {
-    id: 1,
-    user: 'John Doe',
-    action: 'purchased',
-    target: 'Premium Whey Protein',
-    time: '2 min ago',
-    icon: ShoppingBag,
-  },
-  {
-    id: 2,
-    user: 'Sarah Miller',
-    action: 'signed up',
-    target: 'New account',
-    time: '15 min ago',
-    icon: Users,
-  },
-  {
-    id: 3,
-    user: 'Mike Johnson',
-    action: 'booked',
-    target: 'Training Session',
-    time: '32 min ago',
-    icon: Calendar,
-  },
-  {
-    id: 4,
-    user: 'Emma Wilson',
-    action: 'purchased',
-    target: 'Adjustable Dumbbells',
-    time: '1 hr ago',
-    icon: ShoppingBag,
-  },
-  {
-    id: 5,
-    user: 'Chris Lee',
-    action: 'signed up',
-    target: 'New account',
-    time: '2 hrs ago',
-    icon: Users,
-  },
-];
+import { recentActivity, statsCardsDashboard } from '../constants';
+import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
 
 const AdminDashboard = () => {
   const { admin } = useSelector((state) => state.admin);
@@ -116,7 +36,7 @@ const AdminDashboard = () => {
         <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2 rounded-full border border-lime-400/20 bg-lime-400/10 px-3 py-1 mb-2">
-              <Dumbbell className="h-3.5 w-3.5 text-lime-400" />
+              <ADMIN_ICONS.DUMBBELL className="h-3.5 w-3.5 text-lime-400" />
               <span className="text-[11px] font-medium text-lime-400 uppercase tracking-wider">
                 Admin Dashboard
               </span>
@@ -140,7 +60,7 @@ const AdminDashboard = () => {
 
       {/* ── Stats Grid ────────────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {statsCards.map(
+        {statsCardsDashboard.map(
           ({
             label,
             value,
@@ -165,9 +85,9 @@ const AdminDashboard = () => {
                   <p className="text-2xl font-bold text-white">{value}</p>
                   <div className="flex items-center gap-1">
                     {trending === 'up' ? (
-                      <ArrowUpRight className="h-3.5 w-3.5 text-emerald-400" />
+                      <ADMIN_ICONS.ARROWUPRIGHT className="h-3.5 w-3.5 text-emerald-400" />
                     ) : (
-                      <ArrowDownRight className="h-3.5 w-3.5 text-red-400" />
+                      <ADMIN_ICONS.ARROWDOWNRIGHT className="h-3.5 w-3.5 text-red-400" />
                     )}
                     <span
                       className={cn(

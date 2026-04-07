@@ -8,6 +8,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import AdminDashboard from '@/pages/admin/pages/AdminDashboard';
 import AdminUsers from '@/pages/admin/pages/AdminUsers';
 import AdminProducts from '@/pages/admin/pages/AdminProducts';
+import AdminOrders from '@/pages/admin/pages/AdminOrders';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('../pages/Home'));
@@ -108,6 +109,7 @@ export const router = createBrowserRouter([
       { index: true, path: 'dashboard', element: <AdminDashboard /> },
       { path: 'users', element: <AdminUsers /> },
       { path: 'products', element: <AdminProducts /> },
+      { path: 'orders', element: <AdminOrders /> },
     ],
   },
 ]);

@@ -6,6 +6,7 @@ import commentSlice from './features/comments/comment.slice';
 import appointmentSlice from './features/appointment/appointment.slice';
 import productSlice from './features/product/product.slice';
 import cartSlice from './features/cart/cart.slice';
+import orderSlice from './features/orders/order.slice';
 import wishListSlice from './features/wishlist/wishlist.slice';
 import adminAuthSlice from './features/admin/auth/admin.auth.slice';
 
@@ -20,6 +21,7 @@ const store = configureStore({
     cart: cartSlice,
     wishlist: wishListSlice,
     admin: adminAuthSlice,
+    orders: orderSlice,
   },
 });
 export default store;

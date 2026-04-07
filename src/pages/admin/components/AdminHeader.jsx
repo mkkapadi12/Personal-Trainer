@@ -53,6 +53,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
       products: 'Products',
       analytics: 'Analytics',
       settings: 'Settings',
+      orders: 'Orders',
     };
     return titles[path] || 'Dashboard';
   };
@@ -65,6 +66,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
       products: 'Manage products & inventory',
       analytics: 'Track performance metrics',
       settings: 'Configure platform settings',
+      orders: 'Manage orders',
     };
     return descriptions[path] || 'Overview of your fitness platform';
   };
@@ -133,8 +135,8 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
                 <Avatar className="h-8 w-8 ring-2 ring-zinc-700/60">
                   <AvatarImage src={admin?.avatar} />
                   <AvatarFallback className="bg-lime-400/15 text-lime-400 text-xs font-semibold">
-                    {admin?.name?.charAt(0) || 'A'}
-                    {admin?.name?.charAt(0) || 'D'}
+                    {admin?.name.split(' ')[0]?.charAt(0) || 'A'}
+                    {admin?.name.split(' ')[1]?.charAt(0) || 'D'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="hidden md:block text-left">

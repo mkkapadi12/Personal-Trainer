@@ -15,6 +15,7 @@ import {
   BarChart3,
 } from 'lucide-react';
 import { logout } from '@/Store/features/admin/auth/admin.auth.slice';
+import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
 
 const navItems = [
   {
@@ -30,7 +31,12 @@ const navItems = [
   {
     label: 'Products',
     path: '/admin/products',
-    icon: ShoppingBag,
+    icon: ADMIN_ICONS.PRODUCTS,
+  },
+  {
+    label: 'Orders',
+    path: '/admin/orders',
+    icon: ADMIN_ICONS.SHOPPINGBAG,
   },
   {
     label: 'Analytics',
