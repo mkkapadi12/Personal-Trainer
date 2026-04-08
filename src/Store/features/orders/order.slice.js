@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAdminOrders, getUserOrders, patchOrderStatus } from './order.api';
+import {
+  createOrderAPI,
+  getAdminOrders,
+  getUserOrders,
+  patchOrderStatus,
+} from './order.api';
 
 const initialState = {
   adminOrders: [],
@@ -10,6 +15,18 @@ const initialState = {
   currentPage: null,
   totalPages: null,
 };
+
+export const createOrder = createAsyncThunk(
+  'orders/createOrder',
+  async (orderData, { rejectWithValue }) => {
+    try {
+      const result = await createOrderAPI(orderData);
+      return result;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  },
+);
 
 export const fetchAdminOrders = createAsyncThunk(
   'orders/fetchAdminOrders',

@@ -209,9 +209,9 @@ const AdminProducts = () => {
         e.preventDefault(); // prevent "/" typing anywhere
         inputRef.current?.focus();
       }
-      if (e.key === 'a') {
-        setDialogOpen(true);
-      }
+      // if (e.key === 'a') {
+      //   setDialogOpen(true);
+      // }
       if (e.key === 'n') {
         nextPageRef.current?.click();
       }

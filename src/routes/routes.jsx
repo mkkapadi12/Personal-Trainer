@@ -9,6 +9,8 @@ import AdminDashboard from '@/pages/admin/pages/AdminDashboard';
 import AdminUsers from '@/pages/admin/pages/AdminUsers';
 import AdminProducts from '@/pages/admin/pages/AdminProducts';
 import AdminOrders from '@/pages/admin/pages/AdminOrders';
+import MyOrders from '@/pages/Orders/MyOrders';
+import Checkout from '@/pages/Checkout.jsx/Checkout';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('../pages/Home'));
@@ -41,6 +43,8 @@ const privateChildren = [
   { path: 'appointment', element: <Appointments /> },
   { path: 'cart', element: <Cart /> },
   { path: 'wishlist', element: <WishList /> },
+  { path: 'checkout', element: <Checkout /> },
+  { path: 'my-orders', element: <MyOrders /> },
 ];
 
 export const router = createBrowserRouter([

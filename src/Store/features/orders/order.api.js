@@ -7,7 +7,7 @@ export const getAdminOrders = async (status, search, sort, page, limit) => {
   return response.data;
 };
 
-export const createOrder = async (orderData) => {
+export const createOrderAPI = async (orderData) => {
   const response = await privateAPI.post('/orders/create', orderData);
   return response.data;
 };
