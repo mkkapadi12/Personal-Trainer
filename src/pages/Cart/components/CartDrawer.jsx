@@ -143,7 +143,7 @@ const CartDrawer = () => {
                         View Cart
                       </Link>
                       <Link
-                        to="/checkout"
+                        to="/account/checkout"
                         onClick={() => setOpen(false)}
                         className="w-full flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium shadow-xs bg-black text-white"
                       >

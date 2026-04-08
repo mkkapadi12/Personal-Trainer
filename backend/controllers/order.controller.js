@@ -3,32 +3,42 @@ const ORDER = require('../models/order.model');
 //create order for user
 const createOrder = async (req, res, next) => {
   try {
-    const { items, totalAmount, status } = req.body;
+    const { items, totalAmount, status, addressId } = req.body;
 
     const productIds = items.map((item) => item.productId);
+    const userId = req.userId;
 
+    // Check existing orders for same user & product but NOT completed & cancelled
     const existOrder = await ORDER.find({
+      userId,
+      status: { $nin: ['completed', 'cancelled'] }, // ignore completed & cancelled orders
       'items.productId': { $in: productIds },
     }).populate('items.productId');
 
     if (existOrder.length > 0) {
-      const error = new Error(
-        'Order already exists : ' +
-          existOrder
-            .map((order) => order.items.map((item) => item.productId.name))
-            .join(','),
-      );
+      const productNames = existOrder
+        .flatMap((order) =>
+          order.items.map((item) => item.productId?.name || ''),
+        )
+        .join(', ');
+
+      const error = new Error(`Order already exists for: ${productNames}`);
       error.statusCode = 400;
       return next(error);
     }
 
     const order = await ORDER.create({
-      userId: req.userId,
+      userId,
       items,
       totalAmount,
       status,
+      addressId,
     });
-    return res.status(201).json({ success: true, order });
+
+    return res.status(201).json({
+      success: true,
+      order,
+    });
   } catch (error) {
     return next(error);
   }

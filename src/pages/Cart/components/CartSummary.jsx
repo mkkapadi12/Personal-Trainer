@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 
 const CartSummary = ({ cart }) => {
   const subtotal = cart.reduce(
@@ -26,10 +27,11 @@ const CartSummary = ({ cart }) => {
         <p className="text-sm text-gray-500">
           Taxes and shipping calculated at checkout
         </p>
-
-        <Button className="w-full bg-[#d7fb00] text-black">
-          PROCEED TO CHECKOUT
-        </Button>
+        <Link to="/account/checkout">
+          <Button className="w-full bg-[#d7fb00] text-black">
+            PROCEED TO CHECKOUT
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -103,7 +103,7 @@ const Navbar = () => {
               >
                 <span className="absolute -inset-0.5" />
                 <span className="sr-only">Close menu</span>
-                <XMarkIcon aria-hidden="true" className="size-6" />
+                <PAGE_ICONS.XMARK aria-hidden="true" className="size-6" />
               </button>
             </div>
 
@@ -341,7 +341,7 @@ const Navbar = () => {
                             to="/account/profile"
                             className="flex items-center gap-2 cursor-pointer"
                           >
-                            <User size={16} />
+                            <PAGE_ICONS.USER size={16} />
                             Profile
                           </Link>
                         </DropdownMenuItem>
@@ -352,7 +352,7 @@ const Navbar = () => {
                             to="/account/appointment"
                             className="flex items-center gap-2 cursor-pointer"
                           >
-                            <CalendarDays size={16} />
+                            <PAGE_ICONS.CALENDARDAYS size={16} />
                             Appointment
                           </Link>
                         </DropdownMenuItem>
@@ -368,13 +368,24 @@ const Navbar = () => {
                           </Link>
                         </DropdownMenuItem>
 
+                        {/* My Orders */}
+                        <DropdownMenuItem asChild>
+                          <Link
+                            to="/account/my-orders"
+                            className="flex items-center gap-2 cursor-pointer"
+                          >
+                            <PAGE_ICONS.PACKAGE size={16} />
+                            My Orders
+                          </Link>
+                        </DropdownMenuItem>
+
                         {/* Cart */}
                         <DropdownMenuItem asChild>
                           <Link
                             to="/account/cart"
                             className="flex items-center gap-2 cursor-pointer"
                           >
-                            <ShoppingBagIcon size={16} />
+                            <PAGE_ICONS.SHOPPINGBAG size={16} />
                             Cart
                           </Link>
                         </DropdownMenuItem>

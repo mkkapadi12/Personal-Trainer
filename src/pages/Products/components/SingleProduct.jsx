@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+  import React, { useState } from 'react';
 import { ArrowLeft, Star, Share2, Scissors } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import AddToCart from '@/pages/Cart/components/AddToCart';

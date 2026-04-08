@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { addToCart } from '@/Store/features/cart/cart.slice';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const AddToCart = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
@@ -41,10 +42,14 @@ const AddToCart = ({ product }) => {
         >
           ADD TO CART →
         </Button>
-
-        <Button variant="primary" className="px-8 py-3 rounded-none text-black">
-          BUY IT NOW
-        </Button>
+        <Link to="/account/checkout">
+          <Button
+            variant="primary"
+            className="px-8 py-3 rounded-none text-black"
+          >
+            BUY IT NOW
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { Bars3Icon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import {
   ArrowLeft,
   BadgePercent,
@@ -22,6 +22,14 @@ import {
   Dumbbell,
   Timer,
   ClipboardList,
+  Package,
+  CheckCircle2,
+  XCircle,
+  ChevronDown,
+  ChevronUp,
+  ShoppingBag,
+  ArrowRight,
+  ReceiptText,
 } from 'lucide-react';
 
 export const PAGE_ICONS = {
@@ -39,6 +47,7 @@ export const PAGE_ICONS = {
   HEART: Heart,
   MINUS: Minus,
   PLUS: Plus,
+  XMARK: XMarkIcon,
 
   // Appointment
   CALENDAR: CalendarDays,
@@ -51,4 +60,16 @@ export const PAGE_ICONS = {
   DUMBBELL: Dumbbell,
   TIMER: Timer,
   CLIPBOARD: ClipboardList,
+
+  //orders
+  PACKAGE: Package,
+  CHECKCIRCLE: CheckCircle2,
+  XCIRCLE: XCircle,
+  CHEVRONDOWN: ChevronDown,
+  CHEVRONUP: ChevronUp,
+  SHOPPINGBAG: ShoppingBag,
+  TRUCK: Truck,
+  ARROWRIGHT: ArrowRight,
+  CALENDARDAYS: CalendarDays,
+  RECEIPTTEXT: ReceiptText,
 };
