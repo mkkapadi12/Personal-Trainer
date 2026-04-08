@@ -10,7 +10,7 @@ import AdminUsers from '@/pages/admin/pages/AdminUsers';
 import AdminProducts from '@/pages/admin/pages/AdminProducts';
 import AdminOrders from '@/pages/admin/pages/AdminOrders';
 import MyOrders from '@/pages/Orders/MyOrders';
-import Checkout from '@/pages/Checkout.jsx/Checkout';
+import Checkout from '@/pages/Checkout/Checkout';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('../pages/Home'));
