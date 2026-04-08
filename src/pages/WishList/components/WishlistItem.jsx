@@ -1,9 +1,9 @@
 import React from 'react';
-import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { addToCart } from '@/Store/features/cart/cart.slice';
 import { useDispatch } from 'react-redux';
 import { removeFromWishList } from '@/Store/features/wishlist/wishlist.slice';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const WishlistItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const WishlistItem = ({ item }) => {
       {/* Delete */}
       <div className="flex justify-start sm:justify-center">
         <button onClick={() => dispatch(removeFromWishList(item._id))}>
-          <Trash2 className="text-red-500 cursor-pointer hover:scale-110 transition" />
+          <PAGE_ICONS.TRASH className="text-red-500 cursor-pointer hover:scale-110 transition" />
         </button>
       </div>
     </div>

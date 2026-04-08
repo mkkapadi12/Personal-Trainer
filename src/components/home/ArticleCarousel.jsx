@@ -8,7 +8,7 @@ import {
 import Autoplay from 'embla-carousel-autoplay';
 import { useSelector } from 'react-redux';
 import ArticleCardCarousel from '@/pages/Article/components/ArticleCardCarousel';
-import { Loader2 } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const ArticleCarousel = () => {
   const { articles, loading: articleLoading } = useSelector(
@@ -18,7 +18,7 @@ const ArticleCarousel = () => {
   if (articleLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <Loader2 className="animate-spin size-10 text-primary" />
+        <PAGE_ICONS.LOADER className="animate-spin size-10 text-primary" />
       </div>
     );
   }

@@ -1,6 +1,6 @@
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Home, ArrowLeft, Dumbbell } from 'lucide-react';
 
 const Error = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const Error = () => {
               border: '2px solid rgba(215,251,0,0.3)',
             }}
           >
-            <Dumbbell size={48} style={{ color: '#d7fb00' }} />
+            <PAGE_ICONS.DUMBBELL size={48} style={{ color: '#d7fb00' }} />
           </div>
         </div>
 
@@ -79,7 +79,7 @@ const Error = () => {
                 '0 4px 24px rgba(215,251,0,0.35)')
             }
           >
-            <Home size={16} />
+            <PAGE_ICONS.HOME size={16} />
             Go Home
           </button>
 
@@ -100,7 +100,7 @@ const Error = () => {
               e.currentTarget.style.borderColor = 'rgba(215,251,0,0.6)';
             }}
           >
-            <ArrowLeft size={16} />
+            <PAGE_ICONS.ARROWLEFT size={16} />
             Go Back
           </button>
         </div>

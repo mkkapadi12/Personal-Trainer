@@ -8,8 +8,8 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Mail, User, Calendar } from 'lucide-react';
 import { logout } from '@/Store/features/auth/auth.slice';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const UserProfileCard = ({ user }) => {
   const dispatch = useDispatch();
@@ -35,17 +35,17 @@ const UserProfileCard = ({ user }) => {
 
       <CardContent className="space-y-4">
         <div className="flex items-center gap-3 text-gray-700">
-          <Mail size={18} />
+          <PAGE_ICONS.MAIL size={18} />
           <span>{user.email}</span>
         </div>
 
         <div className="flex items-center gap-3 text-gray-700">
-          <Calendar size={18} />
+          <PAGE_ICONS.CALENDAR size={18} />
           <span>Joined: {new Date(user.createdAt).toLocaleDateString()}</span>
         </div>
 
         <div className="flex items-center gap-3 text-gray-700">
-          <User size={18} />
+          <PAGE_ICONS.USER size={18} />
           <span>ID: {user._id}</span>
         </div>
 

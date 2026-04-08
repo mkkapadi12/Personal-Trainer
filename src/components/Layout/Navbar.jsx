@@ -25,7 +25,6 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { CalendarDays, LogOut, MapPin, User } from 'lucide-react';
 import { logout } from '@/Store/features/auth/auth.slice';
 import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import CartDrawer from '@/pages/Cart/components/CartDrawer';
@@ -400,7 +399,7 @@ const Navbar = () => {
                           }}
                           className="flex items-center gap-2 cursor-pointer text-red-500"
                         >
-                          <LogOut size={16} />
+                          <PAGE_ICONS.LOGOUT size={16} />
                           Logout
                         </DropdownMenuItem>
                       </DropdownMenuContent>

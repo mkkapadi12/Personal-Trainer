@@ -3,54 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import {
-  LayoutDashboard,
-  Users,
-  ShoppingBag,
-  Dumbbell,
-  LogOut,
-  ChevronLeft,
-  ChevronRight,
-  Settings,
-  BarChart3,
-} from 'lucide-react';
 import { logout } from '@/Store/features/admin/auth/admin.auth.slice';
 import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
-
-const navItems = [
-  {
-    label: 'Dashboard',
-    path: '/admin/dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    label: 'Users',
-    path: '/admin/users',
-    icon: Users,
-  },
-  {
-    label: 'Products',
-    path: '/admin/products',
-    icon: ADMIN_ICONS.PRODUCTS,
-  },
-  {
-    label: 'Orders',
-    path: '/admin/orders',
-    icon: ADMIN_ICONS.SHOPPINGBAG,
-  },
-  {
-    label: 'Analytics',
-    path: '/admin/analytics',
-    icon: BarChart3,
-    disabled: true,
-  },
-  {
-    label: 'Settings',
-    path: '/admin/settings',
-    icon: Settings,
-    disabled: true,
-  },
-];
+import { navItems } from '../constants';
 
 const AdminSidebar = ({ collapsed, setCollapsed }) => {
   const dispatch = useDispatch();
@@ -78,7 +33,7 @@ const AdminSidebar = ({ collapsed, setCollapsed }) => {
         )}
       >
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-lime-400">
-          <Dumbbell className="h-5 w-5 text-zinc-900" />
+          <ADMIN_ICONS.DUMBBELL className="h-5 w-5 text-zinc-900" />
         </div>
         {!collapsed && (
           <span className="text-white font-bold text-base tracking-tight whitespace-nowrap overflow-hidden animate-in fade-in duration-300">
@@ -164,10 +119,10 @@ const AdminSidebar = ({ collapsed, setCollapsed }) => {
           )}
         >
           {collapsed ? (
-            <ChevronRight className="h-4 w-4" />
+            <ADMIN_ICONS.CHEVRONRIGHT className="h-4 w-4" />
           ) : (
             <>
-              <ChevronLeft className="h-4 w-4" />
+              <ADMIN_ICONS.CHEVRONLEFT className="h-4 w-4" />
               <span>Collapse</span>
             </>
           )}
@@ -182,7 +137,7 @@ const AdminSidebar = ({ collapsed, setCollapsed }) => {
             collapsed ? 'justify-center px-0' : 'justify-start gap-3 px-3',
           )}
         >
-          <LogOut className="h-4 w-4 shrink-0" />
+          <ADMIN_ICONS.LOGOUT className="h-4 w-4 shrink-0" />
           {!collapsed && <span>Sign Out</span>}
         </Button>
       </div>

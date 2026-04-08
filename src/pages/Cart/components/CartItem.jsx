@@ -1,12 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Trash } from 'lucide-react';
-import {
-  removeFromCart,
-  updateQuantity,
-} from '@/Store/features/cart/cart.slice';
+import { removeFromCart } from '@/Store/features/cart/cart.slice';
 import { Link } from 'react-router-dom';
 import QuantityUpdate from './QuantityUpdate';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
@@ -41,7 +38,7 @@ const CartItem = ({ item }) => {
           Rs. {(item.price * item.quantity).toLocaleString()} INR
         </p>
 
-        <Trash
+        <PAGE_ICONS.TRASH
           size={18}
           className="text-red-500 cursor-pointer"
           onClick={() => dispatch(removeFromCart(item._id))}

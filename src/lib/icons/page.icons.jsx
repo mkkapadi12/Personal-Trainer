@@ -30,6 +30,31 @@ import {
   ShoppingBag,
   ArrowRight,
   ReceiptText,
+  Loader2,
+  LogOut,
+  Image,
+  Layers,
+  Archive,
+  DollarSign,
+  Tag,
+  Home,
+  Scissors,
+  Share2,
+  Banknote,
+  CreditCard,
+  Wallet,
+  ChevronRight,
+  MapPin,
+  Shield,
+  Gift,
+  Tags,
+  MessageSquarePlus,
+  UserCircle,
+  MessageCircle,
+  Building2,
+  Pencil,
+  ChevronDownIcon,
+  X,
 } from 'lucide-react';
 
 export const PAGE_ICONS = {
@@ -48,6 +73,11 @@ export const PAGE_ICONS = {
   MINUS: Minus,
   PLUS: Plus,
   XMARK: XMarkIcon,
+  LOADER: Loader2,
+  LOGOUT: LogOut,
+  HOME: Home,
+  PENCIL: Pencil,
+  X: X,
 
   // Appointment
   CALENDAR: CalendarDays,
@@ -56,6 +86,7 @@ export const PAGE_ICONS = {
   MAIL: Mail,
   FILE_TEXT: FileText,
   MESSAGE: MessageSquare,
+  MESSAGEADD: MessageSquarePlus,
   USER: UserRound,
   DUMBBELL: Dumbbell,
   TIMER: Timer,
@@ -72,4 +103,31 @@ export const PAGE_ICONS = {
   ARROWRIGHT: ArrowRight,
   CALENDARDAYS: CalendarDays,
   RECEIPTTEXT: ReceiptText,
+
+  //PRODUCTS PAGE
+  SCISSORS: Scissors,
+  SHARE2: Share2,
+
+  //EXTRA
+  TAG: Tag,
+  TAGS: Tags,
+  DOLLARSIGN: DollarSign,
+  ARCHIVE: Archive,
+  LAYERS: Layers,
+  IMAGE: Image,
+  USERCIRCLE: UserCircle,
+  MESSAGECIRCLE: MessageCircle,
+  BUILDING: Building2,
+
+  //checkout page icons
+  BANKNOTE: Banknote,
+  CREDITCARD: CreditCard,
+  WALLET: Wallet,
+  CHEVRONRIGHT: ChevronRight,
+  MAPPIN: MapPin,
+  SHIELD: Shield,
+  GIFT: Gift,
+
+  //shadcn ui icons
+  CHEVRONDOWNICON: ChevronDownIcon,
 };

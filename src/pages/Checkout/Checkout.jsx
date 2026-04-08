@@ -1,50 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
-import {
-  ArrowLeft,
-  MapPin,
-  CreditCard,
-  Wallet,
-  Banknote,
-  ShoppingBag,
-  CheckCircle2,
-  ChevronRight,
-  Plus,
-  Package,
-  Truck,
-  Shield,
-} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { createOrder } from '@/Store/features/orders/order.slice';
 import { clearCart } from '@/Store/features/cart/cart.slice';
 import { fetchAddresses } from '@/Store/features/address/address.slice';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const PAYMENT_METHODS = [
   {
     id: 'cod',
     label: 'Cash on Delivery',
     description: 'Pay when your order arrives',
-    icon: Banknote,
+    icon: PAGE_ICONS.BANKNOTE,
   },
   {
     id: 'upi',
     label: 'UPI / QR Code',
     description: 'Pay via any UPI app',
-    icon: Wallet,
+    icon: PAGE_ICONS.WALLET,
   },
   {
     id: 'card',
     label: 'Credit / Debit Card',
     description: 'Visa, Mastercard, RuPay',
-    icon: CreditCard,
+    icon: PAGE_ICONS.CREDITCARD,
   },
 ];
 
@@ -58,11 +43,6 @@ const Checkout = () => {
 
   const [selectedAddressId, setSelectedAddressId] = useState('');
   const [selectedPayment, setSelectedPayment] = useState('cod');
-
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   useEffect(() => {
     dispatch(fetchAddresses());
@@ -118,7 +98,7 @@ const Checkout = () => {
   if (cart.length === 0) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-4 py-20">
-        <ShoppingBag size={64} className="text-gray-300" />
+        <PAGE_ICONS.SHOPPINGBAG size={64} className="text-gray-300" />
         <h2 className="text-2xl font-bold text-[#222222]">
           Your cart is empty
         </h2>
@@ -141,7 +121,7 @@ const Checkout = () => {
           to="/account/cart"
           className="inline-flex items-center gap-2 text-sm text-[#777777] hover:text-[#222222] mb-6 transition-colors"
         >
-          <ArrowLeft size={16} />
+          <PAGE_ICONS.ARROWLEFT size={16} />
           Back to Cart
         </Link>
 
@@ -170,11 +150,13 @@ const Checkout = () => {
                 )}
               >
                 {i < 1 ? (
-                  <CheckCircle2 size={14} className="inline mr-1" />
+                  <PAGE_ICONS.CHECKCIRCLE size={14} className="inline mr-1" />
                 ) : null}
                 {step}
               </span>
-              {i < 2 && <ChevronRight size={14} className="text-gray-300" />}
+              {i < 2 && (
+                <PAGE_ICONS.CHEVRONRIGHT size={14} className="text-gray-300" />
+              )}
             </React.Fragment>
           ))}
         </div>
@@ -186,7 +168,7 @@ const Checkout = () => {
             <div className="bg-white border border-gray-100 p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-[#faa432]/10 flex items-center justify-center">
-                  <MapPin size={16} className="text-[#faa432]" />
+                  <PAGE_ICONS.MAPPIN size={16} className="text-[#faa432]" />
                 </div>
                 <h2 className="text-lg font-bold text-[#222222]">
                   Delivery Address
@@ -195,7 +177,10 @@ const Checkout = () => {
 
               {addresses?.length === 0 ? (
                 <div className="border-2 border-dashed border-gray-200 p-6 text-center rounded-sm">
-                  <MapPin size={32} className="text-gray-300 mx-auto mb-2" />
+                  <PAGE_ICONS.MAPPIN
+                    size={32}
+                    className="text-gray-300 mx-auto mb-2"
+                  />
                   <p className="text-[#777777] text-sm mb-3">
                     No saved addresses
                   </p>
@@ -206,7 +191,7 @@ const Checkout = () => {
                     className="rounded-none"
                   >
                     <Link to="/account/addresses">
-                      <Plus size={14} className="mr-1" /> Add Address
+                      <PAGE_ICONS.PLUS size={14} className="mr-1" /> Add Address
                     </Link>
                   </Button>
                 </div>
@@ -263,7 +248,7 @@ const Checkout = () => {
                 to="/account/addresses"
                 className="mt-3 inline-flex items-center gap-1 text-xs text-[#faa432] hover:underline font-medium"
               >
-                <Plus size={12} /> Manage Addresses
+                <PAGE_ICONS.PLUS size={12} /> Manage Addresses
               </Link>
             </div>
 
@@ -271,7 +256,7 @@ const Checkout = () => {
             <div className="bg-white border border-gray-100 p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-[#faa432]/10 flex items-center justify-center">
-                  <CreditCard size={16} className="text-[#faa432]" />
+                  <PAGE_ICONS.CREDITCARD size={16} className="text-[#faa432]" />
                 </div>
                 <h2 className="text-lg font-bold text-[#222222]">
                   Payment Method
@@ -309,7 +294,7 @@ const Checkout = () => {
                         </p>
                       </div>
                       {selectedPayment === method.id && (
-                        <CheckCircle2
+                        <PAGE_ICONS.CHECKCIRCLE
                           size={18}
                           className="text-[#faa432] ml-auto"
                         />
@@ -324,7 +309,7 @@ const Checkout = () => {
             <div className="bg-white border border-gray-100 p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-full bg-[#faa432]/10 flex items-center justify-center">
-                  <Package size={16} className="text-[#faa432]" />
+                  <PAGE_ICONS.PACKAGE size={16} className="text-[#faa432]" />
                 </div>
                 <h2 className="text-lg font-bold text-[#222222]">
                   Order Items
@@ -451,7 +436,7 @@ const Checkout = () => {
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
-                    <CheckCircle2 size={18} />
+                    <PAGE_ICONS.CHECKCIRCLE size={18} />
                     Confirm Order
                   </span>
                 )}
@@ -460,9 +445,9 @@ const Checkout = () => {
               {/* Trust badges */}
               <div className="mt-4 grid grid-cols-3 gap-2 text-center">
                 {[
-                  { icon: Shield, label: 'Secure Payment' },
-                  { icon: Truck, label: 'Fast Delivery' },
-                  { icon: Package, label: 'Easy Returns' },
+                  { icon: PAGE_ICONS.SHIELD, label: 'Secure Payment' },
+                  { icon: PAGE_ICONS.TRUCK, label: 'Fast Delivery' },
+                  { icon: PAGE_ICONS.PACKAGE, label: 'Easy Returns' },
                 ].map(({ icon: Icon, label }) => (
                   <div key={label} className="flex flex-col items-center gap-1">
                     <Icon size={16} className="text-[#0d9b4d]" />

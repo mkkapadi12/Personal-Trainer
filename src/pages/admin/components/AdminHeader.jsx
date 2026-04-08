@@ -13,19 +13,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  Bell,
-  Search,
-  Menu,
-  User,
-  Settings,
-  LogOut,
-  ChevronDown,
-} from 'lucide-react';
-import {
   adminProfile,
   logout,
 } from '@/Store/features/admin/auth/admin.auth.slice';
 import { Input } from '@/components/ui/input';
+import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
 
 const AdminHeader = ({ collapsed, onToggleSidebar }) => {
   const dispatch = useDispatch();
@@ -83,7 +75,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
             onClick={onToggleSidebar}
             className="lg:hidden text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60"
           >
-            <Menu className="h-5 w-5" />
+            <ADMIN_ICONS.MENU className="h-5 w-5" />
           </Button>
 
           <div className="hidden sm:block">
@@ -98,7 +90,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
 
         {/* ---center: Search --- */}
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 pointer-events-none" />
+          <ADMIN_ICONS.SEARCH className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 pointer-events-none" />
           <Input
             type="text"
             placeholder="Search..."
@@ -114,7 +106,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
             size="icon"
             className="relative text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/60 transition-colors"
           >
-            <Bell className="h-[18px] w-[18px]" />
+            <ADMIN_ICONS.BELL className="h-[18px] w-[18px]" />
             {/* Notification dot */}
             <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-lime-400 ring-2 ring-zinc-950" />
           </Button>
@@ -147,7 +139,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
                     {admin?.email || 'admin@personaltrainer.com'}
                   </p>
                 </div>
-                <ChevronDown className="h-3.5 w-3.5 text-zinc-500 hidden md:block" />
+                <ADMIN_ICONS.CHEVRONDOWN className="h-3.5 w-3.5 text-zinc-500 hidden md:block" />
               </button>
             </DropdownMenuTrigger>
 
@@ -168,7 +160,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
                 className="gap-2 cursor-pointer focus:bg-zinc-800 focus:text-zinc-100"
                 onClick={() => navigate('/admin/dashboard')}
               >
-                <User className="h-4 w-4 text-zinc-500" />
+                <ADMIN_ICONS.USER className="h-4 w-4 text-zinc-500" />
                 Profile
               </DropdownMenuItem>
 
@@ -176,7 +168,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
                 className="gap-2 cursor-pointer focus:bg-zinc-800 focus:text-zinc-100"
                 disabled
               >
-                <Settings className="h-4 w-4 text-zinc-500" />
+                <ADMIN_ICONS.SETTING className="h-4 w-4 text-zinc-500" />
                 Settings
               </DropdownMenuItem>
 
@@ -186,7 +178,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
                 className="gap-2 cursor-pointer text-red-400 focus:bg-red-500/10 focus:text-red-300"
                 onClick={handleLogout}
               >
-                <LogOut className="h-4 w-4" />
+                <ADMIN_ICONS.LOGOUT className="h-4 w-4" />
                 Sign Out
               </DropdownMenuItem>
             </DropdownMenuContent>

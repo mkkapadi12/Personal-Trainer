@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddresses } from '@/Store/features/address/address.slice';
-import { MapPin } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const Profile = () => {
   const { addresses } = useSelector((state) => state.address);
@@ -21,7 +21,6 @@ const Profile = () => {
   return (
     <div className="min-h-screen bg-black px-4 py-16">
       <div className="max-w-3xl mx-auto">
-
         {/* Page Header */}
         <div className="mb-10 text-center">
           <h1
@@ -64,12 +63,15 @@ const Profile = () => {
               className="p-2 rounded-full"
               style={{ background: 'rgba(215,251,0,0.1)' }}
             >
-              <MapPin size={18} style={{ color: '#d7fb00' }} />
+              <PAGE_ICONS.MAPPIN size={18} style={{ color: '#d7fb00' }} />
             </div>
             <div>
-              <p className="text-white text-sm font-semibold">Saved Addresses</p>
+              <p className="text-white text-sm font-semibold">
+                Saved Addresses
+              </p>
               <p className="text-gray-500 text-xs">
-                {addresses.length} address{addresses.length !== 1 ? 'es' : ''} saved
+                {addresses.length} address{addresses.length !== 1 ? 'es' : ''}{' '}
+                saved
               </p>
             </div>
           </div>
@@ -88,7 +90,6 @@ const Profile = () => {
             View Addresses ({addresses.length})
           </Button>
         </div>
-
       </div>
     </div>
   );

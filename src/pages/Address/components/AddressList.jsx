@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import AddressFormDialog from './AddressFormDialog';
 import AddressCard from './AddressCard';
 import { Button } from '@/components/ui/button';
@@ -9,7 +9,7 @@ import {
 } from '@/Store/features/address/address.slice';
 import { toast } from 'sonner';
 import { useDispatch } from 'react-redux';
-import { MapPin, Plus } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 export default function AddressList({ addresses }) {
   const [open, setOpen] = useState(false);
@@ -38,7 +38,8 @@ export default function AddressList({ addresses }) {
 
       const result = await toast
         .promise(action, {
-          loading: mode === 'edit' ? 'Updating address...' : 'Adding address...',
+          loading:
+            mode === 'edit' ? 'Updating address...' : 'Adding address...',
           success: (res) =>
             res?.msg ||
             (mode === 'edit'
@@ -64,7 +65,6 @@ export default function AddressList({ addresses }) {
 
   return (
     <div className="max-w-3xl mx-auto">
-
       {/* Page Header */}
       <div className="mb-10 text-center">
         <h1
@@ -94,7 +94,7 @@ export default function AddressList({ addresses }) {
             boxShadow: '0 4px 20px rgba(215,251,0,0.35)',
           }}
         >
-          <Plus size={15} />
+          <PAGE_ICONS.PLUS size={15} />
           Add New Address
         </Button>
       </div>
@@ -124,10 +124,17 @@ export default function AddressList({ addresses }) {
             className="p-5 rounded-full mb-4"
             style={{ background: 'rgba(215,251,0,0.08)' }}
           >
-            <MapPin size={32} style={{ color: '#d7fb00', opacity: 0.6 }} />
+            <PAGE_ICONS.MAPPIN
+              size={32}
+              style={{ color: '#d7fb00', opacity: 0.6 }}
+            />
           </div>
-          <p className="text-gray-400 text-sm font-medium">No addresses saved yet</p>
-          <p className="text-gray-600 text-xs mt-1">Add your first delivery address above</p>
+          <p className="text-gray-400 text-sm font-medium">
+            No addresses saved yet
+          </p>
+          <p className="text-gray-600 text-xs mt-1">
+            Add your first delivery address above
+          </p>
         </div>
       )}
 

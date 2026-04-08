@@ -12,7 +12,6 @@ import {
 import { TESTIMONIALS } from '@/constants/home/data';
 import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import Autoplay from 'embla-carousel-autoplay';
-import { Star } from 'lucide-react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -109,12 +108,12 @@ const Services = () => {
                           <div className="flex gap-1">
                             {Array.from({ length: 5 }).map((_, index) => {
                               return index < Math.round(testimonial.rating) ? (
-                                <Star
+                                <PAGE_ICONS.STAR
                                   key={index}
                                   className="w-5 h-5 text-brand fill-brand"
                                 />
                               ) : (
-                                <Star
+                                <PAGE_ICONS.STAR
                                   key={index}
                                   className="w-5 h-5 text-white fill-white"
                                 />

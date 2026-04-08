@@ -116,3 +116,38 @@ export const recentActivity = [
     icon: ADMIN_ICONS.USER,
   },
 ];
+
+export const navItems = [
+  {
+    label: 'Dashboard',
+    path: '/admin/dashboard',
+    icon: ADMIN_ICONS.LAYOUTDASHBOARD,
+  },
+  {
+    label: 'Users',
+    path: '/admin/users',
+    icon: ADMIN_ICONS.USERS,
+  },
+  {
+    label: 'Products',
+    path: '/admin/products',
+    icon: ADMIN_ICONS.PRODUCTS,
+  },
+  {
+    label: 'Orders',
+    path: '/admin/orders',
+    icon: ADMIN_ICONS.SHOPPINGBAG,
+  },
+  {
+    label: 'Analytics',
+    path: '/admin/analytics',
+    icon: ADMIN_ICONS.BARCHART,
+    disabled: true,
+  },
+  {
+    label: 'Settings',
+    path: '/admin/settings',
+    icon: ADMIN_ICONS.SETTING,
+    disabled: true,
+  },
+];

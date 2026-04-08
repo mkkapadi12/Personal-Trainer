@@ -1,6 +1,6 @@
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import {
   Form,
   FormControl,
@@ -8,14 +8,13 @@ import {
   FormItem,
   FormMessage,
 } from '@/components/ui/form';
-
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { commentSchema } from './commentSchema';
 import { toast } from 'sonner';
 import { addComment } from '@/Store/features/comments/comment.slice';
 import { useDispatch } from 'react-redux';
-import { MessageSquarePlus } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 export default function CommentForm({ id }) {
   const dispatch = useDispatch();
@@ -48,7 +47,7 @@ export default function CommentForm({ id }) {
     <div className="relative overflow-hidden bg-white rounded-[2rem] p-6 md:p-10 border border-gray-100/80">
       <div className="relative z-10 flex items-center gap-4 mb-8">
         <div className="p-2.5 bg-[#c7f000]/20 rounded-2xl border border-[#c7f000]/30 shadow-sm">
-          <MessageSquarePlus className="w-5 h-5 text-[#8ba600]" />
+          <PAGE_ICONS.MESSAGE className="w-5 h-5 text-[#8ba600]" />
         </div>
         <h3 className="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight">
           Leave a Comment

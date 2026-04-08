@@ -36,6 +36,14 @@ import {
   Clock,
   Check,
   XCircle,
+  LayoutDashboard,
+  Users,
+  BarChart3,
+  Settings,
+  LogOut,
+  Menu,
+  Bell,
+  ChevronDown,
 } from 'lucide-react';
 
 export const ADMIN_ICONS = {
@@ -70,6 +78,7 @@ export const ADMIN_ICONS = {
   IMAGEPLUS: ImagePlus,
   CHEVRONSLEFT: ChevronsLeft,
   CHEVRONLEFT: ChevronLeft,
+  CHEVRONDOWN : ChevronDown,
   CHEVRONRIGHT: ChevronRight,
   CHEVRONS_RIGHT: ChevronsRight,
 
@@ -78,6 +87,13 @@ export const ADMIN_ICONS = {
   CALENDAR: Calendar,
   ARROWUPRIGHT: ArrowUpRight,
   ARROWDOWNRIGHT: ArrowDownRight,
+  LAYOUTDASHBOARD: LayoutDashboard,
+  USERS: Users,
+  SETTING: Settings,
+  BARCHART: BarChart3,
+  LOGOUT : LogOut,
+  MENU : Menu,
+  BELL :Bell,
 
   //admin orders page icons
   CLOCK: Clock,

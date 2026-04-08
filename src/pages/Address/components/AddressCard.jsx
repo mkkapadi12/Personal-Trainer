@@ -1,6 +1,7 @@
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useSelector } from 'react-redux';
-import { MapPin, Pencil, Trash2, Building2, Phone } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 export default function AddressCard({ address, onEdit, onDelete }) {
   const { user } = useSelector((state) => state.user);
@@ -38,7 +39,7 @@ export default function AddressCard({ address, onEdit, onDelete }) {
           className="p-2 rounded-full mt-0.5 shrink-0"
           style={{ background: 'rgba(215,251,0,0.08)' }}
         >
-          <MapPin size={16} style={{ color: '#d7fb00' }} />
+          <PAGE_ICONS.MAPPIN size={16} style={{ color: '#d7fb00' }} />
         </div>
         <div>
           <p className="text-white font-semibold text-sm">
@@ -46,7 +47,7 @@ export default function AddressCard({ address, onEdit, onDelete }) {
           </p>
           {address?.company && (
             <div className="flex items-center gap-1 mt-0.5">
-              <Building2 size={11} className="text-gray-500" />
+              <PAGE_ICONS.BUILDING size={11} className="text-gray-500" />
               <p className="text-gray-500 text-xs">{address.company}</p>
             </div>
           )}
@@ -75,7 +76,7 @@ export default function AddressCard({ address, onEdit, onDelete }) {
         )}
         {address?.phone && (
           <div className="flex items-center gap-1.5 mt-2">
-            <Phone size={12} className="text-gray-500" />
+            <PAGE_ICONS.PHONE size={12} className="text-gray-500" />
             <p className="text-gray-500 text-xs">{address.phone}</p>
           </div>
         )}
@@ -94,7 +95,7 @@ export default function AddressCard({ address, onEdit, onDelete }) {
             boxShadow: '0 3px 12px rgba(215,251,0,0.25)',
           }}
         >
-          <Pencil size={12} />
+          <PAGE_ICONS.PENCIL size={12} />
           Edit
         </Button>
 
@@ -116,7 +117,7 @@ export default function AddressCard({ address, onEdit, onDelete }) {
             e.currentTarget.style.borderColor = 'rgba(255,107,107,0.4)';
           }}
         >
-          <Trash2 size={12} />
+          <PAGE_ICONS.TRASH size={12} />
           Delete
         </Button>
       </div>

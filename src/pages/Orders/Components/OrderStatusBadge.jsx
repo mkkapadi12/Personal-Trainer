@@ -1,24 +1,24 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import { Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const STATUS_CONFIG = {
   pending: {
     label: 'Pending',
-    icon: Clock,
+    icon: PAGE_ICONS.CLOCK,
     className: 'bg-amber-50 text-amber-700 border-amber-200',
     dotColor: 'bg-amber-400',
   },
   completed: {
     label: 'Delivered',
-    icon: CheckCircle2,
+    icon: PAGE_ICONS.CHECKCIRCLE,
     className: 'bg-green-50 text-[#0d9b4d] border-green-200',
     dotColor: 'bg-[#0d9b4d]',
   },
   cancelled: {
     label: 'Cancelled',
-    icon: XCircle,
+    icon: PAGE_ICONS.XCIRCLE,
     className: 'bg-red-50 text-red-600 border-red-200',
     dotColor: 'bg-red-400',
   },

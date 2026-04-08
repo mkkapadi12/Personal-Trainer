@@ -15,13 +15,13 @@ import { getProfile, updateProfile } from '@/Store/features/auth/auth.slice';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'sonner';
 import profileSchema from '../schema/profile.schema';
-import { User, Mail, Phone, Pencil, Check, X } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const fieldIconMap = {
-  firstName: <User size={15} />,
-  lastName: <User size={15} />,
-  email: <Mail size={15} />,
-  phone: <Phone size={15} />,
+  firstName: <PAGE_ICONS.USER size={15} />,
+  lastName: <PAGE_ICONS.USER size={15} />,
+  email: <PAGE_ICONS.MAIL size={15} />,
+  phone: <PAGE_ICONS.PHONE size={15} />,
 };
 
 const StyledInput = ({ icon, ...props }) => (
@@ -244,7 +244,7 @@ const ProfileForm = () => {
                 boxShadow: '0 4px 16px rgba(215,251,0,0.3)',
               }}
             >
-              <Pencil size={13} />
+              <PAGE_ICONS.PENCIL size={13} />
               Edit Profile
             </Button>
           )}
@@ -262,7 +262,7 @@ const ProfileForm = () => {
                   boxShadow: '0 4px 16px rgba(215,251,0,0.3)',
                 }}
               >
-                <Check size={13} />
+                <PAGE_ICONS.CHECKCIRCLE size={13} />
                 Save Changes
               </Button>
 
@@ -279,7 +279,7 @@ const ProfileForm = () => {
                   border: '1.5px solid rgba(215,251,0,0.5)',
                 }}
               >
-                <X size={13} />
+                <PAGE_ICONS.X size={13} />
                 Cancel
               </Button>
             </>

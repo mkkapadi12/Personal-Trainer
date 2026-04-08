@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import CartTable from './components/CartTable';
 import CartSummary from './components/CartSummary';
 import GiftWrap from './components/GiftWrap';
-import { ArrowLeft } from 'lucide-react';
 import cartEmpty from '../../assets/images/cart-empty.png';
 import { Button } from '@/components/ui/button';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const Cart = () => {
   const { cart } = useSelector((state) => state.cart);
@@ -32,7 +32,7 @@ const Cart = () => {
             <div className="mb-10 space-y-4">
               <Link to="/products" className="flex items-center gap-3">
                 <div className="border p-2 rounded-full">
-                  <ArrowLeft size={16} />
+                  <PAGE_ICONS.ARROWLEFT size={16} />
                 </div>
                 <span className="text-sm font-medium">Continue Shopping</span>
               </Link>

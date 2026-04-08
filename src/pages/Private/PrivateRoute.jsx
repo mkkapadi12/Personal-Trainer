@@ -1,4 +1,4 @@
-import { Loader2 } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
@@ -12,7 +12,7 @@ const PrivateRoute = () => {
   if (!isAuthChecked || loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader2 className="size-10 animate-spin" />
+        <PAGE_ICONS.LOADER className="size-10 animate-spin" />
       </div>
     );
   }

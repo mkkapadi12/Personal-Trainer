@@ -1,9 +1,9 @@
-import { getProductById } from '@/Store/features/product/product.slice';
-import { Loader2 } from 'lucide-react';
 import React, { useEffect } from 'react';
+import { getProductById } from '@/Store/features/product/product.slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import SingleProduct from './components/SingleProduct';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const ProductDetails = () => {
   const { id } = useParams();
@@ -19,7 +19,7 @@ const ProductDetails = () => {
   if (!singleProduct) {
     return (
       <div className="flex justify-center py-20">
-        <Loader2 className="animate-spin" />
+        <PAGE_ICONS.LOADER className="animate-spin" />
       </div>
     );
   }

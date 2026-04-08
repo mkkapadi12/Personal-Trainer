@@ -1,15 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import {
-  Users,
-  ShoppingBag,
-  TrendingUp,
-  Activity,
-  ArrowUpRight,
-  ArrowDownRight,
-  Dumbbell,
-  Calendar,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { recentActivity, statsCardsDashboard } from '../constants';
 import { ADMIN_ICONS } from '@/lib/icons/admin.icons';

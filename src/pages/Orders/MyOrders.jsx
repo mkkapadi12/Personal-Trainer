@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ReceiptText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { fetchUserOrders } from '@/Store/features/orders/order.slice';
 import OrderCard from './Components/OrderCard';
 import { OrderSkeleton } from './Components/OrderSkeleton';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const MyOrders = () => {
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const MyOrders = () => {
         ) : filteredOrders?.length === 0 ? (
           <div className="bg-white border border-gray-100 p-16 text-center">
             <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ReceiptText size={28} className="text-gray-300" />
+              <PAGE_ICONS.RECEIPTTEXT size={28} className="text-gray-300" />
             </div>
             <h3 className="font-bold text-[#222222] mb-1">No orders found</h3>
             <p className="text-sm text-[#777777] mb-6">
@@ -86,7 +86,8 @@ const MyOrders = () => {
               className="bg-[#faa432] hover:bg-[#faa432]/90 text-white rounded-none px-8"
             >
               <Link to="/products">
-                Start Shopping <ArrowRight size={14} className="ml-1" />
+                Start Shopping{' '}
+                <PAGE_ICONS.ARROWRIGHT size={14} className="ml-1" />
               </Link>
             </Button>
           </div>

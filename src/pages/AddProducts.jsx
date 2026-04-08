@@ -4,18 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { productSchema } from './product.schema';
 import axios from 'axios';
 import { toast } from 'sonner';
-import {
-  Package,
-  Tag,
-  DollarSign,
-  FileText,
-  Image,
-  Layers,
-  Archive,
-  Plus,
-} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const fieldConfig = [
   {
@@ -23,7 +14,7 @@ const fieldConfig = [
     label: 'Product Name',
     type: 'text',
     placeholder: 'e.g. Whey Protein 2kg',
-    icon: Package,
+    icon: PAGE_ICONS.PACKAGE,
     span: 1,
   },
   {
@@ -31,7 +22,7 @@ const fieldConfig = [
     label: 'Brand',
     type: 'text',
     placeholder: 'e.g. Optimum Nutrition',
-    icon: Tag,
+    icon: PAGE_ICONS.TAG,
     span: 1,
   },
   {
@@ -39,7 +30,7 @@ const fieldConfig = [
     label: 'Price (₹)',
     type: 'number',
     placeholder: '0',
-    icon: DollarSign,
+    icon: PAGE_ICONS.DOLLARSIGN,
     span: 1,
   },
   {
@@ -47,7 +38,7 @@ const fieldConfig = [
     label: 'Stock',
     type: 'number',
     placeholder: '0',
-    icon: Archive,
+    icon: PAGE_ICONS.ARCHIVE,
     span: 1,
   },
   {
@@ -55,7 +46,7 @@ const fieldConfig = [
     label: 'Category',
     type: 'text',
     placeholder: 'e.g. Supplements',
-    icon: Layers,
+    icon: PAGE_ICONS.LAYERS,
     span: 1,
   },
   {
@@ -63,7 +54,7 @@ const fieldConfig = [
     label: 'Main Image URL',
     type: 'text',
     placeholder: 'https://...',
-    icon: Image,
+    icon: PAGE_ICONS.IMAGE,
     span: 1,
   },
   {
@@ -71,7 +62,7 @@ const fieldConfig = [
     label: 'Description',
     type: 'text',
     placeholder: 'Short product description...',
-    icon: FileText,
+    icon: PAGE_ICONS.FILE_TEXT,
     span: 2,
   },
 ];
@@ -192,7 +183,7 @@ const AddProducts = () => {
                 </>
               ) : (
                 <>
-                  <Plus size={17} strokeWidth={2.5} />
+                  <PAGE_ICONS.PLUS size={17} strokeWidth={2.5} />
                   Add Product
                 </>
               )}

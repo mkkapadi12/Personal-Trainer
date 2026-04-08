@@ -1,12 +1,10 @@
-  import React, { useState } from 'react';
-import { ArrowLeft, Star, Share2, Scissors } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
 import AddToCart from '@/pages/Cart/components/AddToCart';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const SingleProduct = ({ product }) => {
   const [activeImage, setActiveImage] = useState(product?.mainImage);
   const [zoomStyle, setZoomStyle] = useState({});
-  const [qty, setQty] = useState(1);
   const images = [...product?.images];
 
   // 🔍 Zoom Handler
@@ -72,7 +70,7 @@ const SingleProduct = ({ product }) => {
         <div className="space-y-5">
           {/* Back */}
           <button className="flex items-center gap-2 text-sm">
-            <ArrowLeft size={16} /> Back to Home
+            <PAGE_ICONS.ARROWLEFT size={16} /> Back to Home
           </button>
 
           {/* Brand */}
@@ -89,17 +87,17 @@ const SingleProduct = ({ product }) => {
           {/* Rating */}
           <div className="flex gap-1">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} size={18} className="text-black" />
+              <PAGE_ICONS.STAR key={i} size={18} className="text-black" />
             ))}
           </div>
 
           {/* Actions */}
           <div className="flex items-center gap-6 text-sm">
             <div className="flex items-center gap-2">
-              <Scissors size={16} /> See Sizing Guide
+              <PAGE_ICONS.SCISSORS size={16} /> See Sizing Guide
             </div>
             <div className="flex items-center gap-2">
-              <Share2 size={16} /> Share
+              <PAGE_ICONS.SHARE2 size={16} /> Share
             </div>
           </div>
           {/* Price */}

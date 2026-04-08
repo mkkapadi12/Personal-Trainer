@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -18,8 +19,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { addressSchema } from './addressSchema';
-import { useEffect } from 'react';
-import { MapPin } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const DarkInput = ({ placeholder, ...props }) => (
   <Input
@@ -118,7 +118,7 @@ export default function AddressFormDialog({
               className="p-2 rounded-full"
               style={{ background: 'rgba(215,251,0,0.1)' }}
             >
-              <MapPin size={16} style={{ color: '#d7fb00' }} />
+              <PAGE_ICONS.MAPPIN size={16} style={{ color: '#d7fb00' }} />
             </div>
             <DialogTitle
               className="text-lg font-bold tracking-wide"

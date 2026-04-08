@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogBackdrop,
@@ -22,8 +22,8 @@ import { useParams } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import { useDispatch } from 'react-redux';
 import { getProducts } from '@/Store/features/product/product.slice';
-import { Loader2 } from 'lucide-react';
 import ProductNotFound from '../../../assets/images/product-not-found.jpg';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const sortOptions = [
   { name: 'Most Popular', value: 'latest' },
@@ -379,7 +379,7 @@ const ProductSection = ({ products, loading }) => {
                   </div>
                 ) : loading ? (
                   <div className="flex items-center justify-center h-full">
-                    <Loader2 className="animate-spin" />
+                    <PAGE_ICONS.LOADER className="animate-spin" />
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">

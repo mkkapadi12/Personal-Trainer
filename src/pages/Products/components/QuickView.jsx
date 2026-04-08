@@ -1,9 +1,9 @@
+import React from 'react';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
-import { X } from 'lucide-react';
-import { Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { addToCart } from '@/Store/features/cart/cart.slice';
 import { useDispatch } from 'react-redux';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
@@ -26,7 +26,7 @@ export default function QuickView({ open, setOpen, product }) {
             onClick={() => setOpen(false)}
             className="absolute top-4 right-4 text-gray-500 hover:text-black"
           >
-            <X size={22} />
+            <PAGE_ICONS.XMARK size={22} />
           </button>
 
           <div className="grid md:grid-cols-2 gap-6 p-6">
@@ -61,7 +61,7 @@ export default function QuickView({ open, setOpen, product }) {
                 <div className="flex items-center gap-2 mt-3">
                   <div className="flex">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <Star
+                      <PAGE_ICONS.STAR
                         key={star}
                         size={18}
                         className={classNames(

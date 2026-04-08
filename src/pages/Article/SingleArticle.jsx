@@ -10,14 +10,7 @@ import {
 } from '@/Store/features/comments/comment.slice';
 import CommentForm from './components/Commentform';
 import { Button } from '@/components/ui/button';
-import {
-  Trash2,
-  Calendar,
-  Tags,
-  UserCircle,
-  MessageSquarePlus,
-  MessageCircle,
-} from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const SingleArticle = () => {
   const { id } = useParams();
@@ -51,7 +44,7 @@ const SingleArticle = () => {
                     {single_article?.category}
                   </span>
                   <span className="flex items-center gap-2 text-sm font-semibold text-gray-500 bg-white border border-gray-200 shadow-sm rounded-full px-5 py-2">
-                    <Calendar className="w-4 h-4 text-gray-400" />
+                    <PAGE_ICONS.CALENDAR className="w-4 h-4 text-gray-400" />
                     {formatDate(single_article?.createdAt)}
                   </span>
                 </div>
@@ -100,7 +93,7 @@ const SingleArticle = () => {
                 {single_article?.tags && single_article.tags.length > 0 && (
                   <div className="flex items-center flex-wrap gap-3 pt-10 mt-10 border-t border-gray-100">
                     <div className="flex items-center gap-2 text-gray-900 font-bold mr-2 bg-gray-50 px-4 py-2 rounded-xl">
-                      <Tags className="w-5 h-5 text-[#c7f000]" />
+                      <PAGE_ICONS.TAGS className="w-5 h-5 text-[#c7f000]" />
                       <span>Tags:</span>
                     </div>
                     {single_article.tags.map((tag) => (
@@ -160,7 +153,7 @@ const SingleArticle = () => {
                   {!comments || comments.length === 0 ? (
                     <div className="text-center py-12 bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center h-full">
                       <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-4 shadow-sm border border-gray-100">
-                        <MessageSquarePlus className="w-8 h-8 text-gray-300" />
+                        <PAGE_ICONS.MESSAGEADD className="w-8 h-8 text-gray-300" />
                       </div>
                       <p className="text-gray-500 font-semibold text-lg">
                         No comments yet
@@ -178,7 +171,7 @@ const SingleArticle = () => {
                         <div className="flex items-start justify-center gap-4 mb-3">
                           <div className="sm:w-12 sm:h-12 w-10 h-10 rounded-full bg-linear-to-tr from-[#c7f000] to-[#e4ff5a] flex items-center justify-center text-black font-extrabold text-lg sm:text-xl shadow-md shrink-0">
                             {comment.user?.firstName?.charAt(0) || (
-                              <UserCircle className="sm:w-6 sm:h-6 w-5 h-5" />
+                              <PAGE_ICONS.USERCIRCLE className="sm:w-6 sm:h-6 w-5 h-5" />
                             )}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -191,7 +184,7 @@ const SingleArticle = () => {
                           </div>
                         </div>
                         <p className="text-gray-700 leading-relaxed font-medium mt-4 flex items-center gap-2">
-                          <MessageCircle className="w-5 h-5 text-gray-900" />{' '}
+                          <PAGE_ICONS.MESSAGECIRCLE className="w-5 h-5 text-gray-900" />{' '}
                           {comment.comment}
                         </p>
 
@@ -209,7 +202,7 @@ const SingleArticle = () => {
                             variant="ghost"
                             title="Delete comment"
                           >
-                            <Trash2 className="w-5 h-5" />
+                            <PAGE_ICONS.TRASH className="w-5 h-5" />
                           </Button>
                         )}
                       </div>
@@ -229,7 +222,7 @@ const SingleArticle = () => {
                     <div className="absolute inset-0 bg-[#c7f000] opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
                     <div className="relative z-10 flex flex-col items-center">
                       <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center mb-6 border-4 border-gray-700 shadow-inner">
-                        <UserCircle className="w-5 h-5 text-gray-400" />
+                        <PAGE_ICONS.USERCIRCLE className="w-5 h-5 text-gray-400" />
                       </div>
                       <h3 className="text-2xl font-extrabold text-white mb-4 tracking-tight">
                         Join the Discussion

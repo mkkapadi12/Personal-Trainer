@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Button } from '../ui/button';
 import {
   Carousel,
@@ -11,7 +11,7 @@ import { Card, CardContent } from '../ui/card';
 import { Link } from 'react-router-dom';
 import { TESTIMONIALS } from '@/constants/home/data';
 import Autoplay from 'embla-carousel-autoplay';
-import { Star } from 'lucide-react';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const Litigations = () => {
   return (
@@ -89,12 +89,12 @@ const Litigations = () => {
                           <div className="flex gap-1">
                             {Array.from({ length: 5 }).map((_, index) => {
                               return index < Math.round(testimonial.rating) ? (
-                                <Star
+                                <PAGE_ICONS.STAR
                                   key={index}
                                   className="w-5 h-5 text-brand fill-brand"
                                 />
                               ) : (
-                                <Star
+                                <PAGE_ICONS.STAR
                                   key={index}
                                   className="w-5 h-5 text-white fill-white"
                                 />
