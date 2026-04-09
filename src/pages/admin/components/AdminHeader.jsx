@@ -34,7 +34,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
     navigate('/admin/login');
   };
 
-  console.log(admin);
+  // console.log(admin);
 
   // Derive page title from route
   const getPageTitle = () => {

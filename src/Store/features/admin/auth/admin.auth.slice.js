@@ -3,11 +3,16 @@ import {
   adminLoginAPI,
   adminProfileAPI,
   adminRegisterAPI,
+  getAllUsersAPI,
   updateAdminProfileAPI,
 } from './admin.auth.api';
 
 const initialState = {
   admin: null,
+  users: [],
+  totalUsers: 0,
+  totalPages: 1,
+  currentPage: 1,
   token: localStorage.getItem('workDoAdminToken') || null,
   loading: false,
   error: null,
@@ -84,6 +89,22 @@ export const updateAdminProfile = createAsyncThunk(
   },
 );
 
+// GET ALL USERS
+export const getAllUsers = createAsyncThunk(
+  'auth/getAllUsers',
+  async ({ page, limit, search, sort }, { rejectWithValue }) => {
+    try {
+      return await getAllUsersAPI({ page, limit, search, sort });
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.msg ||
+          error.response?.data?.message ||
+          'Failed to fetch users',
+      );
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -146,6 +167,21 @@ const authSlice = createSlice({
         state.admin = action.payload.admin;
       })
       .addCase(updateAdminProfile.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //get all users
+      .addCase(getAllUsers.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload.users;
+        state.totalUsers = action.payload.totalUsers;
+        state.totalPages = action.payload.totalPages;
+        state.currentPage = action.payload.currentPage;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

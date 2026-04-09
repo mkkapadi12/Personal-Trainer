@@ -44,6 +44,9 @@ import {
   Menu,
   Bell,
   ChevronDown,
+  UserPlus,
+  Shield,
+  MoreHorizontal,
 } from 'lucide-react';
 
 export const ADMIN_ICONS = {
@@ -99,4 +102,9 @@ export const ADMIN_ICONS = {
   CLOCK: Clock,
   CHECK: Check,
   XCIRCLE: XCircle,
+
+  //admin users page icons
+  USERPLUS: UserPlus,
+  SHIELD: Shield,
+  MOREHORIZONTAL: MoreHorizontal,
 };

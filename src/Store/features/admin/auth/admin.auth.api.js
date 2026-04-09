@@ -20,3 +20,10 @@ export const updateAdminProfileAPI = async (data) => {
   const response = await privateAPI.put('/admin/update-profile', data);
   return response.data;
 };
+
+export const getAllUsersAPI = async ({ page, limit, search, sort }) => {
+  const response = await privateAPI.get(
+    `/admin/users?page=${page}&limit=${limit}&search=${search}&sort=${sort}`,
+  );
+  return response.data;
+};

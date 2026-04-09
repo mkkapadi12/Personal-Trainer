@@ -1,4 +1,5 @@
 const ADMIN = require('../models/admin.model');
+const USER = require('../models/user.model');
 
 const registerAdmin = async (req, res, next) => {
   try {
@@ -9,7 +10,7 @@ const registerAdmin = async (req, res, next) => {
     return res.status(201).json({
       msg: 'Admin registration successful!',
       token: await newAdmin.generateToken(),
-      adminId: newAdmin._id.  toString(),
+      adminId: newAdmin._id.toString(),
     });
   } catch (error) {
     return next(error);
@@ -74,9 +75,49 @@ const updateAdminProfile = async (req, res, next) => {
   }
 };
 
+const getAllUsers = async (req, res, next) => {
+  try {
+    const { page = 1, limit = 5, search = '', sort = 'createdAt' } = req.query;
+
+    let query = {};
+
+    if (search) {
+      query.$or = [
+        { firstName: { $regex: search, $options: 'i' } },
+        { lastName: { $regex: search, $options: 'i' } },
+        { email: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    let sortOption = {};
+
+    if (sort === 'createdAt') sortOption.createdAt = -1;
+    else if (sort === 'updatedAt') sortOption.updatedAt = -1;
+
+    const skip = (page - 1) * limit;
+
+    const users = await USER.find(query)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limit);
+
+    const totalUsers = await USER.countDocuments(query);
+    return res.status(200).json({
+      msg: 'Users fetched successfully!',
+      totalUsers,
+      currentPage: Number(page),
+      totalPages: Math.ceil(totalUsers / limit),
+      users,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   loginAdmin,
   registerAdmin,
   getAdminProfile,
   updateAdminProfile,
+  getAllUsers,
 };
