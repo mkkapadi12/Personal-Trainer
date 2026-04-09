@@ -190,7 +190,7 @@ const Checkout = () => {
                     size="sm"
                     className="rounded-none"
                   >
-                    <Link to="/account/addresses">
+                    <Link to="/account/profile/address">
                       <PAGE_ICONS.PLUS size={14} className="mr-1" /> Add Address
                     </Link>
                   </Button>

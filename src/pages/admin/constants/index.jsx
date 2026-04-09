@@ -8,6 +8,15 @@ export const sortOptions = [
   { value: 'price-desc', label: 'Price: High → Low' },
 ];
 
+export const appoSortOptions = [
+  { value: 'latest', label: 'Latest' },
+  { value: 'oldest', label: 'Oldest' },
+  { value: 'booked', label: 'Status: Booked' },
+  { value: 'confirmed', label: 'Status: Confirmed' },
+  { value: 'completed', label: 'Status: Completed' },
+  { value: 'cancelled', label: 'Status: Cancelled' },
+];
+
 export const categoryOptions = [
   'cross trainer',
   'gym equipment',
@@ -17,6 +26,12 @@ export const categoryOptions = [
   'creatine',
   'mass gainer',
   'bcaa',
+];
+
+export const appoServiceOptions = [
+  { value: '+$15.00', label: 'Basic Training (+$15)' },
+  { value: '+$34.00', label: 'Pro Training (+$34)' },
+  { value: '+$155.00', label: 'Elite Package (+$155)' },
 ];
 
 export const emptyForm = {
@@ -137,6 +152,11 @@ export const navItems = [
     label: 'Orders',
     path: '/admin/orders',
     icon: ADMIN_ICONS.SHOPPINGBAG,
+  },
+  {
+    label: 'Appointments',
+    path: '/admin/appointments',
+    icon: ADMIN_ICONS.CALENDAR,
   },
   {
     label: 'Analytics',

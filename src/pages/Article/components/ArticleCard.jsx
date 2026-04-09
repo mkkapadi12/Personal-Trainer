@@ -1,53 +1,57 @@
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { formatDate } from '@/lib/utils';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const ArticleCard = ({ article }) => {
   return (
-    <div className="">
-      <div className="p-1">
-        <Card className="rounded-none bg-black hover:border-amber-300 p-0 hover:border border-none">
-          <CardContent className="flex flex-col items-start justify-between p-0 relative">
-            {/* image */}
-            <div className="w-full border-b border-[#2d2d2d] h-[200px]">
-              <Link to={`/articles/${article._id}`}>
-                <img
-                  src={article.featuredImage}
-                  alt={article.title}
-                  className="w-full h-full object-cover"
-                />
-              </Link>
-            </div>
-            {/* details */}
-            <div className="p-4 space-y-3">
-              <p className="text-brand">{article.tags[0]}</p>
-              <h3 className="text-xl font-bold text-white">
-                {article.title.slice(0, 20)}...
-              </h3>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: article.description.slice(0, 100) + '...',
-                }}
-                className="text-white"
-              />
-              <div>
-                <Button className="bg-[#d7fb00] text-black hover:bg-white transition-colors duration-300 uppercase rounded-none cursor-pointer text-sm font-semibold px-5 py-2">
-                  <Link to={`/articles/${article._id}`}>Read More</Link>
-                </Button>
-              </div>
-            </div>
-            {/* date */}
-            <div className="absolute top-2 left-2 bg-brand p-1">
-              <h1 className="text-black text-sm font-bold">
-                {formatDate(article.createdAt)}
-              </h1>
-            </div>
-          </CardContent>
-        </Card>
+    <Link
+      to={`/articles/${article._id}`}
+      className="group block rounded-2xl overflow-hidden bg-[rgba(255,255,255,0.04)] border border-white/8 hover:border-[#d7fb00]/30 transition-all duration-500 hover:shadow-[0_0_30px_rgba(215,251,0,0.06)]"
+    >
+      {/* Image */}
+      <div className="relative w-full h-[200px] overflow-hidden">
+        <img
+          src={article.featuredImage}
+          alt={article.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        {/* linear overlay */}
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+
+        {/* Date badge */}
+        <div className="absolute top-3 left-3 bg-[#d7fb00] text-black text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+          <PAGE_ICONS.CALENDAR className="w-3 h-3" />
+          {formatDate(article.createdAt)}
+        </div>
+
+        {/* Category badge */}
+        {article.tags?.[0] && (
+          <div className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-[#d7fb00] text-xs font-semibold px-3 py-1.5 rounded-full border border-[#d7fb00]/20">
+            #{article.tags[0]}
+          </div>
+        )}
       </div>
-    </div>
+
+      {/* Content */}
+      <div className="p-5 space-y-3">
+        <h3 className="text-base font-bold text-white leading-snug line-clamp-2 group-hover:text-[#d7fb00] transition-colors duration-300">
+          {article.title}
+        </h3>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: article.description.slice(0, 100) + '...',
+          }}
+          className="text-gray-500 text-sm leading-relaxed line-clamp-2"
+        />
+
+        {/* Read more */}
+        <div className="flex items-center gap-2 text-[#d7fb00] text-xs font-bold uppercase tracking-widest pt-1 group-hover:gap-3 transition-all duration-300">
+          <span>Read More</span>
+          <PAGE_ICONS.ARROWRIGHT className="w-3.5 h-3.5" />
+        </div>
+      </div>
+    </Link>
   );
 };
 

@@ -44,12 +44,15 @@ export default function CommentForm({ id }) {
   };
 
   return (
-    <div className="relative overflow-hidden bg-white rounded-[2rem] p-6 md:p-10 border border-gray-100/80">
-      <div className="relative z-10 flex items-center gap-4 mb-8">
-        <div className="p-2.5 bg-[#c7f000]/20 rounded-2xl border border-[#c7f000]/30 shadow-sm">
-          <PAGE_ICONS.MESSAGE className="w-5 h-5 text-[#8ba600]" />
+    <div className="relative overflow-hidden bg-white/3 rounded-xl p-5 sm:p-6 border border-white/6">
+      <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-[#d7fb00] rounded-full blur-[80px] opacity-[0.03] pointer-events-none" />
+
+      {/* Header */}
+      <div className="relative z-10 flex items-center gap-3 mb-5">
+        <div className="p-2 bg-[#d7fb00]/10 rounded-lg border border-[#d7fb00]/15">
+          <PAGE_ICONS.MESSAGE className="w-4 h-4 text-[#d7fb00]" />
         </div>
-        <h3 className="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight">
+        <h3 className="text-lg font-bold text-white tracking-[-0.01em]">
           Leave a Comment
         </h3>
       </div>
@@ -57,7 +60,7 @@ export default function CommentForm({ id }) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="relative z-10 space-y-7"
+          className="relative z-10 space-y-4"
         >
           <FormField
             control={form.control}
@@ -67,21 +70,22 @@ export default function CommentForm({ id }) {
                 <FormControl>
                   <Textarea
                     placeholder="Share your thoughts about this article..."
-                    rows={5}
+                    rows={4}
                     {...field}
-                    className="min-h-[140px] rounded-2xl border-gray-200 bg-gray-50/80 p-5 text-base focus:bg-white focus:ring-4 focus:ring-[#c7f000]/30 focus:border-[#c7f000] transition-all duration-300 resize-none shadow-inner"
+                    className="min-h-[120px] rounded-lg border-white/8 bg-white/3 text-white text-[14px] leading-relaxed placeholder:text-gray-600 p-4 focus:bg-white/5 focus:ring-2 focus:ring-[#d7fb00]/20 focus:border-[#d7fb00]/40 transition-all duration-300 resize-none"
                   />
                 </FormControl>
-                <FormMessage className="text-red-500 font-medium ml-2" />
+                <FormMessage className="text-red-400 text-[13px] font-medium ml-1" />
               </FormItem>
             )}
           />
 
           <Button
             type="submit"
-            className="w-full hover:text-white cursor-pointer relative overflow-hidden bg-[#c7f000] text-black rounded-xl py-5 font-bold text-lg tracking-wider uppercase"
+            className="w-full cursor-pointer bg-[#d7fb00] text-black hover:bg-[#e4ff5a] rounded-lg py-2.5 font-bold text-[13px] tracking-[0.05em] uppercase transition-all duration-300 shadow-[0_4px_16px_rgba(215,251,0,0.2)] hover:shadow-[0_8px_24px_rgba(215,251,0,0.3)] active:scale-[0.98]"
           >
-            <span className="relative z-10 flex items-center justify-center gap-2">
+            <span className="flex items-center justify-center gap-2">
+              <PAGE_ICONS.MESSAGE className="w-4 h-4" />
               Post Comment
             </span>
           </Button>

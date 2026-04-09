@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createAppointment, getAllAppointments } from './appointmentAPI';
+import {
+  createAppointment,
+  getAllAppointments,
+  getAllAppointmentsAdmin,
+} from './appointmentAPI';
 
 export const createAppointmentAsync = createAsyncThunk(
   'appointment/createAppointment',
@@ -26,8 +30,30 @@ export const getAllAppointmentsAsync = createAsyncThunk(
   },
 );
 
+export const getAllAppointmentsAdminAsync = createAsyncThunk(
+  'appointment/getAllAppointmentsAdmin',
+  async ({ page, limit, sort, search, service }, { rejectWithValue }) => {
+    try {
+      const response = await getAllAppointmentsAdmin({
+        page,
+        limit,
+        sort,
+        search,
+        service,
+      });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  },
+);
+
 const initialState = {
   appointment: [],
+  adminAppointment: [],
+  totalAppointments: 0,
+  currentPage: 1,
+  totalPages: 1,
   loading: false,
   error: null,
 };
@@ -60,6 +86,22 @@ const appointmentSlice = createSlice({
         state.appointment = action.payload.userAppointment;
       })
       .addCase(getAllAppointmentsAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(getAllAppointmentsAdminAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAllAppointmentsAdminAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+        state.adminAppointment = action.payload.adminAppointment;
+        state.totalAppointments = action.payload.totalAppointments;
+        state.currentPage = action.payload.currentPage;
+        state.totalPages = action.payload.totalPages;
+      })
+      .addCase(getAllAppointmentsAdminAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

@@ -19,7 +19,7 @@ export const formatDate = (dateString, format = 'long') => {
       year: 'numeric',
     }),
   };
-  return date.toLocaleDateString('en-US', options);
+  return date.toLocaleDateString('en-IN', options);
 };
 export const setCartItem = (cart) => {
   localStorage.setItem('workDoCart', JSON.stringify(cart));

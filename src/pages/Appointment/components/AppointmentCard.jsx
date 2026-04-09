@@ -61,9 +61,12 @@ const AppointmentCard = ({ appo }) => {
 
         <span
           className="text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shrink-0"
-          style={{ background: 'rgba(74,222,128,0.12)', color: '#4ade80' }}
+          style={{
+            background: appo.status === 'booked' ? 'rgba(74,222,128,0.12)' : 'rgba(255,255,255,0.06)',
+            color: appo.status === 'booked' ? '#4ade80' : '#d7fb00',
+          }}
         >
-          Booked
+          {appo.status}
         </span>
       </div>
 

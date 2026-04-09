@@ -47,6 +47,8 @@ import {
   UserPlus,
   Shield,
   MoreHorizontal,
+  Phone,
+  ChevronUp,
 } from 'lucide-react';
 
 export const ADMIN_ICONS = {
@@ -81,7 +83,7 @@ export const ADMIN_ICONS = {
   IMAGEPLUS: ImagePlus,
   CHEVRONSLEFT: ChevronsLeft,
   CHEVRONLEFT: ChevronLeft,
-  CHEVRONDOWN : ChevronDown,
+  CHEVRONDOWN: ChevronDown,
   CHEVRONRIGHT: ChevronRight,
   CHEVRONS_RIGHT: ChevronsRight,
 
@@ -94,9 +96,9 @@ export const ADMIN_ICONS = {
   USERS: Users,
   SETTING: Settings,
   BARCHART: BarChart3,
-  LOGOUT : LogOut,
-  MENU : Menu,
-  BELL :Bell,
+  LOGOUT: LogOut,
+  MENU: Menu,
+  BELL: Bell,
 
   //admin orders page icons
   CLOCK: Clock,
@@ -107,4 +109,6 @@ export const ADMIN_ICONS = {
   USERPLUS: UserPlus,
   SHIELD: Shield,
   MOREHORIZONTAL: MoreHorizontal,
+  PHONE: Phone,
+  CHEVRONUP: ChevronUp,
 };

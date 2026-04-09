@@ -68,6 +68,12 @@ const appointmentSchema = new Schema(
       type: String,
       trim: true,
     },
+
+    status: {
+      type: String,
+      enum: ['booked', 'confirmed', 'completed', 'cancelled'],
+      default: 'booked',
+    },
   },
   {
     timestamps: true,
