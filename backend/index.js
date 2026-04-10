@@ -50,3 +50,6 @@ app.use('/api/admin/activity', activity_routes);
 app.use(errorMiddleware);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
+
+// Export the Express API for Vercel
+module.exports = app;
