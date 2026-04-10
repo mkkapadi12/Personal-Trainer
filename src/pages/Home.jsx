@@ -7,8 +7,7 @@ import ArticleCarousel from '@/components/home/ArticleCarousel';
 import HeroSection from '@/components/home/HeroSection';
 import Litigations from '@/components/home/Litigations';
 import PersonalSubscription from '@/components/home/PersonalSubscription';
-import SimilarSection from '@/components/home/similarSection';
-import { getallArticles } from '@/Store/features/article/article.slice';
+import SimilarSection from '@/components/home/SimilarSection';
 
 const Home = () => {
   const { user, loading } = useSelector((state) => state.user);
