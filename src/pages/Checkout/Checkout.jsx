@@ -97,15 +97,15 @@ const Checkout = () => {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 py-20">
-        <PAGE_ICONS.SHOPPINGBAG size={64} className="text-gray-300" />
-        <h2 className="text-2xl font-bold text-[#222222]">
+      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center gap-4 py-20">
+        <PAGE_ICONS.SHOPPINGBAG size={64} className="text-zinc-600" />
+        <h2 className="text-2xl font-bold text-zinc-100">
           Your cart is empty
         </h2>
-        <p className="text-[#777777]">Add some products before checking out</p>
+        <p className="text-zinc-400">Add some products before checking out</p>
         <Button
           asChild
-          className="bg-[#faa432] hover:bg-[#faa432]/90 text-white rounded-none px-8"
+          className="bg-[#d7fb00] hover:bg-[#b5d500] text-black font-semibold rounded-none px-8 transition-colors mt-4"
         >
           <Link to="/products">Shop Now</Link>
         </Button>
@@ -114,23 +114,23 @@ const Checkout = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
+    <div className="min-h-screen bg-zinc-950 py-10">
       <div className="max-w-6xl mx-auto px-4">
         {/* Back */}
         <Link
           to="/account/cart"
-          className="inline-flex items-center gap-2 text-sm text-[#777777] hover:text-[#222222] mb-6 transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-[#d7fb00] mb-6 transition-colors group"
         >
-          <PAGE_ICONS.ARROWLEFT size={16} />
+          <PAGE_ICONS.ARROWLEFT size={16} className="group-hover:-translate-x-1 transition-transform" />
           Back to Cart
         </Link>
 
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#222222] uppercase tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-zinc-100 uppercase tracking-tight shadow-sm">
             Checkout
           </h1>
-          <p className="text-[#777777] mt-1">
+          <p className="text-zinc-400 mt-1">
             {cart.length} item{cart.length > 1 ? 's' : ''} in your order
           </p>
         </div>
@@ -141,21 +141,21 @@ const Checkout = () => {
             <React.Fragment key={step}>
               <span
                 className={cn(
-                  'font-medium',
+                  'font-medium transition-colors',
                   i === 1
-                    ? 'text-[#faa432]'
+                    ? 'text-[#d7fb00]'
                     : i < 1
-                      ? 'text-[#0d9b4d]'
-                      : 'text-gray-400',
+                      ? 'text-[#d7fb00]'
+                      : 'text-zinc-500',
                 )}
               >
                 {i < 1 ? (
-                  <PAGE_ICONS.CHECKCIRCLE size={14} className="inline mr-1" />
+                  <PAGE_ICONS.CHECKCIRCLE size={14} className="inline mr-1 text-[#d7fb00]" />
                 ) : null}
                 {step}
               </span>
               {i < 2 && (
-                <PAGE_ICONS.CHEVRONRIGHT size={14} className="text-gray-300" />
+                <PAGE_ICONS.CHEVRONRIGHT size={14} className="text-zinc-600" />
               )}
             </React.Fragment>
           ))}
@@ -165,30 +165,30 @@ const Checkout = () => {
           {/* LEFT COLUMN */}
           <div className="lg:col-span-3 space-y-6">
             {/* DELIVERY ADDRESS */}
-            <div className="bg-white border border-gray-100 p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-[#faa432]/10 flex items-center justify-center">
-                  <PAGE_ICONS.MAPPIN size={16} className="text-[#faa432]" />
+            <div className="bg-zinc-900 border border-zinc-800 p-6 shadow-md rounded-sm">
+              <div className="flex items-center gap-2 mb-4 pb-2 border-b border-zinc-800/60">
+                <div className="w-8 h-8 rounded-full bg-[#d7fb00]/10 flex items-center justify-center">
+                  <PAGE_ICONS.MAPPIN size={16} className="text-[#d7fb00]" />
                 </div>
-                <h2 className="text-lg font-bold text-[#222222]">
+                <h2 className="text-lg font-bold text-zinc-100">
                   Delivery Address
                 </h2>
               </div>
 
               {addresses?.length === 0 ? (
-                <div className="border-2 border-dashed border-gray-200 p-6 text-center rounded-sm">
+                <div className="border-2 border-dashed border-zinc-700 p-6 text-center rounded-sm bg-zinc-800/30">
                   <PAGE_ICONS.MAPPIN
                     size={32}
-                    className="text-gray-300 mx-auto mb-2"
+                    className="text-zinc-500 mx-auto mb-2"
                   />
-                  <p className="text-[#777777] text-sm mb-3">
+                  <p className="text-zinc-400 text-sm mb-3">
                     No saved addresses
                   </p>
                   <Button
                     asChild
                     variant="outline"
                     size="sm"
-                    className="rounded-none"
+                    className="rounded-none border-zinc-700 hover:bg-zinc-800 hover:text-zinc-100 text-zinc-300"
                   >
                     <Link to="/account/profile/address">
                       <PAGE_ICONS.PLUS size={14} className="mr-1" /> Add Address
@@ -206,36 +206,36 @@ const Checkout = () => {
                       key={addr._id}
                       htmlFor={addr._id}
                       className={cn(
-                        'flex items-start gap-3 p-4 border-2 cursor-pointer transition-all',
+                        'flex items-start gap-3 p-4 border-2 cursor-pointer transition-all rounded-sm',
                         selectedAddressId === addr._id
-                          ? 'border-[#faa432] bg-[#faa432]/5'
-                          : 'border-gray-100 hover:border-gray-200',
+                          ? 'border-[#d7fb00] bg-[#d7fb00]/5'
+                          : 'border-zinc-800/50 bg-zinc-800/20 hover:border-zinc-700',
                       )}
                     >
                       <RadioGroupItem
                         value={addr._id}
                         id={addr._id}
-                        className="mt-0.5 accent-[#faa432]"
+                        className="mt-0.5 accent-[#d7fb00] border-zinc-600 data-[state=checked]:border-[#d7fb00] data-[state=checked]:text-[#d7fb00]"
                       />
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-semibold text-[#222222] text-sm">
+                          <span className="font-semibold text-zinc-100 text-sm">
                             {addr.name ||
                               `${user?.firstName} ${user?.lastName}`}
                           </span>
                           {addr.isDefault && (
-                            <Badge className="text-[10px] h-4 bg-[#0d9b4d]/10 text-[#0d9b4d] border-0">
+                            <Badge className="text-[10px] h-4 bg-[#d7fb00]/10 text-[#d7fb00] border border-[#d7fb00]/20">
                               Default
                             </Badge>
                           )}
                         </div>
-                        <p className="text-sm text-[#777777]">
+                        <p className="text-sm text-zinc-400">
                           {addr.street}, {addr.city}, {addr.state} —{' '}
                           {addr.pincode}
                         </p>
                         {addr.phone && (
-                          <p className="text-xs text-[#777777] mt-0.5">
-                            📞 {addr.phone}
+                          <p className="text-xs text-zinc-500 mt-1 flex items-center gap-1">
+                            <PAGE_ICONS.PHONE size={12} className="text-zinc-600"/> {addr.phone}
                           </p>
                         )}
                       </div>
@@ -246,19 +246,19 @@ const Checkout = () => {
 
               <Link
                 to="/account/addresses"
-                className="mt-3 inline-flex items-center gap-1 text-xs text-[#faa432] hover:underline font-medium"
+                className="mt-4 inline-flex items-center gap-1 text-xs text-[#d7fb00] hover:text-[#b5d500] hover:underline font-medium transition-colors"
               >
-                <PAGE_ICONS.PLUS size={12} /> Manage Addresses
+                <PAGE_ICONS.PLUS size={14} /> Manage Addresses
               </Link>
             </div>
 
             {/* PAYMENT METHOD */}
-            <div className="bg-white border border-gray-100 p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-[#faa432]/10 flex items-center justify-center">
-                  <PAGE_ICONS.CREDITCARD size={16} className="text-[#faa432]" />
+            <div className="bg-zinc-900 border border-zinc-800 p-6 shadow-md rounded-sm">
+              <div className="flex items-center gap-2 mb-4 pb-2 border-b border-zinc-800/60">
+                <div className="w-8 h-8 rounded-full bg-[#d7fb00]/10 flex items-center justify-center">
+                  <PAGE_ICONS.CREDITCARD size={16} className="text-[#d7fb00]" />
                 </div>
-                <h2 className="text-lg font-bold text-[#222222]">
+                <h2 className="text-lg font-bold text-zinc-100">
                   Payment Method
                 </h2>
               </div>
@@ -275,28 +275,28 @@ const Checkout = () => {
                       key={method.id}
                       htmlFor={method.id}
                       className={cn(
-                        'flex items-center gap-3 p-4 border-2 cursor-pointer transition-all',
+                        'flex items-center gap-3 p-4 border-2 cursor-pointer transition-all rounded-sm',
                         selectedPayment === method.id
-                          ? 'border-[#faa432] bg-[#faa432]/5'
-                          : 'border-gray-100 hover:border-gray-200',
+                          ? 'border-[#d7fb00] bg-[#d7fb00]/5'
+                          : 'border-zinc-800/50 bg-zinc-800/20 hover:border-zinc-700',
                       )}
                     >
-                      <RadioGroupItem value={method.id} id={method.id} />
-                      <div className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-                        <Icon size={18} className="text-[#222222]" />
+                      <RadioGroupItem value={method.id} id={method.id} className="border-zinc-600 data-[state=checked]:border-[#d7fb00] data-[state=checked]:text-[#d7fb00] accent-[#d7fb00]" />
+                      <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shrink-0 border border-zinc-700/50">
+                        <Icon size={18} className="text-zinc-300" />
                       </div>
                       <div>
-                        <p className="font-semibold text-sm text-[#222222]">
+                        <p className="font-semibold text-sm text-zinc-100">
                           {method.label}
                         </p>
-                        <p className="text-xs text-[#777777]">
+                        <p className="text-xs text-zinc-400 mt-0.5">
                           {method.description}
                         </p>
                       </div>
                       {selectedPayment === method.id && (
                         <PAGE_ICONS.CHECKCIRCLE
                           size={18}
-                          className="text-[#faa432] ml-auto"
+                          className="text-[#d7fb00] ml-auto drop-shadow-sm"
                         />
                       )}
                     </label>
@@ -306,44 +306,46 @@ const Checkout = () => {
             </div>
 
             {/* ORDER ITEMS */}
-            <div className="bg-white border border-gray-100 p-6 shadow-sm">
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-full bg-[#faa432]/10 flex items-center justify-center">
-                  <PAGE_ICONS.PACKAGE size={16} className="text-[#faa432]" />
+            <div className="bg-zinc-900 border border-zinc-800 p-6 shadow-md rounded-sm">
+              <div className="flex items-center gap-2 mb-5 pb-2 border-b border-zinc-800/60">
+                <div className="w-8 h-8 rounded-full bg-[#d7fb00]/10 flex items-center justify-center">
+                  <PAGE_ICONS.PACKAGE size={16} className="text-[#d7fb00]" />
                 </div>
-                <h2 className="text-lg font-bold text-[#222222]">
+                <h2 className="text-lg font-bold text-zinc-100">
                   Order Items
                 </h2>
-                <span className="text-xs text-[#777777] ml-auto">
+                <span className="text-xs text-zinc-400 ml-auto bg-zinc-800 px-2 py-1 rounded-full border border-zinc-700">
                   {cart.length} item{cart.length > 1 ? 's' : ''}
                 </span>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {cart.map((item) => (
-                  <div key={item._id} className="flex items-center gap-3">
-                    <div className="w-16 h-16 border border-gray-100 shrink-0 overflow-hidden bg-gray-50">
-                      <img
-                        src={item.mainImage}
-                        alt={item.name}
-                        className="w-full h-full object-contain"
-                      />
+                  <Link to={`/products/${item._id}`} key={item._id} className="block group">
+                    <div className="flex items-center gap-4 p-3 rounded-sm border border-transparent hover:border-zinc-800 hover:bg-zinc-800/30 transition-all">
+                      <div className="w-16 h-16 border border-zinc-700 shrink-0 overflow-hidden bg-white/5 rounded-sm p-1">
+                        <img
+                          src={item.mainImage}
+                          alt={item.name}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[10px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">
+                          {item.brand}
+                        </p>
+                        <p className="text-sm font-semibold text-zinc-100 truncate group-hover:text-[#d7fb00] transition-colors">
+                          {item.name}
+                        </p>
+                        <p className="text-xs text-zinc-500 mt-1">
+                          Qty: <span className="text-zinc-300 font-medium">{item.quantity}</span>
+                        </p>
+                      </div>
+                      <p className="text-sm font-bold text-zinc-100 shrink-0 tabular-nums">
+                        ₹{(item.price * item.quantity).toLocaleString()}
+                      </p>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-[#63af21] font-medium uppercase tracking-wide truncate">
-                        {item.brand}
-                      </p>
-                      <p className="text-sm font-semibold text-[#222222] truncate">
-                        {item.name}
-                      </p>
-                      <p className="text-xs text-[#777777]">
-                        Qty: {item.quantity}
-                      </p>
-                    </div>
-                    <p className="text-sm font-bold text-[#222222] shrink-0">
-                      ₹{(item.price * item.quantity).toLocaleString()}
-                    </p>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -351,68 +353,69 @@ const Checkout = () => {
 
           {/* RIGHT COLUMN — ORDER SUMMARY */}
           <div className="lg:col-span-2">
-            <div className="bg-white border border-gray-100 p-6 shadow-sm sticky top-6">
-              <h2 className="text-lg font-bold text-[#222222] mb-5">
+            <div className="bg-zinc-900 border border-zinc-800 p-6 shadow-md rounded-sm sticky top-6">
+              <h2 className="text-lg font-bold text-zinc-100 mb-5 pb-2 border-b border-zinc-800/60">
                 Order Summary
               </h2>
 
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between text-[#777777]">
+                <div className="flex justify-between text-zinc-400">
                   <span>Subtotal ({cart.length} items)</span>
-                  <span className="text-[#222222] font-medium">
+                  <span className="text-zinc-100 font-medium tabular-nums">
                     ₹{subtotal.toLocaleString()}
                   </span>
                 </div>
-                <div className="flex justify-between text-[#777777]">
+                <div className="flex justify-between text-zinc-400">
                   <span>Shipping</span>
                   <span
                     className={
                       shipping === 0
-                        ? 'text-[#0d9b4d] font-medium'
-                        : 'text-[#222222] font-medium'
+                        ? 'text-[#d7fb00] font-medium'
+                        : 'text-zinc-100 font-medium'
                     }
                   >
                     {shipping === 0 ? 'FREE' : `₹${shipping}`}
                   </span>
                 </div>
                 {shipping === 0 && (
-                  <p className="text-xs text-[#0d9b4d] bg-[#0d9b4d]/5 px-2 py-1 rounded-sm">
-                    🎉 You saved ₹99 on shipping!
-                  </p>
+                  <div className="flex items-center gap-2 text-xs text-[#d7fb00] bg-[#d7fb00]/10 px-3 py-2 rounded-sm border border-[#d7fb00]/20 mt-2">
+                    <PAGE_ICONS.TRUCK size={14} />
+                    <p>You saved ₹99 on shipping!</p>
+                  </div>
                 )}
                 {shipping > 0 && (
-                  <p className="text-xs text-[#777777] bg-gray-50 px-2 py-1 rounded-sm">
-                    Add ₹{(999 - subtotal).toLocaleString()} more for free
-                    shipping
-                  </p>
+                  <div className="text-xs text-zinc-400 bg-zinc-800/50 px-3 py-2 rounded-sm border border-zinc-700/50 mt-2">
+                    Add <span className="text-zinc-200 font-medium">₹{(999 - subtotal).toLocaleString()}</span> more for free shipping
+                  </div>
                 )}
               </div>
 
-              <Separator className="my-4" />
+              <Separator className="my-5 bg-zinc-800" />
 
-              <div className="flex justify-between font-bold text-[#222222]">
-                <span className="text-base">Total</span>
-                <span className="text-xl">₹{total.toLocaleString()}</span>
+              <div className="flex justify-between items-end font-bold text-zinc-100">
+                <div>
+                  <span className="text-base text-zinc-100 block">Total Amount</span>
+                  <span className="text-[10px] text-zinc-500 font-normal mt-0.5 block">Inclusive of all taxes</span>
+                </div>
+                <span className="text-2xl text-[#d7fb00] tabular-nums">₹{total.toLocaleString()}</span>
               </div>
 
-              <p className="text-xs text-[#777777] mt-1">
-                Inclusive of all taxes
-              </p>
-
-              <Separator className="my-5" />
+              <Separator className="my-5 bg-zinc-800" />
 
               {/* Payment badge */}
-              <div className="flex items-center gap-2 bg-gray-50 p-3 mb-5">
+              <div className="flex items-center gap-3 bg-zinc-800/50 p-3 mb-6 rounded-sm border border-zinc-700/50">
                 {PAYMENT_METHODS.find((m) => m.id === selectedPayment) && (
                   <>
-                    {React.createElement(
-                      PAYMENT_METHODS.find((m) => m.id === selectedPayment)
-                        .icon,
-                      { size: 16, className: 'text-[#777777] shrink-0' },
-                    )}
-                    <span className="text-xs text-[#777777]">
-                      Paying via{' '}
-                      <strong className="text-[#222222]">
+                    <div className="p-1.5 bg-zinc-800 rounded-full shrink-0">
+                      {React.createElement(
+                        PAYMENT_METHODS.find((m) => m.id === selectedPayment)
+                          .icon,
+                        { size: 16, className: 'text-[#d7fb00]' },
+                      )}
+                    </div>
+                    <span className="text-xs text-zinc-300">
+                      Paying securely via{' '}
+                      <strong className="text-zinc-100 font-semibold">
                         {
                           PAYMENT_METHODS.find((m) => m.id === selectedPayment)
                             .label
@@ -427,31 +430,33 @@ const Checkout = () => {
               <Button
                 onClick={onConfirmOrder}
                 disabled={loading || !selectedAddressId}
-                className="w-full bg-[#faa432] hover:bg-[#faa432]/90 text-white rounded-none py-6 text-base font-bold uppercase tracking-wider disabled:opacity-50"
+                className="w-full bg-[#d7fb00] hover:bg-[#b5d500] text-black rounded-none h-14 text-base font-bold uppercase tracking-wider disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-[0_0_20px_rgba(215,251,0,0.3)]"
               >
                 {loading ? (
                   <span className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Placing Order...
+                    <div className="w-5 h-5 border-2 border-black/20 border-t-black rounded-full animate-spin" />
+                    Processing...
                   </span>
                 ) : (
                   <span className="flex items-center gap-2">
                     <PAGE_ICONS.CHECKCIRCLE size={18} />
-                    Confirm Order
+                    Confirm Order & Pay
                   </span>
                 )}
               </Button>
 
               {/* Trust badges */}
-              <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+              <div className="mt-6 grid grid-cols-3 gap-2 text-center pt-4 border-t border-zinc-800/50">
                 {[
                   { icon: PAGE_ICONS.SHIELD, label: 'Secure Payment' },
                   { icon: PAGE_ICONS.TRUCK, label: 'Fast Delivery' },
                   { icon: PAGE_ICONS.PACKAGE, label: 'Easy Returns' },
                 ].map(({ icon: Icon, label }) => (
-                  <div key={label} className="flex flex-col items-center gap-1">
-                    <Icon size={16} className="text-[#0d9b4d]" />
-                    <span className="text-[10px] text-[#777777]">{label}</span>
+                  <div key={label} className="flex flex-col items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-zinc-800/80 flex items-center justify-center border border-zinc-700/50">
+                      <Icon size={14} className="text-zinc-400" />
+                    </div>
+                    <span className="text-[10px] uppercase font-semibold text-zinc-500 tracking-wider w-full">{label}</span>
                   </div>
                 ))}
               </div>

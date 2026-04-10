@@ -12,6 +12,7 @@ const appo_routes = require('./routes/appo.routes');
 const product_routes = require('./routes/product.routes');
 const admin_routes = require('./routes/admin.routes');
 const order_routes = require('./routes/order.routes');
+const activity_routes = require('./routes/activity.routes');
 
 const errorMiddleware = require('./middlewares/error.middleware');
 
@@ -43,6 +44,7 @@ app.use('/api/article', article_routes);
 app.use('/api/appointment', appo_routes);
 app.use('/api/products', product_routes);
 app.use('/api/orders', order_routes);
+app.use('/api/admin/activity', activity_routes);
 
 //error handling middleware
 app.use(errorMiddleware);

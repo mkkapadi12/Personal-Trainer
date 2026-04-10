@@ -32,30 +32,30 @@ const MyOrders = () => {
       : userOrders?.filter((o) => o.status === activeFilter) || [];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10">
+    <div className="min-h-screen bg-zinc-950 py-10">
       <div className="max-w-3xl mx-auto px-4">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#222222] uppercase tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-zinc-100 uppercase tracking-tight">
             My Orders
           </h1>
-          <p className="text-[#777777] mt-1">
+          <p className="text-zinc-400 mt-1">
             {userOrders?.length || 0} order
             {(userOrders?.length || 0) !== 1 ? 's' : ''} placed
           </p>
         </div>
 
         {/* Filter tabs */}
-        <div className="flex gap-1 mb-6 bg-white border border-gray-100 p-1 w-fit">
+        <div className="flex gap-1 mb-6 bg-zinc-900 border border-zinc-800 p-1 w-fit rounded-sm">
           {filters.map((f) => (
             <button
               key={f.value}
               onClick={() => setActiveFilter(f.value)}
               className={cn(
-                'px-4 py-1.5 text-sm font-medium transition-all',
+                'px-4 py-1.5 text-sm font-medium transition-all rounded-sm',
                 activeFilter === f.value
-                  ? 'bg-[#faa432] text-white'
-                  : 'text-[#777777] hover:text-[#222222]',
+                  ? 'bg-[#d7fb00] text-black shadow-sm'
+                  : 'text-zinc-400 hover:text-zinc-100',
               )}
             >
               {f.label}
@@ -71,23 +71,23 @@ const MyOrders = () => {
             ))}
           </div>
         ) : filteredOrders?.length === 0 ? (
-          <div className="bg-white border border-gray-100 p-16 text-center">
-            <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <PAGE_ICONS.RECEIPTTEXT size={28} className="text-gray-300" />
+          <div className="bg-zinc-900 border border-zinc-800 p-16 text-center rounded-sm">
+            <div className="w-16 h-16 bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-4 border border-zinc-700">
+              <PAGE_ICONS.RECEIPTTEXT size={28} className="text-zinc-400" />
             </div>
-            <h3 className="font-bold text-[#222222] mb-1">No orders found</h3>
-            <p className="text-sm text-[#777777] mb-6">
+            <h3 className="font-bold text-zinc-100 mb-1">No orders found</h3>
+            <p className="text-sm text-zinc-400 mb-6">
               {activeFilter === 'all'
                 ? "You haven't placed any orders yet."
                 : `No ${activeFilter} orders.`}
             </p>
             <Button
               asChild
-              className="bg-[#faa432] hover:bg-[#faa432]/90 text-white rounded-none px-8"
+              className="bg-[#d7fb00] hover:bg-[#b5d500] text-black rounded-none px-8 font-semibold transition-colors"
             >
               <Link to="/products">
                 Start Shopping{' '}
-                <PAGE_ICONS.ARROWRIGHT size={14} className="ml-1" />
+                <PAGE_ICONS.ARROWRIGHT size={16} className="ml-2" />
               </Link>
             </Button>
           </div>

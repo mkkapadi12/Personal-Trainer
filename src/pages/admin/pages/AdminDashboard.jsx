@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { cn } from '@/lib/utils';
-import { recentActivity, statsCardsDashboard } from '../constants';
+import { statsCardsDashboard } from '../constants';
 import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
+import RecentActivity from '../components/RecentActivity';
 
 const AdminDashboard = () => {
   const { admin } = useSelector((state) => state.admin);
@@ -109,44 +110,7 @@ const AdminDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Recent Activity */}
         <div className="lg:col-span-2 rounded-xl bg-zinc-900 border border-zinc-800/60 overflow-hidden">
-          <div className="flex items-center justify-between p-5 border-b border-zinc-800/60">
-            <div>
-              <h3 className="text-sm font-semibold text-white">
-                Recent Activity
-              </h3>
-              <p className="text-xs text-zinc-500 mt-0.5">
-                Latest actions on the platform
-              </p>
-            </div>
-            <button className="text-xs text-lime-400 hover:text-lime-300 font-medium transition-colors">
-              View All
-            </button>
-          </div>
-
-          <div className="divide-y divide-zinc-800/40">
-            {recentActivity.map(
-              ({ id, user, action, target, time, icon: Icon }) => (
-                <div
-                  key={id}
-                  className="flex items-center gap-3.5 px-5 py-3.5 hover:bg-zinc-800/30 transition-colors"
-                >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-800">
-                    <Icon className="h-4 w-4 text-zinc-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-zinc-200 truncate">
-                      <span className="font-medium text-white">{user}</span>{' '}
-                      <span className="text-zinc-500">{action}</span>{' '}
-                      <span className="text-zinc-300">{target}</span>
-                    </p>
-                  </div>
-                  <span className="text-xs text-zinc-600 whitespace-nowrap">
-                    {time}
-                  </span>
-                </div>
-              ),
-            )}
-          </div>
+          <RecentActivity />
         </div>
 
         {/* Quick Overview */}

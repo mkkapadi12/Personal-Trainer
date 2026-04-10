@@ -9,6 +9,7 @@ import cartSlice from './features/cart/cart.slice';
 import orderSlice from './features/orders/order.slice';
 import wishListSlice from './features/wishlist/wishlist.slice';
 import adminAuthSlice from './features/admin/auth/admin.auth.slice';
+import activitySlice from './features/activity/activity.slice';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     wishlist: wishListSlice,
     admin: adminAuthSlice,
     orders: orderSlice,
+    activity: activitySlice,
   },
 });
 export default store;

@@ -159,6 +159,11 @@ export const navItems = [
     icon: ADMIN_ICONS.CALENDAR,
   },
   {
+    label: 'Activities',
+    path: '/admin/activities',
+    icon: ADMIN_ICONS.ACTIVITY,
+  },
+  {
     label: 'Analytics',
     path: '/admin/analytics',
     icon: ADMIN_ICONS.BARCHART,
@@ -171,3 +176,15 @@ export const navItems = [
     disabled: true,
   },
 ];
+
+export const actionLabel = {
+  purchased: 'purchased',
+  'signed up': 'signed up',
+  booked: 'booked',
+};
+
+export const iconMap = {
+  purchased: { icon: ADMIN_ICONS.SHOPPINGBAG, color: 'text-amber-400' },
+  'signed up': { icon: ADMIN_ICONS.USER, color: 'text-emerald-400' },
+  booked: { icon: ADMIN_ICONS.CALENDAR, color: 'text-blue-400' },
+};

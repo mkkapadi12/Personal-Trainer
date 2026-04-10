@@ -18,14 +18,14 @@ const ProductDetails = () => {
 
   if (!singleProduct) {
     return (
-      <div className="flex justify-center py-20">
-        <PAGE_ICONS.LOADER className="animate-spin" />
+      <div className="min-h-screen bg-zinc-950 flex justify-center py-20">
+        <PAGE_ICONS.LOADER className="animate-spin text-[#d7fb00]" size={48} />
       </div>
     );
   }
 
   return (
-    <div className="">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 py-10">
       <section className="max-w-292.5 mx-auto container px-3">
         <SingleProduct key={singleProduct?._id} product={singleProduct} />
       </section>

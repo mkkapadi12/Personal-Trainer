@@ -9,29 +9,36 @@ const CartSummary = ({ cart }) => {
   );
 
   return (
-    <div className="border p-6 space-y-4">
-      <textarea
-        placeholder="Order special instructions"
-        className="w-full border p-3 h-28"
-        id="order-special-instructions"
-        name="order-special-instructions"
-      />
+    <div className="bg-zinc-900 border border-zinc-800 p-6 lg:p-8 rounded-sm space-y-6 sticky top-6">
+      <div className="space-y-3">
+        <label htmlFor="order-special-instructions" className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+          Order Instructions
+        </label>
+        <textarea
+          placeholder="Add any special instructions for your order..."
+          className="w-full bg-zinc-950 border border-zinc-800 focus:border-[#d7fb00] focus:ring-1 focus:ring-[#d7fb00] p-4 h-32 text-sm text-zinc-300 rounded-sm resize-none transition-colors placeholder:text-zinc-600 outline-none"
+          id="order-special-instructions"
+          name="order-special-instructions"
+        />
+      </div>
 
-      <div className="text-center space-y-3">
-        <p className="text-lg font-semibold">Subtotal</p>
+      <div className="pt-6 border-t border-zinc-800/60 space-y-4">
+        <div className="flex justify-between items-end pb-4 border-b border-zinc-800/40">
+           <p className="text-sm font-semibold text-zinc-400 uppercase tracking-widest">Subtotal</p>
+           <p className="text-2xl font-bold text-zinc-100 tabular-nums">
+             ₹{subtotal.toLocaleString()}
+           </p>
+        </div>
 
-        <p className="text-2xl font-bold">
-          Rs. {subtotal.toLocaleString()} INR
-        </p>
-
-        <p className="text-sm text-gray-500">
+        <p className="text-xs text-zinc-500 text-center leading-relaxed">
           Taxes and shipping calculated at checkout
         </p>
-        <Link to="/account/checkout">
-          <Button className="w-full bg-[#d7fb00] text-black">
+
+        <Button asChild className="w-full bg-[#d7fb00] hover:bg-[#b5d500] text-black h-14 rounded-none font-bold uppercase tracking-wider transition-all mt-2 cursor-pointer shadow-[0_0_20px_rgba(215,251,0,0.1)] hover:shadow-[0_0_30px_rgba(215,251,0,0.3)]">
+          <Link to="/account/checkout">
             PROCEED TO CHECKOUT
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
     </div>
   );

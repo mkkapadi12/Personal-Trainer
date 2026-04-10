@@ -8,10 +8,9 @@ const createOrder = async (req, res, next) => {
     const productIds = items.map((item) => item.productId);
     const userId = req.userId;
 
-    // Check existing orders for same user & product but NOT completed & cancelled
     const existOrder = await ORDER.find({
       userId,
-      status: { $nin: ['completed', 'cancelled'] }, // ignore completed & cancelled orders
+      status: { $nin: ['completed', 'cancelled'] },
       'items.productId': { $in: productIds },
     }).populate('items.productId');
 

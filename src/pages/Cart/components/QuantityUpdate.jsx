@@ -6,27 +6,30 @@ import { PAGE_ICONS } from '@/lib/icons/page.icons';
 const QuantityUpdate = ({ item }) => {
   const dispatch = useDispatch();
   return (
-    <div className=" md:relative top-1/2 right-0 md:top-0 md:right-0 flex border w-fit">
+    <div className="flex bg-zinc-900 border border-zinc-800 rounded-sm h-10 w-32 shrink-0">
       <button
-        className="px-3"
+        className="flex-1 flex justify-center items-center text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors disabled:opacity-50"
         onClick={() =>
           dispatch(
             updateQuantity({ id: item._id, quantity: item.quantity - 1 }),
           )
         }
+        disabled={item.quantity <= 1}
       >
-        <PAGE_ICONS.MINUS className="size-5" />
+        <PAGE_ICONS.MINUS size={14} />
       </button>
-      <span className="px-4">{item.quantity}</span>
+      <span className="w-10 flex justify-center items-center text-sm font-medium text-zinc-100 border-x border-zinc-800 tabular-nums">
+        {item.quantity}
+      </span>
       <button
-        className="px-3"
+        className="flex-1 flex justify-center items-center text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors"
         onClick={() =>
           dispatch(
             updateQuantity({ id: item._id, quantity: item.quantity + 1 }),
           )
         }
       >
-        <PAGE_ICONS.PLUS className="size-5" />
+        <PAGE_ICONS.PLUS size={14} />
       </button>
     </div>
   );

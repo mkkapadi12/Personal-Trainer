@@ -12,6 +12,7 @@ import AdminOrders from '@/pages/admin/pages/AdminOrders';
 import MyOrders from '@/pages/Orders/MyOrders';
 import Checkout from '@/pages/Checkout/Checkout';
 import AdminAppointments from '@/pages/admin/pages/AdminAppointments';
+import AdminActivities from '@/pages/admin/pages/AdminActivities';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('../pages/Home'));
@@ -116,6 +117,7 @@ export const router = createBrowserRouter([
       { path: 'products', element: <AdminProducts /> },
       { path: 'orders', element: <AdminOrders /> },
       { path: 'appointments', element: <AdminAppointments /> },
+      { path: 'activities', element: <AdminActivities /> },
     ],
   },
 ]);

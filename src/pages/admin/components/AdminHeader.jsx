@@ -47,6 +47,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
       settings: 'Settings',
       orders: 'Orders',
       appointments: 'Appointments',
+      activities: 'Activities',
     };
     return titles[path] || 'Dashboard';
   };
@@ -61,6 +62,7 @@ const AdminHeader = ({ collapsed, onToggleSidebar }) => {
       settings: 'Configure platform settings',
       orders: 'Manage orders',
       appointments: 'Manage appointments',
+      activities: 'Recent activities of users',
     };
     return descriptions[path] || 'Overview of your fitness platform';
   };
