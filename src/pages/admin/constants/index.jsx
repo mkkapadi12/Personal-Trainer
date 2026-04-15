@@ -40,7 +40,7 @@ export const emptyForm = {
   category: '',
   price: '',
   description: '',
-  mainImage: '',
+  images: [],
   stock: '',
 };
 

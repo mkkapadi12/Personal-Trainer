@@ -79,6 +79,8 @@ const Checkout = () => {
       })),
       totalAmount: total,
       addressId: selectedAddressId,
+      shippingCharge: shipping,
+      subtotal: subtotal,
       paymentMethod: selectedPayment,
       status: 'pending',
     };
@@ -99,9 +101,7 @@ const Checkout = () => {
     return (
       <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center gap-4 py-20">
         <PAGE_ICONS.SHOPPINGBAG size={64} className="text-zinc-600" />
-        <h2 className="text-2xl font-bold text-zinc-100">
-          Your cart is empty
-        </h2>
+        <h2 className="text-2xl font-bold text-zinc-100">Your cart is empty</h2>
         <p className="text-zinc-400">Add some products before checking out</p>
         <Button
           asChild
@@ -121,7 +121,10 @@ const Checkout = () => {
           to="/account/cart"
           className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-[#d7fb00] mb-6 transition-colors group"
         >
-          <PAGE_ICONS.ARROWLEFT size={16} className="group-hover:-translate-x-1 transition-transform" />
+          <PAGE_ICONS.ARROWLEFT
+            size={16}
+            className="group-hover:-translate-x-1 transition-transform"
+          />
           Back to Cart
         </Link>
 
@@ -150,7 +153,10 @@ const Checkout = () => {
                 )}
               >
                 {i < 1 ? (
-                  <PAGE_ICONS.CHECKCIRCLE size={14} className="inline mr-1 text-[#d7fb00]" />
+                  <PAGE_ICONS.CHECKCIRCLE
+                    size={14}
+                    className="inline mr-1 text-[#d7fb00]"
+                  />
                 ) : null}
                 {step}
               </span>
@@ -235,7 +241,11 @@ const Checkout = () => {
                         </p>
                         {addr.phone && (
                           <p className="text-xs text-zinc-500 mt-1 flex items-center gap-1">
-                            <PAGE_ICONS.PHONE size={12} className="text-zinc-600"/> {addr.phone}
+                            <PAGE_ICONS.PHONE
+                              size={12}
+                              className="text-zinc-600"
+                            />{' '}
+                            {addr.phone}
                           </p>
                         )}
                       </div>
@@ -281,7 +291,11 @@ const Checkout = () => {
                           : 'border-zinc-800/50 bg-zinc-800/20 hover:border-zinc-700',
                       )}
                     >
-                      <RadioGroupItem value={method.id} id={method.id} className="border-zinc-600 data-[state=checked]:border-[#d7fb00] data-[state=checked]:text-[#d7fb00] accent-[#d7fb00]" />
+                      <RadioGroupItem
+                        value={method.id}
+                        id={method.id}
+                        className="border-zinc-600 data-[state=checked]:border-[#d7fb00] data-[state=checked]:text-[#d7fb00] accent-[#d7fb00]"
+                      />
                       <div className="w-10 h-10 rounded-full bg-zinc-800 flex items-center justify-center shrink-0 border border-zinc-700/50">
                         <Icon size={18} className="text-zinc-300" />
                       </div>
@@ -311,9 +325,7 @@ const Checkout = () => {
                 <div className="w-8 h-8 rounded-full bg-[#d7fb00]/10 flex items-center justify-center">
                   <PAGE_ICONS.PACKAGE size={16} className="text-[#d7fb00]" />
                 </div>
-                <h2 className="text-lg font-bold text-zinc-100">
-                  Order Items
-                </h2>
+                <h2 className="text-lg font-bold text-zinc-100">Order Items</h2>
                 <span className="text-xs text-zinc-400 ml-auto bg-zinc-800 px-2 py-1 rounded-full border border-zinc-700">
                   {cart.length} item{cart.length > 1 ? 's' : ''}
                 </span>
@@ -321,14 +333,24 @@ const Checkout = () => {
 
               <div className="space-y-3">
                 {cart.map((item) => (
-                  <Link to={`/products/${item._id}`} key={item._id} className="block group">
+                  <Link
+                    to={`/products/${item._id}`}
+                    key={item._id}
+                    className="block group"
+                  >
                     <div className="flex items-center gap-4 p-3 rounded-sm border border-transparent hover:border-zinc-800 hover:bg-zinc-800/30 transition-all">
                       <div className="w-16 h-16 border border-zinc-700 shrink-0 overflow-hidden bg-white/5 rounded-sm p-1">
-                        <img
-                          src={item.mainImage}
-                          alt={item.name}
-                          className="w-full h-full object-contain"
-                        />
+                        {item.images.map(
+                          (image) =>
+                            image.isPrimary && (
+                              <img
+                                key={image.public_id}
+                                src={image?.url}
+                                alt={item.name}
+                                className="w-full h-full object-contain"
+                              />
+                            ),
+                        )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[10px] text-zinc-400 font-semibold uppercase tracking-widest mb-0.5">
@@ -338,7 +360,10 @@ const Checkout = () => {
                           {item.name}
                         </p>
                         <p className="text-xs text-zinc-500 mt-1">
-                          Qty: <span className="text-zinc-300 font-medium">{item.quantity}</span>
+                          Qty:{' '}
+                          <span className="text-zinc-300 font-medium">
+                            {item.quantity}
+                          </span>
                         </p>
                       </div>
                       <p className="text-sm font-bold text-zinc-100 shrink-0 tabular-nums">
@@ -385,7 +410,11 @@ const Checkout = () => {
                 )}
                 {shipping > 0 && (
                   <div className="text-xs text-zinc-400 bg-zinc-800/50 px-3 py-2 rounded-sm border border-zinc-700/50 mt-2">
-                    Add <span className="text-zinc-200 font-medium">₹{(999 - subtotal).toLocaleString()}</span> more for free shipping
+                    Add{' '}
+                    <span className="text-zinc-200 font-medium">
+                      ₹{(999 - subtotal).toLocaleString()}
+                    </span>{' '}
+                    more for free shipping
                   </div>
                 )}
               </div>
@@ -394,10 +423,16 @@ const Checkout = () => {
 
               <div className="flex justify-between items-end font-bold text-zinc-100">
                 <div>
-                  <span className="text-base text-zinc-100 block">Total Amount</span>
-                  <span className="text-[10px] text-zinc-500 font-normal mt-0.5 block">Inclusive of all taxes</span>
+                  <span className="text-base text-zinc-100 block">
+                    Total Amount
+                  </span>
+                  <span className="text-[10px] text-zinc-500 font-normal mt-0.5 block">
+                    Inclusive of all taxes
+                  </span>
                 </div>
-                <span className="text-2xl text-[#d7fb00] tabular-nums">₹{total.toLocaleString()}</span>
+                <span className="text-2xl text-[#d7fb00] tabular-nums">
+                  ₹{total.toLocaleString()}
+                </span>
               </div>
 
               <Separator className="my-5 bg-zinc-800" />
@@ -456,7 +491,9 @@ const Checkout = () => {
                     <div className="w-8 h-8 rounded-full bg-zinc-800/80 flex items-center justify-center border border-zinc-700/50">
                       <Icon size={14} className="text-zinc-400" />
                     </div>
-                    <span className="text-[10px] uppercase font-semibold text-zinc-500 tracking-wider w-full">{label}</span>
+                    <span className="text-[10px] uppercase font-semibold text-zinc-500 tracking-wider w-full">
+                      {label}
+                    </span>
                   </div>
                 ))}
               </div>

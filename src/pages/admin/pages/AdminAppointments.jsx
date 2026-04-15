@@ -34,28 +34,14 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { appoServiceOptions, appoSortOptions, inputClass } from '../constants';
-import { getAllAppointmentsAdminAsync } from '@/Store/features/appointment/appointment.slice';
+import {
+  getAllAppointmentsAdminAsync,
+  toggleAppointmentStatusAsync,
+} from '@/Store/features/appointment/appointment.slice';
+import SortableHeader from '../components/SortableHeader';
 
 // ─── Column helper ──────────────────────────────────────
 const columnHelper = createColumnHelper();
-
-const SortableHeader = ({ column, label }) => {
-  return (
-    <button
-      onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-      className="flex items-center gap-1.5 hover:text-white transition-colors"
-    >
-      {label}
-      {column.getIsSorted() === 'asc' ? (
-        <ADMIN_ICONS.CHEVRONUP className="h-3.5 w-3.5 text-lime-400" />
-      ) : column.getIsSorted() === 'desc' ? (
-        <ADMIN_ICONS.CHEVRONDOWN className="h-3.5 w-3.5 text-lime-400" />
-      ) : (
-        <ADMIN_ICONS.ARROWUPDOWN className="h-3.5 w-3.5 opacity-0 group-hover:opacity-50" />
-      )}
-    </button>
-  );
-};
 
 // ═════════════════════════════════════════════════════════
 const AdminAppointments = () => {
@@ -140,6 +126,19 @@ const AdminAppointments = () => {
     }
   };
 
+  const handleStatusUpdate = useCallback(
+    async (id, status) => {
+      try {
+        await dispatch(toggleAppointmentStatusAsync({ id, status })).unwrap();
+        fetchAppointments();
+        toast.success(`Appointment status updated to ${status}`);
+      } catch (err) {
+        toast.error(err || 'Failed to update status');
+      }
+    },
+    [dispatch],
+  );
+
   // ── Stats ─────────────────────────────────────────────
   const statsCards = [
     {
@@ -150,6 +149,13 @@ const AdminAppointments = () => {
       iconColor: 'text-blue-400',
     },
     {
+      label: 'Booked',
+      value: appointments?.filter((a) => a.status === 'booked').length || 0,
+      icon: ADMIN_ICONS.CLOCK,
+      iconBg: 'bg-amber-500/10',
+      iconColor: 'text-amber-400',
+    },
+    {
       label: 'Confirmed',
       value: appointments?.filter((a) => a.status === 'confirmed').length || 0,
       icon: ADMIN_ICONS.CHECKCIRCLE2,
@@ -157,11 +163,11 @@ const AdminAppointments = () => {
       iconColor: 'text-emerald-400',
     },
     {
-      label: 'Booked',
-      value: appointments?.filter((a) => a.status === 'booked').length || 0,
-      icon: ADMIN_ICONS.CLOCK,
-      iconBg: 'bg-amber-500/10',
-      iconColor: 'text-amber-400',
+      label: 'Completed',
+      value: appointments?.filter((a) => a.status === 'completed').length || 0,
+      icon: ADMIN_ICONS.CHECKCIRCLE2,
+      iconBg: 'bg-emerald-500/10',
+      iconColor: 'text-emerald-400',
     },
     {
       label: 'Cancelled',
@@ -321,13 +327,21 @@ const AdminAppointments = () => {
         cell: ({ row }) => {
           const appo = row.original;
           return (
-            <div className="flex items-center justify-end gap-1">
-              <button
-                className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-200 hover:bg-zinc-700/50 transition-colors"
-                title="View Details"
+            <div className="flex items-center justify-end gap-2">
+              <Select
+                value={appo.status || 'booked'}
+                onValueChange={(val) => handleStatusUpdate(appo._id, val)}
               >
-                <ADMIN_ICONS.EYE className="h-4 w-4" />
-              </button>
+                <SelectTrigger className="h-8 w-[110px] border-zinc-700/50 bg-zinc-800/50 text-xs font-semibold px-2 hover:bg-zinc-700 transition-colors capitalize text-zinc-300">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-300">
+                  <SelectItem value="booked">Booked</SelectItem>
+                  <SelectItem value="confirmed">Confirmed</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
+                  <SelectItem value="cancelled">Cancelled</SelectItem>
+                </SelectContent>
+              </Select>
 
               {deleteId === appo._id ? (
                 <div className="flex items-center gap-1">
@@ -360,7 +374,7 @@ const AdminAppointments = () => {
         },
       }),
     ],
-    [deleteId, handleDelete],
+    [deleteId, handleDelete, handleStatusUpdate],
   );
 
   // ── Table instance ────────────────────────────────────
@@ -377,7 +391,7 @@ const AdminAppointments = () => {
   return (
     <div className="space-y-6">
       {/* ── Stats Grid ─────────────────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
         {statsCards.map(({ label, value, icon: Icon, iconBg, iconColor }) => (
           <div
             key={label}

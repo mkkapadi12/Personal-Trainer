@@ -19,6 +19,7 @@ export const addProductAPI = async (productData) => {
 };
 
 export const updateProductAPI = async (id, productData) => {
+  console.log(id, productData);
   const response = await privateAPI.put(`/products/${id}`, productData);
   return response.data;
 };

@@ -46,6 +46,7 @@ import {
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { inputClass } from '../constants';
+import SortableHeader from '../components/SortableHeader';
 
 // ─── Constants ──────────────────────────────────────────
 const statusOptions = [
@@ -798,9 +799,12 @@ const AdminOrders = () => {
                       >
                         <div className="flex items-center gap-3">
                           <div className="h-9 w-9 rounded-lg bg-zinc-800 border border-zinc-700/50 flex items-center justify-center overflow-hidden shrink-0">
-                            {product?.mainImage ? (
+                            {product?.images.find((img) => img.isPrimary) ? (
                               <img
-                                src={product.mainImage}
+                                src={
+                                  product.images.find((img) => img.isPrimary)
+                                    ?.url
+                                }
                                 alt={product.name}
                                 className="h-full w-full object-cover"
                               />
@@ -826,17 +830,85 @@ const AdminOrders = () => {
                 </div>
               </div>
 
-              {/* Total */}
-              <div className="rounded-lg bg-linear-to-r from-lime-400/5 to-emerald-400/5 border border-lime-400/10 p-4 flex items-center justify-between">
-                <span className="text-sm font-medium text-zinc-400">
-                  Total Amount
-                </span>
-                <span className="text-lg font-bold text-lime-400 tabular-nums">
-                  ₹
-                  {detailOrder.totalAmount?.toLocaleString('en-IN', {
-                    minimumFractionDigits: 2,
-                  })}
-                </span>
+              {/* Order Summary */}
+              <div className="bg-zinc-900/80 border border-zinc-800/60 rounded-xl overflow-hidden">
+                {/* Header */}
+                <div className="px-4 py-3 border-b border-zinc-800/60 flex items-center gap-2">
+                  <ADMIN_ICONS.RECEIPTTEXT
+                    size={14}
+                    className="text-muted-foreground"
+                  />
+                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                    Order Summary
+                  </span>
+                </div>
+
+                {/* Rows */}
+                <div>
+                  {/* Subtotal */}
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <ADMIN_ICONS.SHOPPINGBAG
+                        size={14}
+                        className="text-muted-foreground/60"
+                      />
+                      <span className="text-sm text-muted-foreground">
+                        Subtotal
+                      </span>
+                    </div>
+                    <span className="text-sm font-medium tabular-nums">
+                      ₹
+                      {detailOrder.subtotal?.toLocaleString('en-IN', {
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
+                  </div>
+
+                  <div className="h-px bg-border/30 mx-4" />
+
+                  {/* Shipping */}
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <ADMIN_ICONS.TRUCK
+                        size={14}
+                        className="text-muted-foreground/60"
+                      />
+                      <span className="text-sm text-muted-foreground">
+                        Shipping
+                      </span>
+                    </div>
+                    <span className="text-sm font-medium tabular-nums">
+                      ₹
+                      {detailOrder.shippingCharge?.toLocaleString('en-IN', {
+                        minimumFractionDigits: 2,
+                      })}
+                    </span>
+                  </div>
+
+                  <div className="h-px bg-border/30 mx-4" />
+
+                  {/* Total */}
+                  <div className="flex items-center justify-between px-4 py-3.5 bg-muted/40 rounded-b-xl">
+                    <div className="flex items-center gap-2">
+                      <ADMIN_ICONS.INDIANRUPEE
+                        size={14}
+                        className="text-lime-400/70"
+                      />
+                      <span className="text-sm font-medium text-foreground">
+                        Total Amount
+                      </span>
+                    </div>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-xs text-muted-foreground">INR</span>
+                      <span className="text-lg font-medium tabular-nums">
+                        ₹
+                        {detailOrder.totalAmount?.toLocaleString('en-IN', {
+                          minimumFractionDigits: 2,
+                        })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Status update actions */}
@@ -879,31 +951,6 @@ const AdminOrders = () => {
         </DialogContent>
       </Dialog>
     </div>
-  );
-};
-
-// ─── Sortable header component ──────────────────────────
-const SortableHeader = ({ column, label }) => {
-  const sorted = column.getIsSorted();
-
-  return (
-    <button
-      className="flex items-center gap-1.5 hover:text-zinc-200 transition-colors group"
-      onClick={() => column.toggleSorting(sorted === 'asc')}
-    >
-      <span className="text-xs font-semibold uppercase tracking-wider">
-        {label}
-      </span>
-      <span className="flex flex-col">
-        {sorted === 'asc' ? (
-          <ADMIN_ICONS.ARROWUP className="h-3.5 w-3.5 text-lime-400" />
-        ) : sorted === 'desc' ? (
-          <ADMIN_ICONS.ARROWDOWN className="h-3.5 w-3.5 text-lime-400" />
-        ) : (
-          <ADMIN_ICONS.ARROWUPDOWN className="h-3.5 w-3.5 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
-        )}
-      </span>
-    </button>
   );
 };
 

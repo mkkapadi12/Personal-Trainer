@@ -100,4 +100,27 @@ const getAllAppointmentAdmin = async (req, res, next) => {
     next(error);
   }
 };
-module.exports = { addAppointment, getAllAppointment, getAllAppointmentAdmin };
+
+const toggleAppointmentStatus = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const appointment = await APPOINTMENT.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true },
+    );
+    return res
+      .status(200)
+      .json({ msg: 'Appointment status updated successfully', appointment });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  addAppointment,
+  getAllAppointment,
+  getAllAppointmentAdmin,
+  toggleAppointmentStatus,
+};

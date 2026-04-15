@@ -24,9 +24,9 @@ const OrderCard = ({ order }) => {
       <div className="p-5 flex flex-col sm:flex-row sm:items-center gap-4">
         {/* Thumbnail */}
         <div className="w-16 h-16 shrink-0 border border-zinc-800 bg-zinc-950 overflow-hidden rounded-sm p-1">
-          {firstItem?.productId?.mainImage ? (
+          {firstItem?.productId?.images.find((img) => img.isPrimary) ? (
             <img
-              src={firstItem.productId.mainImage}
+              src={firstItem.productId.images.find((img) => img.isPrimary)?.url}
               alt={firstItem.productId?.name}
               className="w-full h-full object-contain"
             />
@@ -91,17 +91,26 @@ const OrderCard = ({ order }) => {
             {/* Items list */}
             <div className="space-y-3">
               {items.map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-2 hover:bg-zinc-800/30 rounded-sm transition-colors border border-transparent hover:border-zinc-800">
+                <div
+                  key={i}
+                  className="flex items-center gap-3 p-2 hover:bg-zinc-800/30 rounded-sm transition-colors border border-transparent hover:border-zinc-800"
+                >
                   <div className="w-12 h-12 shrink-0 border border-zinc-800 bg-zinc-900 overflow-hidden rounded-sm p-1">
-                    {item.productId?.mainImage ? (
+                    {item.productId?.images.find((img) => img.isPrimary) ? (
                       <img
-                        src={item.productId.mainImage}
+                        src={
+                          item.productId.images.find((img) => img.isPrimary)
+                            ?.url
+                        }
                         alt={item.productId?.name}
                         className="w-full h-full object-contain"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
-                        <PAGE_ICONS.PACKAGE size={16} className="text-zinc-600" />
+                        <PAGE_ICONS.PACKAGE
+                          size={16}
+                          className="text-zinc-600"
+                        />
                       </div>
                     )}
                   </div>
@@ -113,13 +122,18 @@ const OrderCard = ({ order }) => {
                       {item.productId?.name || 'Product'}
                     </p>
                     <p className="text-xs text-zinc-400 mt-0.5">
-                      Qty: <span className="text-zinc-300 font-medium">{item.quantity}</span>
+                      Qty:{' '}
+                      <span className="text-zinc-300 font-medium">
+                        {item.quantity}
+                      </span>
                     </p>
                   </div>
                   <p className="text-sm font-semibold text-zinc-100 shrink-0 tabular-nums">
                     ₹
                     {(
-                      (item.price || item.productId?.price || 0) * item.quantity
+                      item.price ||
+                      item.productId?.price ||
+                      0
                     ).toLocaleString()}
                   </p>
                 </div>
@@ -132,15 +146,19 @@ const OrderCard = ({ order }) => {
             <div className="space-y-1.5 text-sm">
               <div className="flex justify-between text-zinc-400">
                 <span>Subtotal</span>
-                <span className="tabular-nums">₹{order.totalAmount?.toLocaleString()}</span>
+                <span className="tabular-nums">
+                  ₹{order.subtotal?.toLocaleString()}
+                </span>
               </div>
               <div className="flex justify-between text-zinc-400">
                 <span>Shipping</span>
-                <span className="text-[#d7fb00]">FREE</span>
+                <span className="text-[#d7fb00]">{order.shippingCharge}</span>
               </div>
               <div className="flex justify-between font-bold text-zinc-100 pt-2 mt-2 border-t border-zinc-800/60">
                 <span>Total</span>
-                <span className="tabular-nums text-[#d7fb00]">₹{order.totalAmount?.toLocaleString()}</span>
+                <span className="tabular-nums text-[#d7fb00]">
+                  ₹{order.totalAmount?.toLocaleString()}
+                </span>
               </div>
             </div>
 
@@ -148,7 +166,10 @@ const OrderCard = ({ order }) => {
             {order.status === 'pending' && (
               <div className="flex items-center gap-3 bg-zinc-900 border border-zinc-800 p-4 rounded-sm text-xs text-zinc-300">
                 <div className="p-1.5 bg-[#d7fb00]/10 rounded-full">
-                  <PAGE_ICONS.TRUCK size={14} className="shrink-0 text-[#d7fb00]" />
+                  <PAGE_ICONS.TRUCK
+                    size={14}
+                    className="shrink-0 text-[#d7fb00]"
+                  />
                 </div>
                 <span>
                   Your order is being processed and will be shipped soon.
@@ -158,7 +179,10 @@ const OrderCard = ({ order }) => {
             {order.status === 'completed' && (
               <div className="flex items-center gap-3 bg-zinc-900 border border-zinc-800 p-4 rounded-sm text-xs text-zinc-300">
                 <div className="p-1.5 bg-[#d7fb00]/10 rounded-full">
-                  <PAGE_ICONS.CHECKCIRCLE size={14} className="shrink-0 text-[#d7fb00]" />
+                  <PAGE_ICONS.CHECKCIRCLE
+                    size={14}
+                    className="shrink-0 text-[#d7fb00]"
+                  />
                 </div>
                 <span>
                   Order delivered successfully. Thank you for shopping with us!

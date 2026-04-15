@@ -1,4 +1,5 @@
 const PRODUCT = require('../models/product.model');
+const uploadToCloudinary = require('../utils/uploadToCloudinary');
 
 const addItem = async (req, res, next) => {
   try {
@@ -8,14 +9,12 @@ const addItem = async (req, res, next) => {
       category,
       price,
       description,
-      mainImage,
-      images,
       stock,
       features,
       variants,
     } = req.body;
 
-    if (!name || !price || !category || !description || !mainImage) {
+    if (!name || !price || !category || !description) {
       const error = new Error('Please fill all required fields');
       error.status = 400;
       return next(error);
@@ -29,14 +28,33 @@ const addItem = async (req, res, next) => {
       return next(error);
     }
 
+    const Images = req.files || [];
+    const uploadedImages = await Promise.all(
+      Images.map(async (file, index) => {
+        const result = await uploadToCloudinary(file.buffer).then((res) => {
+          return {
+            url: res.url,
+            public_id: res.public_id,
+            isPrimary: index === 0,
+          };
+        });
+        return result;
+      }),
+    );
+
+    if (uploadedImages.length === 0) {
+      const error = new Error('Failed to upload images');
+      error.status = 500;
+      return next(error);
+    }
+
     const product = await PRODUCT.create({
       name,
       brand,
       category,
       price,
       description,
-      mainImage,
-      images,
+      images: uploadedImages,
       stock,
       features,
       variants,
@@ -145,8 +163,6 @@ const updateProduct = async (req, res, next) => {
       category,
       price,
       description,
-      mainImage,
-      images,
       stock,
       features,
       variants,
@@ -165,11 +181,43 @@ const updateProduct = async (req, res, next) => {
     product.category = category || product.category;
     product.price = price || product.price;
     product.description = description || product.description;
-    product.mainImage = mainImage || product.mainImage;
-    product.images = images || product.images;
     product.stock = stock || product.stock;
     product.features = features || product.features;
     product.variants = variants || product.variants;
+    let finalImages = [];
+    if (req.body.existingImages) {
+      try {
+        finalImages = JSON.parse(req.body.existingImages);
+      } catch (e) {
+        // ignore JSON parse error
+      }
+    } else if (product.images && req.body.existingImages === undefined && req.files && req.files.length === 0) {
+      // If neither existingImages nor new files were sent, keep old images
+      finalImages = product.images;
+    }
+
+    let uploadedImages = [];
+    if (req.files && req.files.length > 0) {
+      uploadedImages = await Promise.all(
+        req.files.map(async (file) => {
+          const result = await uploadToCloudinary(file.buffer);
+          return {
+            url: result.url,
+            public_id: result.public_id,
+          };
+        }),
+      );
+    }
+
+    if (req.body.existingImages !== undefined || uploadedImages.length > 0) {
+      const allImages = [...finalImages, ...uploadedImages].slice(0, 4); // enforce max 4 images
+      allImages.forEach((img, idx) => {
+        img.isPrimary = idx === 0;
+      });
+      if (allImages.length > 0) {
+        product.images = allImages;
+      }
+    }
 
     await product.save();
 

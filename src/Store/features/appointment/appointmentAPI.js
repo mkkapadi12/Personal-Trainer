@@ -26,3 +26,11 @@ export const getAllAppointmentsAdmin = async ({
   });
   return response.data;
 };
+
+export const toggleAppointmentStatus = async ({ id, status }) => {
+  const response = await privateAPI.put(
+    `/appointment/toggle-appointment-status/${id}`,
+    { status },
+  );
+  return response.data;
+};

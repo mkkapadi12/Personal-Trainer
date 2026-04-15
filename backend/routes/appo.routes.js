@@ -18,4 +18,10 @@ router.get(
   appoController.getAllAppointmentAdmin,
 );
 
+router.put(
+  '/toggle-appointment-status/:id',
+  adminMiddleware,
+  appoController.toggleAppointmentStatus,
+);
+
 module.exports = router;

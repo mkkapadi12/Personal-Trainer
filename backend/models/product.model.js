@@ -50,14 +50,11 @@ const productSchema = new Schema(
       required: true,
     },
 
-    mainImage: {
-      type: String,
-      required: true,
-    },
-
     images: [
       {
-        type: String, // gallery images
+        url: { type: String, required: true },
+        public_id: { type: String, required: true },
+        isPrimary: { type: Boolean, default: false },
       },
     ],
 

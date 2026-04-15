@@ -17,8 +17,6 @@ const MyOrders = () => {
     dispatch(fetchUserOrders());
   }, [dispatch]);
 
-  console.log(userOrders);
-
   const filters = [
     { value: 'all', label: 'All Orders' },
     { value: 'pending', label: 'Pending' },

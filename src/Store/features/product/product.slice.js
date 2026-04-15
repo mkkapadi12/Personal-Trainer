@@ -4,6 +4,7 @@ import {
   getProductByIdAPI,
   addProductAPI,
   deleteProductAPI,
+  updateProductAPI,
 } from './productAPI';
 
 const initialState = {
@@ -52,6 +53,20 @@ export const addProduct = createAsyncThunk(
   async (productData, { rejectWithValue }) => {
     try {
       const result = await addProductAPI(productData);
+      return result;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Something went wrong',
+      );
+    }
+  },
+);
+
+export const updateProduct = createAsyncThunk(
+  'products/updateProduct',
+  async ({ id, productData }, { rejectWithValue }) => {
+    try {
+      const result = await updateProductAPI(id, productData);
       return result;
     } catch (error) {
       return rejectWithValue(
@@ -120,6 +135,26 @@ const productSlice = createSlice({
         state.products = [action.payload.product, ...state.products];
       })
       .addCase(addProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // UPDATE PRODUCT
+      .addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        const updatedProduct = action.payload.product;
+        const index = state.products.findIndex((p) => p._id === updatedProduct._id);
+        if (index !== -1) {
+          state.products[index] = updatedProduct;
+        }
+        if (state.singleProduct?._id === updatedProduct._id) {
+          state.singleProduct = updatedProduct;
+        }
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

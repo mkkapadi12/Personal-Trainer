@@ -3,6 +3,7 @@ import {
   createAppointment,
   getAllAppointments,
   getAllAppointmentsAdmin,
+  toggleAppointmentStatus,
 } from './appointmentAPI';
 
 export const createAppointmentAsync = createAsyncThunk(
@@ -41,6 +42,19 @@ export const getAllAppointmentsAdminAsync = createAsyncThunk(
         search,
         service,
       });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  },
+);
+
+export const toggleAppointmentStatusAsync = createAsyncThunk(
+  'appointment/toggleAppointmentStatus',
+  async ({ id, status }, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await toggleAppointmentStatus({ id, status });
+      dispatch(getAllAppointmentsAdminAsync());
       return response;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -102,6 +116,18 @@ const appointmentSlice = createSlice({
         state.totalPages = action.payload.totalPages;
       })
       .addCase(getAllAppointmentsAdminAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.message;
+      })
+      .addCase(toggleAppointmentStatusAsync.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(toggleAppointmentStatusAsync.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = false;
+      })
+      .addCase(toggleAppointmentStatusAsync.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload.message;
       });

@@ -7,10 +7,12 @@ import React, {
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  getProducts,
-  addProduct,
   deleteProduct,
+  getProducts,
 } from '../../../Store/features/product/product.slice';
+import AddProductDialog from '../components/AddProductDialog';
+import EditProductDialog from '../components/EditProductDialog';
+import SortableHeader from '../components/SortableHeader';
 import {
   useReactTable,
   getCoreRowModel,
@@ -30,8 +32,6 @@ import { ADMIN_ICONS } from '@/lib/icons/admin.icons';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
@@ -39,22 +39,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { toast } from 'sonner';
-import {
-  categoryOptions,
-  emptyForm,
-  inputClass,
-  sortOptions,
-} from '../constants';
+import { categoryOptions, inputClass, sortOptions } from '../constants';
 
 // ─── Column helper ──────────────────────────────────────
 const columnHelper = createColumnHelper();
@@ -72,8 +58,6 @@ const AdminProducts = () => {
   const [sort, setSort] = useState('latest');
   const [category, setCategory] = useState('all');
   const [search, setSearch] = useState('');
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [formData, setFormData] = useState(emptyForm);
   const [deleteId, setDeleteId] = useState(null);
   const [sorting, setSorting] = useState([]);
 
@@ -128,43 +112,11 @@ const AdminProducts = () => {
     );
   };
 
-  const handleFormChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleAddProduct = async () => {
-    if (
-      !formData.name ||
-      !formData.price ||
-      !formData.category ||
-      !formData.description ||
-      !formData.mainImage
-    ) {
-      toast.error('Please fill all required fields');
-      return;
-    }
-
-    try {
-      await dispatch(
-        addProduct({
-          ...formData,
-          price: Number(formData.price),
-          stock: Number(formData.stock) || 0,
-        }),
-      ).unwrap();
-      toast.success('Product created successfully');
-      setFormData(emptyForm);
-      setDialogOpen(false);
-      fetchProducts();
-    } catch (err) {
-      toast.error(err || 'Failed to create product');
-    }
-  };
-
   const handleDelete = async (id) => {
     try {
       await dispatch(deleteProduct(id)).unwrap();
       toast.success('Product deleted');
+      fetchProducts();
       setDeleteId(null);
     } catch (err) {
       toast.error(err || 'Failed to delete product');
@@ -209,9 +161,6 @@ const AdminProducts = () => {
         e.preventDefault(); // prevent "/" typing anywhere
         inputRef.current?.focus();
       }
-      // if (e.key === 'a') {
-      //   setDialogOpen(true);
-      // }
       if (e.key === 'n') {
         nextPageRef.current?.click();
       }
@@ -239,9 +188,9 @@ const AdminProducts = () => {
           return (
             <div className="flex items-center gap-3 min-w-0">
               <div className="h-10 w-10 rounded-lg overflow-hidden bg-zinc-800 shrink-0 border border-zinc-700/50">
-                {product.mainImage ? (
+                {product?.images.find((img) => img.isPrimary) ? (
                   <img
-                    src={product.mainImage}
+                    src={product.images.find((img) => img.isPrimary)?.url}
                     alt={product.name}
                     className="h-full w-full object-cover"
                     onError={(e) => {
@@ -327,12 +276,10 @@ const AdminProducts = () => {
           const product = row.original;
           return (
             <div className="flex items-center justify-end gap-1">
-              <button
-                className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-200 hover:bg-zinc-700/50 transition-colors"
-                title="View Details"
-              >
-                <ADMIN_ICONS.EYE className="h-4 w-4" />
-              </button>
+              <EditProductDialog
+                product={product}
+                onSuccess={() => fetchProducts()}
+              />
 
               {deleteId === product._id ? (
                 <div className="flex items-center gap-1">
@@ -365,7 +312,7 @@ const AdminProducts = () => {
         },
       }),
     ],
-    [deleteId, handleDelete],
+    [deleteId, handleDelete, fetchProducts],
   );
 
   // ── Table instance ────────────────────────────────────
@@ -489,175 +436,7 @@ const AdminProducts = () => {
           <div className="flex-1" />
 
           {/* Add product */}
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-lime-400 hover:bg-lime-300 text-zinc-900 font-semibold gap-2 h-9">
-                <ADMIN_ICONS.PLUS className="h-4 w-4" />
-                Add Product
-              </Button>
-            </DialogTrigger>
-
-            <DialogContent className="bg-zinc-950 border-zinc-800 text-white sm:max-w-xl max-h-[85vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle className="text-white">
-                  Add New Product
-                </DialogTitle>
-                <DialogDescription className="text-zinc-500">
-                  Fill in the details to add a new product to your store.
-                </DialogDescription>
-              </DialogHeader>
-
-              <div className="grid gap-4 py-2">
-                {/* Name */}
-                <div className="space-y-2">
-                  <Label className="text-zinc-300">
-                    Name <span className="text-red-400">*</span>
-                  </Label>
-                  <Input
-                    placeholder="e.g. Premium Whey Protein"
-                    value={formData.name}
-                    onChange={(e) => handleFormChange('name', e.target.value)}
-                    className={inputClass}
-                  />
-                </div>
-
-                {/* Brand + Category */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <Label className="text-zinc-300">Brand</Label>
-                    <Input
-                      placeholder="e.g. Optimum Nutrition"
-                      value={formData.brand}
-                      onChange={(e) =>
-                        handleFormChange('brand', e.target.value)
-                      }
-                      className={inputClass}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-zinc-300">
-                      Category <span className="text-red-400">*</span>
-                    </Label>
-                    <Select
-                      value={formData.category}
-                      onValueChange={(v) => handleFormChange('category', v)}
-                    >
-                      <SelectTrigger className="bg-zinc-900 border-zinc-800 text-zinc-300 focus:ring-lime-400/30 focus:border-lime-400/50">
-                        <SelectValue placeholder="Select category" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200">
-                        {categoryOptions.map((cat) => (
-                          <SelectItem
-                            key={cat}
-                            value={cat}
-                            className="capitalize"
-                          >
-                            {cat}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                {/* Price + Stock */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <Label className="text-zinc-300">
-                      Price ($) <span className="text-red-400">*</span>
-                    </Label>
-                    <Input
-                      type="number"
-                      placeholder="0.00"
-                      value={formData.price}
-                      onChange={(e) =>
-                        handleFormChange('price', e.target.value)
-                      }
-                      className={inputClass}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-zinc-300">Stock</Label>
-                    <Input
-                      type="number"
-                      placeholder="0"
-                      value={formData.stock}
-                      onChange={(e) =>
-                        handleFormChange('stock', e.target.value)
-                      }
-                      className={inputClass}
-                    />
-                  </div>
-                </div>
-
-                {/* Description */}
-                <div className="space-y-2">
-                  <Label className="text-zinc-300">
-                    Description <span className="text-red-400">*</span>
-                  </Label>
-                  <Textarea
-                    placeholder="Product description..."
-                    rows={3}
-                    value={formData.description}
-                    onChange={(e) =>
-                      handleFormChange('description', e.target.value)
-                    }
-                    className={cn(inputClass, 'min-h-[80px]')}
-                  />
-                </div>
-
-                {/* Main Image URL */}
-                <div className="space-y-2">
-                  <Label className="text-zinc-300">
-                    Main Image URL <span className="text-red-400">*</span>
-                  </Label>
-                  <div className="relative">
-                    <ADMIN_ICONS.IMAGEPLUS className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-zinc-500 pointer-events-none" />
-                    <Input
-                      placeholder="https://example.com/image.jpg"
-                      value={formData.mainImage}
-                      onChange={(e) =>
-                        handleFormChange('mainImage', e.target.value)
-                      }
-                      className={cn(inputClass, 'pl-9')}
-                    />
-                  </div>
-                  {formData.mainImage && (
-                    <div className="mt-2 rounded-lg overflow-hidden border border-zinc-800 h-32 w-32">
-                      <img
-                        src={formData.mainImage}
-                        alt="Preview"
-                        className="h-full w-full object-cover"
-                        onError={(e) => (e.target.style.display = 'none')}
-                      />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <DialogFooter>
-                <Button
-                  variant="ghost"
-                  onClick={() => setDialogOpen(false)}
-                  className="text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/60"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleAddProduct}
-                  disabled={loading}
-                  className="bg-lime-400 hover:bg-lime-300 text-zinc-900 font-semibold gap-2"
-                >
-                  {loading ? (
-                    <ADMIN_ICONS.LOADER2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <ADMIN_ICONS.PLUS className="h-4 w-4" />
-                  )}
-                  Create Product
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <AddProductDialog onSuccess={fetchProducts} />
         </div>
       </div>
 
@@ -824,31 +603,6 @@ const AdminProducts = () => {
         </div>
       )}
     </div>
-  );
-};
-
-// ─── Sortable header component ──────────────────────────
-const SortableHeader = ({ column, label }) => {
-  const sorted = column.getIsSorted();
-
-  return (
-    <button
-      className="flex items-center gap-1.5 hover:text-zinc-200 transition-colors group"
-      onClick={() => column.toggleSorting(sorted === 'asc')}
-    >
-      <span className="text-xs font-semibold uppercase tracking-wider">
-        {label}
-      </span>
-      <span className="flex flex-col">
-        {sorted === 'asc' ? (
-          <ADMIN_ICONS.ARROWUP className="h-3.5 w-3.5 text-lime-400" />
-        ) : sorted === 'desc' ? (
-          <ADMIN_ICONS.ARROWDOWN className="h-3.5 w-3.5 text-lime-400" />
-        ) : (
-          <ADMIN_ICONS.ARROWUPDOWN className="h-3.5 w-3.5 text-zinc-600 group-hover:text-zinc-400 transition-colors" />
-        )}
-      </span>
-    </button>
   );
 };
 

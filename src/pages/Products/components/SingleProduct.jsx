@@ -3,9 +3,11 @@ import AddToCart from '@/pages/Cart/components/AddToCart';
 import { PAGE_ICONS } from '@/lib/icons/page.icons';
 
 const SingleProduct = ({ product }) => {
-  const [activeImage, setActiveImage] = useState(product?.mainImage);
+  const [activeImage, setActiveImage] = useState(
+    product?.images.find((img) => img.isPrimary)?.url,
+  );
   const [zoomStyle, setZoomStyle] = useState({});
-  const images = [...product?.images];
+  const images = [...product?.images.map((img) => img.url)];
 
   // 🔍 Zoom Handler
   const handleMouseMove = (e) => {
@@ -58,7 +60,9 @@ const SingleProduct = ({ product }) => {
                 key={i}
                 onClick={() => setActiveImage(img)}
                 className={`w-16 h-16 md:w-20 md:h-20 border rounded-sm overflow-hidden bg-white/5 cursor-pointer transition-all ${
-                  activeImage === img ? 'border-[#d7fb00] shadow-[0_0_10px_rgba(215,251,0,0.3)]' : 'border-zinc-800 hover:border-zinc-600'
+                  activeImage === img
+                    ? 'border-[#d7fb00] shadow-[0_0_10px_rgba(215,251,0,0.3)]'
+                    : 'border-zinc-800 hover:border-zinc-600'
                 }`}
               >
                 <img
@@ -74,15 +78,23 @@ const SingleProduct = ({ product }) => {
         <div className="space-y-6">
           {/* Back */}
           <button className="flex items-center gap-2 text-sm text-zinc-400 hover:text-[#d7fb00] font-medium transition-colors group tracking-wider uppercase">
-            <PAGE_ICONS.ARROWLEFT size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Home
+            <PAGE_ICONS.ARROWLEFT
+              size={16}
+              className="group-hover:-translate-x-1 transition-transform"
+            />{' '}
+            Back to Home
           </button>
 
           <div>
             {/* Brand */}
-            <p className="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest mb-1.5">{product?.brand}</p>
+            <p className="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest mb-1.5">
+              {product?.brand}
+            </p>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-zinc-100">{product?.name}</h1>
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-zinc-100">
+              {product?.name}
+            </h1>
           </div>
 
           {/* Price */}
@@ -94,7 +106,11 @@ const SingleProduct = ({ product }) => {
           <div className="flex gap-1 items-center bg-zinc-900 border border-zinc-800 w-fit px-3 py-1.5 rounded-sm">
             <span className="text-xs font-bold text-zinc-300 mr-2">4.8</span>
             {[...Array(5)].map((_, i) => (
-              <PAGE_ICONS.STAR key={i} size={14} className="text-[#d7fb00] fill-[#d7fb00]" />
+              <PAGE_ICONS.STAR
+                key={i}
+                size={14}
+                className="text-[#d7fb00] fill-[#d7fb00]"
+              />
             ))}
             <span className="text-xs text-zinc-500 ml-2">(128 reviews)</span>
           </div>

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { appointmentSchema } from './appointmentSchema';
-
 import {
   Form,
   FormControl,
@@ -11,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -21,11 +19,7 @@ import { createAppointmentAsync } from '@/Store/features/appointment/appointment
 
 export default function AppointmentForm() {
   const [step, setStep] = useState(1);
-  const { loading, error, appointment } = useSelector(
-    (state) => state.appointment,
-  );
   const dispatch = useDispatch();
-
   const form = useForm({
     resolver: zodResolver(appointmentSchema),
     defaultValues: {
@@ -60,8 +54,6 @@ export default function AppointmentForm() {
       toast.error(error || 'Appointment failed');
     }
   };
-
-  console.log('Appointments : ', appointment);
 
   return (
     <section className="bg-black text-white">

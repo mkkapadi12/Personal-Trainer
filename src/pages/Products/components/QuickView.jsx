@@ -32,11 +32,17 @@ export default function QuickView({ open, setOpen, product }) {
           <div className="grid md:grid-cols-2 gap-6 p-6">
             {/* Image */}
             <div className="flex items-center justify-center bg-gray-100 rounded-xl p-4">
-              <img
-                src={product.mainImage}
-                alt={product.name}
-                className="h-72 object-contain"
-              />
+              {product.images.map(
+                (image) =>
+                  image.isPrimary && (
+                    <img
+                      key={image.public_id}
+                      src={image?.url}
+                      alt={product.name}
+                      className="h-72 object-contain"
+                    />
+                  ),
+              )}
             </div>
 
             {/* Content */}

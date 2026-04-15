@@ -3,7 +3,8 @@ const ORDER = require('../models/order.model');
 //create order for user
 const createOrder = async (req, res, next) => {
   try {
-    const { items, totalAmount, status, addressId } = req.body;
+    const { items, totalAmount, status, addressId, shippingCharge, subtotal } =
+      req.body;
 
     const productIds = items.map((item) => item.productId);
     const userId = req.userId;
@@ -32,6 +33,8 @@ const createOrder = async (req, res, next) => {
       totalAmount,
       status,
       addressId,
+      subtotal,
+      shippingCharge,
     });
 
     return res.status(201).json({

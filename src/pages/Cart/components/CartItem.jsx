@@ -14,19 +14,32 @@ const CartItem = ({ item }) => {
       <div className="col-span-2 flex items-center gap-4">
         <Link to={`/products/${item._id}`} className="shrink-0">
           <div className="w-24 h-24 md:w-20 md:h-20 bg-zinc-900 border border-zinc-800 rounded-sm p-2 flex items-center justify-center group-hover:border-zinc-700 transition-colors">
-            <img
-              src={item.mainImage}
-              className="w-full h-full object-contain"
-              alt={item.name}
-            />
+            {item.images.map(
+              (image) =>
+                image.isPrimary && (
+                  <img
+                    key={image.public_id}
+                    src={image?.url}
+                    alt={item.name}
+                    className="w-full h-full object-contain"
+                  />
+                ),
+            )}
           </div>
         </Link>
 
         {/* Name */}
         <div className="flex-1">
-          <p className="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest mb-1.5">{item.brand}</p>
-          <Link to={`/products/${item._id}`} className="hover:text-[#d7fb00] transition-colors">
-            <p className="text-sm font-semibold text-zinc-100 line-clamp-2 md:line-clamp-none">{item.name}</p>
+          <p className="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest mb-1.5">
+            {item.brand}
+          </p>
+          <Link
+            to={`/products/${item._id}`}
+            className="hover:text-[#d7fb00] transition-colors"
+          >
+            <p className="text-sm font-semibold text-zinc-100 line-clamp-2 md:line-clamp-none">
+              {item.name}
+            </p>
           </Link>
         </div>
       </div>
@@ -38,7 +51,7 @@ const CartItem = ({ item }) => {
 
       {/* Quantity */}
       <div className="mt-4 md:mt-0 flex justify-center w-fit md:w-full">
-         <QuantityUpdate item={item} />
+        <QuantityUpdate item={item} />
       </div>
 
       {/* Total & Action */}
@@ -47,7 +60,7 @@ const CartItem = ({ item }) => {
           ₹{(item.price * item.quantity).toLocaleString()}
         </p>
 
-        <button 
+        <button
           onClick={() => dispatch(removeFromCart(item._id))}
           className="text-zinc-600 hover:text-red-500 transition-colors"
           title="Remove item"

@@ -49,6 +49,10 @@ import {
   MoreHorizontal,
   Phone,
   ChevronUp,
+  Truck,
+  IndianRupee,
+  ReceiptText,
+  Pencil,
 } from 'lucide-react';
 
 export const ADMIN_ICONS = {
@@ -73,6 +77,7 @@ export const ADMIN_ICONS = {
   SEARCH: Search,
   PLUS: Plus,
   TRASH2: Trash2,
+  EDIT: Pencil,
   EYE: Eye,
   FILTER: Filter,
   ARROWUPDOWN: ArrowUpDown,
@@ -104,6 +109,9 @@ export const ADMIN_ICONS = {
   CLOCK: Clock,
   CHECK: Check,
   XCIRCLE: XCircle,
+  TRUCK: Truck,
+  INDIANRUPEE: IndianRupee,
+  RECEIPTTEXT: ReceiptText,
 
   //admin users page icons
   USERPLUS: UserPlus,

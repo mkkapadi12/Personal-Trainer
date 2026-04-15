@@ -20,7 +20,7 @@ const ProductCard = ({ product }) => {
     _id,
     name,
     category,
-    mainImage,
+    images,
     price,
     description,
     rating = 4,
@@ -50,17 +50,24 @@ const ProductCard = ({ product }) => {
     return stars;
   };
 
+  console.log(images);
+
   return (
     <div className="group border p-3 bg-white relative overflow-hidden">
       {/* Image */}
       <div className="relative overflow-hidden">
-        <Link to={`/products/${_id}`}>
-          <img
-            src={mainImage}
-            alt={name}
-            className="w-full h-[260px] object-contain transition-transform duration-300 group-hover:scale-105"
-          />
-        </Link>
+        {images.map(
+          (image, index) =>
+            image.isPrimary && (
+              <Link to={`/products/${_id}`} key={image.public_id}>
+                <img
+                  src={image?.url}
+                  alt={name}
+                  className="w-full h-[260px] object-contain transition-transform duration-300 group-hover:scale-105"
+                />
+              </Link>
+            ),
+        )}
 
         {/* Overlay Icons */}
         <div className="absolute left-2 top-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition">
