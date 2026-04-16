@@ -3,17 +3,10 @@ import { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import OrderStatusBadge from './OrderStatusBadge';
 import { PAGE_ICONS } from '@/lib/icons/page.icons';
+import { formatDate } from '@/lib/utils';
 
 const OrderCard = ({ order }) => {
   const [expanded, setExpanded] = useState(false);
-
-  const formattedDate = order.createdAt
-    ? new Date(order.createdAt).toLocaleDateString('en-IN', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-      })
-    : '—';
 
   const items = order.items || [];
   const firstItem = items[0];
@@ -53,7 +46,7 @@ const OrderCard = ({ order }) => {
           <div className="flex items-center gap-3 mt-1.5 text-xs text-zinc-500">
             <span className="flex items-center gap-1">
               <PAGE_ICONS.CALENDARDAYS size={11} />
-              {formattedDate}
+              {formatDate(order.createdAt)}
             </span>
             <span>•</span>
             <span>

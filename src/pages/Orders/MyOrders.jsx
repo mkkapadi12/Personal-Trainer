@@ -20,7 +20,9 @@ const MyOrders = () => {
   const filters = [
     { value: 'all', label: 'All Orders' },
     { value: 'pending', label: 'Pending' },
-    { value: 'completed', label: 'Delivered' },
+    { value: 'shipped', label: 'Shipped' },
+    { value: 'out_for_delivery', label: 'Out for Delivery' },
+    { value: 'delivered', label: 'Delivered' },
     { value: 'cancelled', label: 'Cancelled' },
   ];
 

@@ -178,13 +178,66 @@ export const navItems = [
 ];
 
 export const actionLabel = {
-  purchased: 'purchased',
+  ordered: 'ordered',
   'signed up': 'signed up',
   booked: 'booked',
 };
 
 export const iconMap = {
-  purchased: { icon: ADMIN_ICONS.SHOPPINGBAG, color: 'text-amber-400' },
+  ordered: { icon: ADMIN_ICONS.SHOPPINGBAG, color: 'text-amber-400' },
   'signed up': { icon: ADMIN_ICONS.USER, color: 'text-emerald-400' },
   booked: { icon: ADMIN_ICONS.CALENDAR, color: 'text-blue-400' },
+};
+
+// ─── Order Constants ──────────────────────────────────────────
+export const orderStatusOptions = [
+  { value: 'all', label: 'All Statuses' },
+  { value: 'pending', label: 'Pending' },
+  { value: 'shipped', label: 'Shipped' },
+  { value: 'out_for_delivery', label: 'Out for Delivery' },
+  { value: 'delivered', label: 'Delivered' },
+  { value: 'cancelled', label: 'Cancelled' },
+];
+
+export const orderSortOptions = [
+  { value: 'latest', label: 'Latest' },
+  { value: 'oldest', label: 'Oldest' },
+];
+
+export const orderStatusConfig = {
+  pending: {
+    label: 'Pending',
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    ring: 'ring-amber-500/20',
+    dot: 'bg-amber-400',
+  },
+  shipped: {
+    label: 'Shipped',
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    ring: 'ring-emerald-500/20',
+    dot: 'bg-emerald-400',
+  },
+  out_for_delivery: {
+    label: 'Out for Delivery',
+    bg: 'bg-blue-500/10',
+    text: 'text-blue-400',
+    ring: 'ring-blue-500/20',
+    dot: 'bg-blue-400',
+  },
+  delivered: {
+    label: 'Delivered',
+    bg: 'bg-green-500/10',
+    text: 'text-green-400',
+    ring: 'ring-green-500/20',
+    dot: 'bg-green-400',
+  },
+  cancelled: {
+    label: 'Cancelled',
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    ring: 'ring-red-500/20',
+    dot: 'bg-red-400',
+  },
 };

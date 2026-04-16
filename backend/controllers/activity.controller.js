@@ -28,7 +28,7 @@ const getRecentActivity = async (req, res, next) => {
     // Normalize orders into activity items
     const orderActivities = recentOrders.map((order) => ({
       id: order._id,
-      type: 'purchased',
+      type: 'ordered',
       userName:
         order.userId?.firstName + ' ' + order.userId?.lastName || 'Unknown',
       detail: order.items?.[0]?.productId?.name || 'a product',

@@ -110,7 +110,7 @@ const AdminActivities = () => {
                 </SelectTrigger>
                 <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200">
                   <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="purchased">Purchased</SelectItem>
+                  <SelectItem value="ordered">Ordered</SelectItem>
                   <SelectItem value="signed up">Signed Up</SelectItem>
                   <SelectItem value="booked">Booked</SelectItem>
                 </SelectContent>

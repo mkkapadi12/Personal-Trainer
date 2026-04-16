@@ -255,7 +255,7 @@ const Checkout = () => {
               )}
 
               <Link
-                to="/account/addresses"
+                to="/account/profile/address"
                 className="mt-4 inline-flex items-center gap-1 text-xs text-[#d7fb00] hover:text-[#b5d500] hover:underline font-medium transition-colors"
               >
                 <PAGE_ICONS.PLUS size={14} /> Manage Addresses

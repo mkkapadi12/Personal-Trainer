@@ -55,6 +55,7 @@ import {
   Pencil,
   ChevronDownIcon,
   X,
+  Motorbike,
 } from 'lucide-react';
 
 export const PAGE_ICONS = {
@@ -103,6 +104,7 @@ export const PAGE_ICONS = {
   ARROWRIGHT: ArrowRight,
   CALENDARDAYS: CalendarDays,
   RECEIPTTEXT: ReceiptText,
+  MOTORBIKE: Motorbike,
 
   //PRODUCTS PAGE
   SCISSORS: Scissors,

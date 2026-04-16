@@ -11,11 +11,22 @@ const WishlistItem = ({ item }) => {
     <div className="grid grid-cols-2 md:grid-cols-4 items-center gap-4 py-6 border-b">
       {/* Product Image */}
       <div className="flex justify-center md:justify-start">
-        <img
-          src={item.mainImage}
-          alt={item.name}
-          className="w-[75%] h-[75%] object-contain"
-        />
+        {item.images.length > 0 ? (
+          item.images.map(
+            (img) =>
+              img.isPrimary && (
+                <img
+                  src={img.url}
+                  alt={item.name}
+                  className="w-[25%] h-[25%] object-contain"
+                />
+              ),
+          )
+        ) : (
+          <div className="w-[25%] h-[25%] bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-500">No Image</span>
+          </div>
+        )}
       </div>
 
       {/* Details */}

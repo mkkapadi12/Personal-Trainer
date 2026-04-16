@@ -53,6 +53,7 @@ import {
   IndianRupee,
   ReceiptText,
   Pencil,
+  MapPin,
 } from 'lucide-react';
 
 export const ADMIN_ICONS = {
@@ -112,6 +113,7 @@ export const ADMIN_ICONS = {
   TRUCK: Truck,
   INDIANRUPEE: IndianRupee,
   RECEIPTTEXT: ReceiptText,
+  MAP: MapPin,
 
   //admin users page icons
   USERPLUS: UserPlus,

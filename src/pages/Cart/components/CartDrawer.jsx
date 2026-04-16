@@ -75,6 +75,24 @@ const CartDrawer = () => {
                           {cart?.map((product) => (
                             <li key={product._id} className="flex py-6">
                               <div className="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200">
+                                {product.images.length > 0 ? (
+                                  product.images.map(
+                                    (img) =>
+                                      img.isPrimary && (
+                                        <img
+                                          alt={product.name}
+                                          src={img.url}
+                                          className="size-full object-cover"
+                                        />
+                                      ),
+                                  )
+                                ) : (
+                                  <div className="size-full object-cover">
+                                    <p className="text-center text-gray-500">
+                                      No Image
+                                    </p>
+                                  </div>
+                                )}
                                 <img
                                   alt={product.name}
                                   src={product.mainImage}

@@ -1,4 +1,5 @@
 const ORDER = require('../models/order.model');
+const PRODUCT = require('../models/product.model');
 
 //create order for user
 const createOrder = async (req, res, next) => {
@@ -9,9 +10,26 @@ const createOrder = async (req, res, next) => {
     const productIds = items.map((item) => item.productId);
     const userId = req.userId;
 
+    const validatedItems = [];
+
+    for (const item of items) {
+      const product = await PRODUCT.findById(item.productId);
+      if (!product) {
+        const error = new Error('Product not found');
+        error.statusCode = 404;
+        return next(error);
+      }
+      validatedItems.push({
+        productId: product._id,
+        name: product.name,
+        price: product.price,
+        quantity: item.quantity,
+      });
+    }
+
     const existOrder = await ORDER.find({
       userId,
-      status: { $nin: ['completed', 'cancelled'] },
+      status: { $nin: ['delivered', 'cancelled'] },
       'items.productId': { $in: productIds },
     }).populate('items.productId');
 
@@ -25,6 +43,13 @@ const createOrder = async (req, res, next) => {
       const error = new Error(`Order already exists for: ${productNames}`);
       error.statusCode = 400;
       return next(error);
+    }
+
+    // Update product stock
+    for (const item of validatedItems) {
+      await PRODUCT.findByIdAndUpdate(item.productId, {
+        $inc: { stock: -item.quantity },
+      });
     }
 
     const order = await ORDER.create({
@@ -82,6 +107,24 @@ const getAllOrders = async (req, res, next) => {
         foreignField: '_id',
         as: 'products',
       },
+    });
+
+    pipeline.push({
+      $lookup: {
+        from: 'addresses',
+        let: { addressId: '$addressId' },
+        pipeline: [
+          { $unwind: '$addresses' },
+          { $match: { $expr: { $eq: ['$addresses._id', '$$addressId'] } } },
+          { $replaceRoot: { newRoot: '$addresses' } },
+        ],
+        as: 'address',
+      },
+    });
+
+    // flatten array → single object
+    pipeline.push({
+      $unwind: { path: '$address', preserveNullAndEmptyArrays: true },
     });
 
     // search
@@ -156,7 +199,15 @@ const updateOrderStatus = async (req, res, next) => {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (!['pending', 'completed', 'cancelled'].includes(status)) {
+    if (
+      ![
+        'pending',
+        'shipped',
+        'out_for_delivery',
+        'delivered',
+        'cancelled',
+      ].includes(status)
+    ) {
       const error = new Error('Invalid status value');
       error.statusCode = 400;
       return next(error);

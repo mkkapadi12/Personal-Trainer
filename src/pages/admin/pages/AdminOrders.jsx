@@ -6,10 +6,7 @@ import React, {
   useRef,
 } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchAdminOrders,
-  updateOrderStatus,
-} from '../../../Store/features/orders/order.slice';
+import { fetchAdminOrders } from '../../../Store/features/orders/order.slice';
 import {
   useReactTable,
   getCoreRowModel,
@@ -37,53 +34,14 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { toast } from 'sonner';
-import { inputClass } from '../constants';
+  inputClass,
+  orderSortOptions,
+  orderStatusConfig,
+  orderStatusOptions,
+} from '../constants';
 import SortableHeader from '../components/SortableHeader';
-
-// ─── Constants ──────────────────────────────────────────
-const statusOptions = [
-  { value: 'all', label: 'All Statuses' },
-  { value: 'pending', label: 'Pending' },
-  { value: 'completed', label: 'Completed' },
-  { value: 'cancelled', label: 'Cancelled' },
-];
-
-const sortOptions = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'oldest', label: 'Oldest' },
-];
-
-const STATUS_CONFIG = {
-  pending: {
-    label: 'Pending',
-    bg: 'bg-amber-500/10',
-    text: 'text-amber-400',
-    ring: 'ring-amber-500/20',
-    dot: 'bg-amber-400',
-  },
-  completed: {
-    label: 'Completed',
-    bg: 'bg-emerald-500/10',
-    text: 'text-emerald-400',
-    ring: 'ring-emerald-500/20',
-    dot: 'bg-emerald-400',
-  },
-  cancelled: {
-    label: 'Cancelled',
-    bg: 'bg-red-500/10',
-    text: 'text-red-400',
-    ring: 'ring-red-500/20',
-    dot: 'bg-red-400',
-  },
-};
+import OrderDetailsDrawer from '../components/OrderDetailsDrawer';
+import { useOrderStatus } from '@/hooks/useOrderStatus';
 
 // ─── Column helper ──────────────────────────────────────
 const columnHelper = createColumnHelper();
@@ -104,19 +62,28 @@ const AdminOrders = () => {
   const [sorting, setSorting] = useState([]);
   const [detailOrder, setDetailOrder] = useState(null);
 
+  const { handleStatusUpdate, getNextStatus, canCancel } = useOrderStatus({
+    onStatusUpdate: () => {
+      setDetailOrder(null);
+    },
+  });
+
   // ── Derived data ──────────────────────────────────────
   const pendingCount = (adminOrders || []).filter(
     (o) => o.status === 'pending',
   ).length;
-  const completedCount = (adminOrders || []).filter(
-    (o) => o.status === 'completed',
+  const shippedCount = (adminOrders || []).filter(
+    (o) => o.status === 'shipped',
+  ).length;
+  const deliveredCount = (adminOrders || []).filter(
+    (o) => o.status === 'delivered',
   ).length;
   const cancelledCount = (adminOrders || []).filter(
     (o) => o.status === 'cancelled',
   ).length;
 
   const totalRevenue = (adminOrders || [])
-    .filter((o) => o.status === 'completed')
+    .filter((o) => o.status === 'delivered')
     .reduce((sum, o) => sum + (o.totalAmount || 0), 0);
 
   // ── Fetch orders ─────────────────────────────────────
@@ -169,17 +136,6 @@ const AdminOrders = () => {
     );
   };
 
-  const handleStatusUpdate = async (orderId, newStatus) => {
-    try {
-      await dispatch(
-        updateOrderStatus({ id: orderId, status: newStatus }),
-      ).unwrap();
-      toast.success(`Order status updated to ${newStatus}`);
-    } catch (err) {
-      toast.error(err || 'Failed to update order status');
-    }
-  };
-
   // ── Keyboard shortcuts ────────────────────────────────
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -199,6 +155,8 @@ const AdminOrders = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  console.log('admin orders:', adminOrders);
+
   // ── Stats ─────────────────────────────────────────────
   const statsCards = [
     {
@@ -216,8 +174,15 @@ const AdminOrders = () => {
       iconColor: 'text-amber-400',
     },
     {
-      label: 'Completed',
-      value: completedCount,
+      label: 'Shipped',
+      value: shippedCount,
+      icon: ADMIN_ICONS.TRUCK,
+      iconBg: 'bg-emerald-500/10',
+      iconColor: 'text-emerald-400',
+    },
+    {
+      label: 'Delivered',
+      value: deliveredCount,
       icon: ADMIN_ICONS.CHECK,
       iconBg: 'bg-emerald-500/10',
       iconColor: 'text-emerald-400',
@@ -319,7 +284,7 @@ const AdminOrders = () => {
         ),
         cell: ({ getValue }) => {
           const status = getValue();
-          const config = STATUS_CONFIG[status] || STATUS_CONFIG.pending;
+          const config = orderStatusConfig[status] || orderStatusConfig.pending;
           return (
             <span
               className={cn(
@@ -376,6 +341,8 @@ const AdminOrders = () => {
         ),
         cell: ({ row }) => {
           const order = row.original;
+          const nextStatus = getNextStatus(order?.status);
+
           return (
             <div className="flex items-center justify-end gap-1">
               <button
@@ -386,23 +353,24 @@ const AdminOrders = () => {
                 <ADMIN_ICONS.EYE className="h-4 w-4" />
               </button>
 
-              {order.status === 'pending' && (
-                <>
-                  <button
-                    onClick={() => handleStatusUpdate(order._id, 'completed')}
-                    className="p-1.5 rounded-md text-emerald-500/70 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"
-                    title="Mark Completed"
-                  >
-                    <ADMIN_ICONS.CHECK className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => handleStatusUpdate(order._id, 'cancelled')}
-                    className="p-1.5 rounded-md text-red-500/70 hover:text-red-400 hover:bg-red-500/10 transition-colors"
-                    title="Cancel Order"
-                  >
-                    <ADMIN_ICONS.XCIRCLE className="h-4 w-4" />
-                  </button>
-                </>
+              {nextStatus?.next && (
+                <button
+                  onClick={() => handleStatusUpdate(order._id, nextStatus.next)}
+                  className="p-1.5 rounded-md text-emerald-500/70 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors"
+                  title={nextStatus.action}
+                >
+                  <ADMIN_ICONS.CHECK className="h-4 w-4" />
+                </button>
+              )}
+
+              {canCancel(order.status) && (
+                <button
+                  onClick={() => handleStatusUpdate(order._id, 'cancelled')}
+                  className="p-1.5 rounded-md text-red-500/70 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                  title="Cancel Order"
+                >
+                  <ADMIN_ICONS.XCIRCLE className="h-4 w-4" />
+                </button>
               )}
             </div>
           );
@@ -426,7 +394,7 @@ const AdminOrders = () => {
   return (
     <div className="space-y-6">
       {/* ── Stats Grid ─────────────────────────────── */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4">
         {statsCards.map(({ label, value, icon: Icon, iconBg, iconColor }) => (
           <div
             key={label}
@@ -484,7 +452,7 @@ const AdminOrders = () => {
               </div>
             </SelectTrigger>
             <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200">
-              {statusOptions.map((opt) => (
+              {orderStatusOptions.map((opt) => (
                 <SelectItem key={opt.value} value={opt.value}>
                   {opt.label}
                 </SelectItem>
@@ -507,7 +475,7 @@ const AdminOrders = () => {
               </div>
             </SelectTrigger>
             <SelectContent className="bg-zinc-900 border-zinc-800 text-zinc-200">
-              {sortOptions.map((opt) => (
+              {orderSortOptions.map((opt) => (
                 <SelectItem key={opt.value} value={opt.value}>
                   {opt.label}
                 </SelectItem>
@@ -692,264 +660,13 @@ const AdminOrders = () => {
         </div>
       )}
 
-      {/* ── Order Detail Dialog ──────────────────────── */}
-      <Dialog
-        open={!!detailOrder}
-        onOpenChange={(open) => !open && setDetailOrder(null)}
-      >
-        <DialogContent className="bg-zinc-950 border-zinc-800 text-white sm:max-w-lg max-h-[85vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-white flex items-center gap-2">
-              <ADMIN_ICONS.SHOPPINGCART className="h-5 w-5 text-lime-400" />
-              Order Details
-            </DialogTitle>
-            <DialogDescription className="text-zinc-500">
-              Order #{detailOrder?._id?.slice(-8).toUpperCase()}
-            </DialogDescription>
-          </DialogHeader>
-
-          {detailOrder && (
-            <div className="space-y-5 py-2">
-              {/* Customer info */}
-              <div className="rounded-lg bg-zinc-900/80 border border-zinc-800/60 p-4 space-y-3">
-                <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                  Customer
-                </h4>
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-linear-to-br from-lime-400/20 to-emerald-400/20 border border-zinc-700/50 flex items-center justify-center">
-                    <span className="text-sm font-bold text-lime-400 uppercase">
-                      {detailOrder.user?.firstName?.[0] || '?'}
-                    </span>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white">
-                      {detailOrder.user?.firstName || 'Unknown'}{' '}
-                      {detailOrder.user?.lastName || ''}
-                    </p>
-                    <p className="text-xs text-zinc-500">
-                      {detailOrder.user?.email || '—'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Status & date */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-lg bg-zinc-900/80 border border-zinc-800/60 p-4 space-y-2">
-                  <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                    Status
-                  </h4>
-                  {(() => {
-                    const config =
-                      STATUS_CONFIG[detailOrder.status] ||
-                      STATUS_CONFIG.pending;
-                    return (
-                      <span
-                        className={cn(
-                          'inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ring-1',
-                          config.bg,
-                          config.text,
-                          config.ring,
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            'h-1.5 w-1.5 rounded-full animate-pulse',
-                            config.dot,
-                          )}
-                        />
-                        {config.label}
-                      </span>
-                    );
-                  })()}
-                </div>
-                <div className="rounded-lg bg-zinc-900/80 border border-zinc-800/60 p-4 space-y-2">
-                  <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                    Date
-                  </h4>
-                  <p className="text-sm text-zinc-300">
-                    {new Date(detailOrder.createdAt).toLocaleDateString(
-                      'en-IN',
-                      {
-                        day: '2-digit',
-                        month: 'short',
-                        year: 'numeric',
-                      },
-                    )}
-                  </p>
-                </div>
-              </div>
-
-              {/* Items */}
-              <div className="rounded-lg bg-zinc-900/80 border border-zinc-800/60 p-4 space-y-3">
-                <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
-                  Items ({detailOrder.items?.length || 0})
-                </h4>
-                <div className="divide-y divide-zinc-800/50">
-                  {detailOrder.items?.map((item, idx) => {
-                    const product = detailOrder.products?.find(
-                      (p) =>
-                        p._id === item.productId ||
-                        p._id === item.productId?._id,
-                    );
-                    return (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-between py-2.5 first:pt-0 last:pb-0"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="h-9 w-9 rounded-lg bg-zinc-800 border border-zinc-700/50 flex items-center justify-center overflow-hidden shrink-0">
-                            {product?.images.find((img) => img.isPrimary) ? (
-                              <img
-                                src={
-                                  product.images.find((img) => img.isPrimary)
-                                    ?.url
-                                }
-                                alt={product.name}
-                                className="h-full w-full object-cover"
-                              />
-                            ) : (
-                              <ADMIN_ICONS.PACKAGE className="h-4 w-4 text-zinc-600" />
-                            )}
-                          </div>
-                          <div>
-                            <p className="text-sm text-white">
-                              {product?.name || 'Product'}
-                            </p>
-                            <p className="text-xs text-zinc-500">
-                              Qty: {item.quantity}
-                            </p>
-                          </div>
-                        </div>
-                        <span className="text-sm font-semibold text-white tabular-nums">
-                          ₹{item.price?.toLocaleString('en-IN')}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Order Summary */}
-              <div className="bg-zinc-900/80 border border-zinc-800/60 rounded-xl overflow-hidden">
-                {/* Header */}
-                <div className="px-4 py-3 border-b border-zinc-800/60 flex items-center gap-2">
-                  <ADMIN_ICONS.RECEIPTTEXT
-                    size={14}
-                    className="text-muted-foreground"
-                  />
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    Order Summary
-                  </span>
-                </div>
-
-                {/* Rows */}
-                <div>
-                  {/* Subtotal */}
-                  <div className="flex items-center justify-between px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <ADMIN_ICONS.SHOPPINGBAG
-                        size={14}
-                        className="text-muted-foreground/60"
-                      />
-                      <span className="text-sm text-muted-foreground">
-                        Subtotal
-                      </span>
-                    </div>
-                    <span className="text-sm font-medium tabular-nums">
-                      ₹
-                      {detailOrder.subtotal?.toLocaleString('en-IN', {
-                        minimumFractionDigits: 2,
-                      })}
-                    </span>
-                  </div>
-
-                  <div className="h-px bg-border/30 mx-4" />
-
-                  {/* Shipping */}
-                  <div className="flex items-center justify-between px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <ADMIN_ICONS.TRUCK
-                        size={14}
-                        className="text-muted-foreground/60"
-                      />
-                      <span className="text-sm text-muted-foreground">
-                        Shipping
-                      </span>
-                    </div>
-                    <span className="text-sm font-medium tabular-nums">
-                      ₹
-                      {detailOrder.shippingCharge?.toLocaleString('en-IN', {
-                        minimumFractionDigits: 2,
-                      })}
-                    </span>
-                  </div>
-
-                  <div className="h-px bg-border/30 mx-4" />
-
-                  {/* Total */}
-                  <div className="flex items-center justify-between px-4 py-3.5 bg-muted/40 rounded-b-xl">
-                    <div className="flex items-center gap-2">
-                      <ADMIN_ICONS.INDIANRUPEE
-                        size={14}
-                        className="text-lime-400/70"
-                      />
-                      <span className="text-sm font-medium text-foreground">
-                        Total Amount
-                      </span>
-                    </div>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-xs text-muted-foreground">INR</span>
-                      <span className="text-lg font-medium tabular-nums">
-                        ₹
-                        {detailOrder.totalAmount?.toLocaleString('en-IN', {
-                          minimumFractionDigits: 2,
-                        })}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Status update actions */}
-              {detailOrder.status === 'pending' && (
-                <div className="flex gap-2">
-                  <Button
-                    onClick={() => {
-                      handleStatusUpdate(detailOrder._id, 'completed');
-                      setDetailOrder(null);
-                    }}
-                    className="flex-1 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 border border-emerald-500/20 gap-2"
-                  >
-                    <ADMIN_ICONS.CHECK className="h-4 w-4" />
-                    Mark Completed
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      handleStatusUpdate(detailOrder._id, 'cancelled');
-                      setDetailOrder(null);
-                    }}
-                    className="flex-1 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20 gap-2"
-                  >
-                    <ADMIN_ICONS.XCIRCLE className="h-4 w-4" />
-                    Cancel Order
-                  </Button>
-                </div>
-              )}
-            </div>
-          )}
-
-          <DialogFooter>
-            <Button
-              variant="ghost"
-              onClick={() => setDetailOrder(null)}
-              className="text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/60"
-            >
-              Close
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* ── Order Detail Drawer ──────────────────────── */}
+      <OrderDetailsDrawer
+        isOpen={!!detailOrder}
+        onClose={() => setDetailOrder(null)}
+        order={detailOrder}
+        onStatusUpdate={handleStatusUpdate}
+      />
     </div>
   );
 };

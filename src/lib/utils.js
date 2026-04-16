@@ -21,6 +21,23 @@ export const formatDate = (dateString, format = 'long') => {
   };
   return date.toLocaleDateString('en-IN', options);
 };
+
+export const formatTime = (dateString, format = 'long') => {
+  const date = new Date(dateString);
+  const options = {
+    ...(format === 'long' && {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    }),
+    ...(format === 'short' && {
+      hour: '2-digit',
+      minute: '2-digit',
+    }),
+  };
+  return date.toLocaleTimeString('en-IN', options);
+};
+
 export const setCartItem = (cart) => {
   localStorage.setItem('workDoCart', JSON.stringify(cart));
 };
