@@ -1,10 +1,23 @@
 const USER = require('../models/user.model');
+const { Resend } = require('resend');
+const { userWelcomeTemplate } = require('../utils/emailTemplates');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const registerUser = async (req, res, next) => {
   try {
     const user = req.body;
 
     const newUser = await USER.create(user);
+
+    if (newUser.email) {
+      await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: newUser.email,
+        subject: 'Welcome to Personal Trainer App!',
+        html: userWelcomeTemplate(newUser.firstName),
+      });
+    }
 
     return res.status(201).json({
       msg: 'Registration successfully!',

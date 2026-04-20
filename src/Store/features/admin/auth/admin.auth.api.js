@@ -27,3 +27,8 @@ export const getAllUsersAPI = async ({ page, limit, search, sort }) => {
   );
   return response.data;
 };
+
+export const deleteUserAPI = async (id) => {
+  const response = await privateAPI.delete(`/admin/users/${id}`);
+  return response.data;
+};

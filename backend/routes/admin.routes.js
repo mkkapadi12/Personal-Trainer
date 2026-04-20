@@ -7,6 +7,7 @@ const {
   getAdminProfile,
   updateAdminProfile,
   getAllUsers,
+  deleteUser,
 } = require('../controllers/admin.controller');
 
 //admin register
@@ -23,5 +24,8 @@ router.put('/update-profile', adminMiddleware, updateAdminProfile);
 
 //get all users
 router.get('/users', adminMiddleware, getAllUsers);
+
+//delete user
+router.delete('/users/:id', adminMiddleware, deleteUser);
 
 module.exports = router;

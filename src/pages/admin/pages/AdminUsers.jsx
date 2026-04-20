@@ -35,6 +35,8 @@ import {
 } from '@/components/ui/select';
 import { inputClass } from '../constants';
 import SortableHeader from '../components/SortableHeader';
+import UserDetailsDrawer from '../components/UserDetailsDrawer';
+import AdminPagination from '../components/AdminPagination';
 
 // ─── Sort options for users ─────────────────────────────
 const userSortOptions = [
@@ -52,13 +54,13 @@ const AdminUsers = () => {
   );
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const nextPageRef = useRef(null);
-  const prevPageRef = useRef(null);
 
   // ── Local state ──────────────────────────────────────
   const [sort, setSort] = useState('createdAt');
   const [search, setSearch] = useState('');
   const [sorting, setSorting] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // ── Fetch users ──────────────────────────────────────
   const fetchUsers = useCallback(
@@ -95,6 +97,18 @@ const AdminUsers = () => {
     setSearch('');
     setSort('createdAt');
     dispatch(getAllUsers({ sort: 'createdAt', page: 1, limit: 5, search: '' }));
+  };
+
+  const handleViewUser = (user) => {
+    setSelectedUser(user);
+    setIsDrawerOpen(true);
+  };
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false);
+    setTimeout(() => {
+      setSelectedUser(null);
+    }, 300); // match transition duration
   };
 
   // ── Stats ─────────────────────────────────────────────
@@ -136,14 +150,10 @@ const AdminUsers = () => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === '/') {
-        e.preventDefault();
-        inputRef.current?.focus();
-      }
-      if (e.key === 'n') {
-        nextPageRef.current?.click();
-      }
-      if (e.key === 'p') {
-        prevPageRef.current?.click();
+        if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          inputRef.current?.focus();
+        }
       }
     };
 
@@ -247,6 +257,7 @@ const AdminUsers = () => {
               <button
                 className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-200 hover:bg-zinc-700/50 transition-colors"
                 title="View Details"
+                onClick={() => handleViewUser(user)}
               >
                 <ADMIN_ICONS.EYE className="h-4 w-4" />
               </button>
@@ -456,85 +467,21 @@ const AdminUsers = () => {
       </div>
 
       {/* ── Pagination ──────────────────────────────── */}
-      {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-1">
-          <p className="text-xs text-zinc-500 tabular-nums">
-            Showing{' '}
-            <span className="font-medium text-zinc-300">
-              {(currentPage - 1) * 5 + 1}
-            </span>{' '}
-            to{' '}
-            <span className="font-medium text-zinc-300">
-              {Math.min(currentPage * 5, totalUsers)}
-            </span>{' '}
-            of <span className="font-medium text-zinc-300">{totalUsers}</span>{' '}
-            users
-          </p>
-          <div className="flex items-center gap-1">
-            {/* First page */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              disabled={currentPage <= 1}
-              onClick={() => fetchUsers({ page: 1 })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONSLEFT className="h-4 w-4" />
-            </Button>
+      <AdminPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={totalUsers}
+        limit={5}
+        onPageChange={(page) => fetchUsers({ page })}
+        itemName="users"
+      />
 
-            {/* Previous */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              ref={prevPageRef}
-              disabled={currentPage <= 1}
-              onClick={() => fetchUsers({ page: currentPage - 1 })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONLEFT className="h-4 w-4" />
-            </Button>
-
-            {/* Page numbers */}
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => fetchUsers({ page })}
-                className={cn(
-                  'h-8 w-8 rounded-lg text-xs font-medium transition-all duration-200',
-                  page === currentPage
-                    ? 'bg-lime-400 text-zinc-900 shadow-md shadow-lime-400/20'
-                    : 'text-zinc-500 hover:bg-zinc-800/60 hover:text-zinc-200',
-                )}
-              >
-                {page}
-              </button>
-            ))}
-
-            {/* Next */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              ref={nextPageRef}
-              disabled={currentPage >= totalPages}
-              onClick={() => fetchUsers({ page: currentPage + 1 })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONRIGHT className="h-4 w-4" />
-            </Button>
-
-            {/* Last page */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              disabled={currentPage >= totalPages}
-              onClick={() => fetchUsers({ page: totalPages })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONS_RIGHT className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      )}
+      {/* ── User Details Drawer ─────────────────────── */}
+      <UserDetailsDrawer
+        isOpen={isDrawerOpen}
+        onClose={handleCloseDrawer}
+        user={selectedUser}
+      />
     </div>
   );
 };

@@ -1,11 +1,27 @@
 const ADMIN = require('../models/admin.model');
 const USER = require('../models/user.model');
+const { Resend } = require('resend');
+const {
+  adminWelcomeTemplate,
+  userDeletedTemplate,
+} = require('../utils/emailTemplates');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const registerAdmin = async (req, res, next) => {
   try {
     const admin = req.body;
 
     const newAdmin = await ADMIN.create(admin);
+
+    if (newAdmin.email) {
+      await resend.emails.send({
+        from: 'onboarding@resend.dev',
+        to: newAdmin.email,
+        subject: 'Welcome to Suxnix Admin Portal',
+        html: adminWelcomeTemplate(newAdmin.name),
+      });
+    }
 
     return res.status(201).json({
       msg: 'Admin registration successful!',
@@ -99,7 +115,8 @@ const getAllUsers = async (req, res, next) => {
     const users = await USER.find(query)
       .sort(sortOption)
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .select('-password');
 
     const totalUsers = await USER.countDocuments(query);
     return res.status(200).json({
@@ -114,10 +131,38 @@ const getAllUsers = async (req, res, next) => {
   }
 };
 
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = await USER.findById(id);
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      return next(error);
+    }
+    // Send email first
+    await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: user.email,
+      subject: 'Your account has been removed',
+      html: userDeletedTemplate(user.firstName),
+    });
+
+    await user.deleteOne();
+    return res.status(200).json({
+      msg: 'User deleted successfully!',
+      user,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+
 module.exports = {
   loginAdmin,
   registerAdmin,
   getAdminProfile,
   updateAdminProfile,
   getAllUsers,
+  deleteUser,
 };

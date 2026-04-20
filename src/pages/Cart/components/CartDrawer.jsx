@@ -80,6 +80,7 @@ const CartDrawer = () => {
                                     (img) =>
                                       img.isPrimary && (
                                         <img
+                                          key={img.public_id}
                                           alt={product.name}
                                           src={img.url}
                                           className="size-full object-cover"

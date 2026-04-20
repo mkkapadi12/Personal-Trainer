@@ -13,6 +13,7 @@ import {
 import AddProductDialog from '../components/AddProductDialog';
 import EditProductDialog from '../components/EditProductDialog';
 import SortableHeader from '../components/SortableHeader';
+import AdminPagination from '../components/AdminPagination';
 import {
   useReactTable,
   getCoreRowModel,
@@ -51,8 +52,6 @@ const AdminProducts = () => {
     useSelector((state) => state.products);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
-  const nextPageRef = useRef(null);
-  const prevPageRef = useRef(null);
 
   // ── Local state ──────────────────────────────────────
   const [sort, setSort] = useState('latest');
@@ -158,14 +157,13 @@ const AdminProducts = () => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === '/') {
-        e.preventDefault(); // prevent "/" typing anywhere
-        inputRef.current?.focus();
-      }
-      if (e.key === 'n') {
-        nextPageRef.current?.click();
-      }
-      if (e.key === 'p') {
-        prevPageRef.current?.click();
+        if (
+          e.target.tagName !== 'INPUT' &&
+          e.target.tagName !== 'TEXTAREA'
+        ) {
+          e.preventDefault(); // prevent "/" typing anywhere
+          inputRef.current?.focus();
+        }
       }
     };
 
@@ -522,86 +520,14 @@ const AdminProducts = () => {
       </div>
 
       {/* ── Pagination ──────────────────────────────── */}
-      {totalPages > 1 && (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-1">
-          <p className="text-xs text-zinc-500 tabular-nums">
-            Showing{' '}
-            <span className="font-medium text-zinc-300">
-              {(currentPage - 1) * 5 + 1}
-            </span>{' '}
-            to{' '}
-            <span className="font-medium text-zinc-300">
-              {Math.min(currentPage * 5, totalProducts)}
-            </span>{' '}
-            of{' '}
-            <span className="font-medium text-zinc-300">{totalProducts}</span>{' '}
-            products
-          </p>
-          <div className="flex items-center gap-1">
-            {/* First page */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              disabled={currentPage <= 1}
-              onClick={() => fetchProducts({ page: 1 })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONSLEFT className="h-4 w-4" />
-            </Button>
-
-            {/* Previous */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              ref={prevPageRef}
-              disabled={currentPage <= 1}
-              onClick={() => fetchProducts({ page: currentPage - 1 })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONLEFT className="h-4 w-4" />
-            </Button>
-
-            {/* Page numbers */}
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => fetchProducts({ page })}
-                className={cn(
-                  'h-8 w-8 rounded-lg text-xs font-medium transition-all duration-200',
-                  page === currentPage
-                    ? 'bg-lime-400 text-zinc-900 shadow-md shadow-lime-400/20'
-                    : 'text-zinc-500 hover:bg-zinc-800/60 hover:text-zinc-200',
-                )}
-              >
-                {page}
-              </button>
-            ))}
-
-            {/* Next */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              ref={nextPageRef}
-              disabled={currentPage >= totalPages}
-              onClick={() => fetchProducts({ page: currentPage + 1 })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONRIGHT className="h-4 w-4" />
-            </Button>
-
-            {/* Last page */}
-            <Button
-              variant="ghost"
-              size="icon-sm"
-              disabled={currentPage >= totalPages}
-              onClick={() => fetchProducts({ page: totalPages })}
-              className="text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800/60 disabled:opacity-30"
-            >
-              <ADMIN_ICONS.CHEVRONS_RIGHT className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      )}
+      <AdminPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalItems={totalProducts}
+        limit={5}
+        onPageChange={(page) => fetchProducts({ page })}
+        itemName="products"
+      />
     </div>
   );
 };

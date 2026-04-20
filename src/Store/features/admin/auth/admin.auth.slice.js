@@ -3,6 +3,7 @@ import {
   adminLoginAPI,
   adminProfileAPI,
   adminRegisterAPI,
+  deleteUserAPI,
   getAllUsersAPI,
   updateAdminProfileAPI,
 } from './admin.auth.api';
@@ -105,6 +106,22 @@ export const getAllUsers = createAsyncThunk(
   },
 );
 
+// DELETE USER
+export const deleteUser = createAsyncThunk(
+  'auth/deleteUser',
+  async (id, { rejectWithValue }) => {
+    try {
+      return await deleteUserAPI(id);
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.msg ||
+          error.response?.data?.message ||
+          'Failed to delete user',
+      );
+    }
+  },
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -158,7 +175,7 @@ const authSlice = createSlice({
         state.isAdminChecked = false;
       })
 
-      //update profile
+      //UPDATE PROFILE
       .addCase(updateAdminProfile.pending, (state) => {
         state.loading = true;
       })
@@ -170,7 +187,7 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      //get all users
+      //GET ALL USERS
       .addCase(getAllUsers.pending, (state) => {
         state.loading = true;
       })
@@ -182,6 +199,21 @@ const authSlice = createSlice({
         state.currentPage = action.payload.currentPage;
       })
       .addCase(getAllUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      //DELETE USER
+      .addCase(deleteUser.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = state.users.filter(
+          (user) => user._id !== action.payload.user._id,
+        );
+        state.totalUsers -= 1;
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
